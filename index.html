@@ -731,7 +731,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 </header>
   <div class="facts" aria-label="대표 수치">
     <a class="fact" href="#/addeep/commerce"><span class="f-val"><span class="from">2,455ms</span><span class="arr">→</span>16.6ms</span><span class="f-lab">커머스 추천 응답 시간 중앙값</span><span class="f-cond">개발환경, 불필요한 외부 모델 호출 제거</span></a>
-    <a class="fact" href="#/ax/gate"><span class="f-val">116<small>건</small></span><span class="f-lab">AI 에이전트의 위험 명령 차단</span><span class="f-cond">23일, 개발 환경 저장소와 DB 대상만 집계</span></a>
+    <a class="fact" href="#/addeep/rec"><span class="f-val"><span class="from">8.3%</span><span class="arr">→</span>93.3%</span><span class="f-lab">같은 사용자 반복 호출 시 추천 결과 일치율</span><span class="f-cond">개발환경, A/A 테스트로 자연 변동 폭 확인</span></a>
     <a class="fact" href="#/addeep/sns"><span class="f-val">167<small>/ 290</small></span><span class="f-lab">SNS 서버 저장소에서 작성한 커밋</span><span class="f-cond">서버 초기 개발과 API 통합 담당</span></a>
   </div>
 
@@ -846,12 +846,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <h2>AI 개발 자동화 및 지식 관리 (AX)</h2>
       <p class="scope">혼자 설계하고 구축했으며, 사내 교육도 직접 진행했습니다. 자율성 단계를 계산하는 엔진과 일부 하위 에이전트는 외부 플러그인을 사용했습니다.</p>
       <p class="ctx">4개 서비스는 코드 구조와 개발 규칙이 서로 달라서, 코드를 바꿀 때마다 서비스별로 같은 확인을 반복해야 했습니다. 그래서 바뀐 코드와 기획 문서를 비교하는 검사 도구를 만들고, 공통 검사는 하나로 묶었습니다. 빌드 도구나 관리자 경로처럼 서비스마다 다른 설정만 따로 적용했고, 이 도구는 기획자와 프론트엔드 개발자도 실제 업무에 사용했습니다.</p>
-    </div>
-    <div class="summary" aria-label="핵심 성과">
-      <div class="m"><span class="m-label">개발 자동화를 적용한 서비스</span><span class="m-val">4<small>개</small></span><span class="m-cond">공통 검사는 하나로 묶고 서비스별 설정만 따로 적용</span></div>
-      <div class="m"><span class="m-label">차단한 위험 명령</span><span class="m-val">116<small>건</small></span><span class="m-cond">23일 동안 개발 환경의 저장소와 DB를 대상으로 한 명령만 센 값</span></div>
-      <div class="m"><span class="m-label">찾아낸 코드와 기획 문서 불일치</span><span class="m-val">41<small>건</small></span><span class="m-cond">4개 서비스의 코드 변경을 매일 모아 기획 문서와 비교</span></div>
-      <div class="m"><span class="m-label">개발자 대상 교육</span><span class="m-val">4<small>회</small></span><span class="m-cond">이틀 동안 진행했고, 기획자와 프론트엔드 개발자도 도구를 업무에 사용</span></div>
     </div>
     <p class="fig-title flow-title">세부 페이지</p>
     <div class="child-grid">
@@ -2039,7 +2033,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <ol class="steps">
           <li><b>상황</b>셸 우회 차단 훅의 전체 이벤트 수를 차단 건수로 적고 있었습니다.</li>
           <li><b>측정</b>이벤트 기록의 결과 값을 기준으로 다시 세어, 경고로 끝난 이벤트와 임시 폴더를 대상으로 한 명령은 차단 건수에서 제외했습니다.</li>
-          <li class="fix"><b>조치</b>개발 환경의 저장소와 DB를 대상으로 한 명령만 차단 건수에 남겼습니다. 직접 만든 훅의 기록과 외부 플러그인의 기록은 출처를 구분해 적었고, 달력 날짜로 계산하던 운영 기간도 실제 작업한 날 기준으로 고쳤습니다.</li>
+          <li class="fix"><b>조치</b>개발 환경의 저장소와 DB를 대상으로 한 명령만 남기니 23일 동안 116건이었습니다. 직접 만든 훅의 기록과 외부 플러그인의 기록은 출처를 구분해 적었고, 달력 날짜로 계산하던 운영 기간도 실제 작업한 날 기준으로 고쳤습니다.</li>
         </ol>
       </div>
       <div class="case-card">
