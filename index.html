@@ -597,6 +597,12 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   .career-line span + span::before { content: none; padding: 0; }
   .facts { grid-template-columns: 1fr; gap: 0; }
 }
+.index li .row { display: grid; grid-template-columns: minmax(0, 15em) minmax(0, 1fr) auto; gap: 6px 24px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--line); color: var(--fg); }
+.index li .row .i-name { font-weight: 600; }
+.child.plain { cursor: default; }
+.child.plain::before, .child.plain::after { content: none; }
+.child.plain .c-k { font-weight: 600; }
+@media (max-width: 759px) { .index li .row { grid-template-columns: minmax(0, 1fr) auto; } .index li .row .i-desc { grid-column: 1 / -1; grid-row: 2; } }
 .etc-line { margin-top: 14px; font-size: 14px; color: var(--muted); line-height: 1.7; max-width: 60em; }
 .etc-line b { font-weight: 600; color: var(--fg); margin-right: 8px; }
 /* ---- 그 밖의 작업 목록 ---- */
@@ -773,8 +779,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     <h2>사이드 프로젝트</h2>
     <ul>
       <li><a href="#/side/cascade"><span class="i-name">외부 변화 영향 판정 엔진 (cascade)</span><span class="i-desc">환율 같은 외부 변화가 회사의 손익과 현금흐름에 닿는 경로를 계산하는 엔진과 화면</span><span class="i-date">2026.08 – 2026.10</span></a></li>
+    
+      <li><span class="row"><span class="i-name">여행 일정과 가계부 서버</span><span class="i-desc">JWT와 게스트 로그인을 지원하고, 일정은 여행, 일, 시간의 3단 구조로, 공개 범위는 3단계로 나눈 Spring Boot 서버</span><span class="i-date">2024.08 – 2024.09</span></span></li>
+      <li><span class="row"><span class="i-name">운동 타이머 앱</span><span class="i-desc">타바타, 인터벌, 랩 타이머를 지원하고 광고 버전을 따로 만든 Flutter 앱</span><span class="i-date">2025.04</span></span></li>
+      <li><span class="row"><span class="i-name">Flutter 앱 공통 기반 (로그인, 지도)</span><span class="i-desc">로그인 7종을 공통으로 처리하고 구글과 네이버 지도를 연동한 Flutter 앱 기본 구조</span><span class="i-date">2025.01 – 2025.02</span></span></li>
     </ul>
-    <p class="etc-line"><b>그 밖에</b> 여행 일정과 가계부 서버(Spring Boot, 2024), 운동 타이머 앱(Flutter, 2025), Flutter 앱 공통 기반(로그인 7종과 지도, 2025)</p>
   </nav>
 
   <section class="section" id="how">
@@ -3853,13 +3862,15 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     <div class="p-head">
       <p class="label">개인 프로젝트</p>
       <h2>사이드 프로젝트</h2>
-      <p class="ctx">회사 업무와 별개로 직접 기획하고 개발한 프로젝트입니다. 진행 중인 cascade는 구조 도식과 한 일을 따로 정리했고, 이전에 만든 세 개는 한 줄로 적었습니다.</p>
+      <p class="ctx">회사 업무와 별개로 직접 기획하고 개발한 프로젝트입니다. 진행 중인 cascade는 상세 페이지를 두었고, 이전에 만든 세 개는 목록으로만 적었습니다.</p>
     </div>
     <p class="fig-title flow-title">프로젝트</p>
     <div class="child-grid">
       <a class="child" href="#/side/cascade"><span class="c-k">외부 변화 영향 판정 엔진 (cascade)</span><span class="c-d">2026.08 – 2026.10, 환율 같은 외부 변화가 회사의 손익과 현금흐름에 닿는 경로를 계산하고, 같은 입력이면 같은 결과가 나오게 만든 판정 엔진</span></a>
+      <div class="child plain"><span class="c-k">여행 일정과 가계부 서버</span><span class="c-d">2024.08 – 2024.09, JWT와 게스트 로그인을 지원하고, 일정은 여행, 일, 시간의 3단 구조로, 공개 범위는 3단계로 나눈 Spring Boot 서버</span></div>
+      <div class="child plain"><span class="c-k">운동 타이머 앱</span><span class="c-d">2025.04, 타바타, 인터벌, 랩 타이머를 지원하고 광고 버전을 따로 만든 Flutter 앱</span></div>
+      <div class="child plain"><span class="c-k">Flutter 앱 공통 기반 (로그인, 지도)</span><span class="c-d">2025.01 – 2025.02, 로그인 7종을 공통으로 처리하고 구글과 네이버 지도를 연동한 Flutter 앱 기본 구조</span></div>
     </div>
-    <p class="etc-line"><b>그 밖의 개인 프로젝트</b> 여행 일정과 가계부 서버(Spring Boot, JWT와 게스트 로그인, 2024.08 – 2024.09), 운동 타이머 앱(Flutter, 타바타와 인터벌, 랩 타이머, 2025.04), Flutter 앱 공통 기반(로그인 7종과 지도 연동, 2025.01 – 2025.02)</p>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
       <a class="prev" href="#/pknu"><span class="pg-k">← 이전</span><span class="pg-t">대학 모바일 앱 화면</span></a>
