@@ -358,6 +358,7 @@ h1 { font-size: clamp(44px, 8vw, 84px); font-weight: 700; line-height: 1.05; let
 .principle h3 { font-size: 18px; font-weight: 700; }
 .principle p { font-size: 15px; line-height: 1.7; }
 .principle .case { font-size: 14px; color: var(--muted); border-top: 1px dashed var(--line); padding-top: 10px; margin-top: 4px; }
+.principle .case a { white-space: nowrap; }
 .principle .case b { font-family: var(--font-mono); font-weight: 500; font-size: 12px; letter-spacing: 0.06em; color: var(--accent); margin-right: 6px; }
 
 /* 경력 */
@@ -576,6 +577,68 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   .child { grid-template-columns: minmax(0, 1fr); gap: 2px; }
   .home-top { padding-block: 36px 32px; }
 }
+
+/* ---- 첫 화면 경력 한 줄, 대표 수치 ---- */
+.career-line { grid-column: 2; display: flex; flex-wrap: wrap; gap: 6px 0; margin-top: 16px; font-size: 14px; color: var(--muted); }
+.career-line span + span::before { content: "·"; padding: 0 10px; color: var(--line); }
+.facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 32px; margin-top: 8px; border-top: 1px solid var(--line); }
+.fact { display: grid; gap: 3px; align-content: start; padding: 16px 0 14px; color: var(--fg); border-bottom: 1px solid var(--line); min-width: 0; }
+.fact:hover { text-decoration: none; }
+.fact:hover .f-lab { color: var(--accent); }
+.fact .f-val { font-size: 26px; font-weight: 700; line-height: 1.2; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.fact .f-val .arr { color: var(--muted); font-weight: 400; padding: 0 6px; }
+.fact .f-val .from { color: var(--muted); font-weight: 500; font-size: 18px; }
+.fact .f-val small { font-size: 15px; font-weight: 500; color: var(--muted); margin-left: 3px; }
+.fact .f-lab { font-size: 14.5px; }
+.fact .f-cond { font-size: 12.5px; color: var(--note); line-height: 1.5; }
+@media (max-width: 759px) {
+  .career-line { grid-column: 1 / -1; font-size: 13px; flex-direction: column; gap: 4px; }
+  .career-line span + span::before { content: none; padding: 0; }
+  .facts { grid-template-columns: 1fr; gap: 0; }
+}
+/* ---- 그 밖의 작업 목록 ---- */
+.etc { margin-top: 44px; border-top: 1px solid var(--line); padding-top: 20px; }
+.etc-h { font-size: 14.5px; font-weight: 600; color: var(--fg); margin: 0 0 6px; }
+.etc-list { list-style: none; }
+.etc-list li { padding: 10px 0; border-bottom: 1px solid var(--line); }
+.etc-k { font-size: 15px; font-weight: 600; }
+.etc-m { font-weight: 400; font-size: 13px; color: var(--muted); margin-left: 10px; }
+.etc-d { font-size: 14px; color: var(--muted); margin-top: 2px; max-width: 60em; }
+/* ---- 가독성 ---- */
+.index .i-desc { color: var(--fg); opacity: 0.78; }
+.sys .f-d { font-size: 14px; color: var(--fg); opacity: 0.8; }
+.points li { font-size: 16px; line-height: 1.75; }
+/* ---- 도식 확대 ---- */
+.dgf { position: relative; }
+.zoom-btn { position: absolute; right: 0; top: -4px; font: 500 12.5px var(--font-sans); color: var(--muted); background: var(--bg); border: 1px solid var(--line); border-radius: 3px; padding: 3px 9px; cursor: pointer; }
+.zoom-btn:hover { color: var(--accent); border-color: var(--accent); }
+.fig-scroll { cursor: zoom-in; }
+.lightbox { position: fixed; inset: 0; z-index: 50; background: rgba(22,24,28,0.6); display: none; align-items: center; justify-content: center; padding: 24px; }
+.lightbox.on { display: flex; }
+.lightbox-inner { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; width: min(1400px, 100%); max-height: 100%; overflow: auto; padding: 16px 16px 12px; }
+.lightbox-inner svg { display: block; width: 100%; height: auto; min-width: 900px; }
+.lightbox-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 8px; }
+.lightbox-title { font-size: 14px; font-weight: 600; }
+.lightbox-close { font: 500 13px var(--font-sans); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 3px; padding: 4px 10px; cursor: pointer; }
+.lightbox-close:hover { border-color: var(--accent); color: var(--accent); }
+.lightbox-cap { font-size: 13.5px; color: var(--muted); margin-top: 10px; }
+/* ---- 접기 ---- */
+.case-card h3 { cursor: pointer; position: relative; padding-right: 28px; }
+.case-card h3::after { content: "+"; position: absolute; right: 2px; top: 0; color: var(--muted); font-weight: 400; }
+.case-card.open h3::after { content: "−"; }
+.case-card .steps { display: none; }
+.case-card.open .steps { display: grid; }
+.more-btn { margin-top: 10px; font: 500 13px var(--font-sans); color: var(--accent); background: none; border: 0; padding: 0; cursor: pointer; }
+.more-btn:hover { text-decoration: underline; }
+.points li.extra[hidden] { display: none; }
+/* ---- 맨 위로 ---- */
+.to-top { position: fixed; right: 20px; bottom: 20px; z-index: 40; font: 500 13px var(--font-sans); color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 20px; padding: 8px 14px; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 0.2s; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+.to-top.show { opacity: 1; pointer-events: auto; }
+.to-top:hover { border-color: var(--accent); color: var(--accent); }
+.kbd-hint { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
+@media (max-width: 759px) { .kbd-hint { display: none; } .lightbox { padding: 8px; } .lightbox-inner { padding: 10px; } .zoom-btn { top: -2px; } }
+@media (prefers-reduced-motion: reduce) { .to-top { transition: none; } }
+
 </style>
 
 <div class="topbar">
@@ -600,7 +663,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
             <li><a href="#/ax/planning">기획 문서와 코드 연결</a></li>
             <li><a href="#/ax/spread">사내 도입과 교육</a></li>
             <li><a href="#/ax/honesty">검사 결과 재확인</a></li>
-            <li><a href="#/ax/more">그 밖의 AX 작업</a></li>
           </ul>
         </li>
         <li><a href="#/addeep">애딥 서비스 구성</a>
@@ -611,7 +673,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
             <li><a href="#/addeep/vlm">영상 분석 파이프라인</a></li>
             <li><a href="#/addeep/commerce">커머스 추천</a></li>
             <li><a href="#/addeep/image">상품 이미지 생성</a></li>
-            <li><a href="#/addeep/more">그 밖의 작업</a></li>
           </ul>
         </li>
         <li><a href="#/bokiyo">보드게임카페 매장 운영 시스템</a>
@@ -651,6 +712,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <p class="role">백엔드 개발자</p>
       <h1>노성훈</h1>
       <p class="lede">AI 에이전트로 개발 과정을 개선하고, 맡은 서비스를 끝까지 구현하는 백엔드 개발자입니다. Java와 Spring Boot, Python과 FastAPI로 서비스를 개발해 왔고, 최근에는 AI가 코드를 작성하는 과정에 영향 범위 검사, 코드 리뷰, 기획 문서 확인을 연결해 팀 업무에 적용했습니다.</p>
+      <p class="career-line"><span>2022년부터 백엔드 개발</span><span>최근: 애딥 백엔드·AI R&amp;D, 2025.12 – 2026.08</span><span>주 언어: Java, Python</span></p>
     </div>
     <div class="top-side">
     <div class="contact">
@@ -667,6 +729,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     </div>
   </div>
 </header>
+  <div class="facts" aria-label="대표 수치">
+    <a class="fact" href="#/addeep/commerce"><span class="f-val"><span class="from">2,455ms</span><span class="arr">→</span>16.6ms</span><span class="f-lab">커머스 추천 응답 시간 중앙값</span><span class="f-cond">개발환경, 불필요한 외부 모델 호출 제거</span></a>
+    <a class="fact" href="#/ax/gate"><span class="f-val">116<small>건</small></span><span class="f-lab">AI 에이전트의 위험 명령 차단</span><span class="f-cond">23일, 개발 환경 저장소와 DB 대상만 집계</span></a>
+    <a class="fact" href="#/addeep/sns"><span class="f-val">167<small>/ 290</small></span><span class="f-lab">SNS 서버 저장소에서 작성한 커밋</span><span class="f-cond">서버 초기 개발과 API 통합 담당</span></a>
+  </div>
 
   <section class="caps" aria-label="주요 개발 역량">
     <h2>주요 개발 역량</h2>
@@ -674,24 +741,21 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <div><p class="f-k">AI 에이전트와 업무 자동화</p><p class="f-d">코드를 바꾸기 전의 영향 범위 검사, 기획 문서와 코드 연동, 개발 규칙 검사를 자동화했습니다. 개발 규칙을 저장소에 설치하는 AX KIT와 Next.js 공통 템플릿을 만들어 사내에 적용했습니다.</p></div>
       <div><p class="f-k">백엔드 서버 설계와 개발</p><p class="f-d">Java와 Spring Boot, Python과 FastAPI로 SNS, 개인화 추천, 매장 운영 서버를 개발했습니다. REST API부터 인증과 권한, 데이터베이스, 캐시, 클라우드 배포까지 담당했습니다.</p></div>
       <div><p class="f-k">아키텍처와 디자인 패턴</p><p class="f-d">Spring Boot 서버는 도메인 중심 구조와 Repository 패턴으로 구성했고, 추천 서버에는 5계층 클린 아키텍처와 레지스트리 패턴을, 영상 분석 서버에는 헥사고날 아키텍처를 적용했습니다.</p></div>
-      <div><p class="f-k">AI 개인화 추천</p><p class="f-d">SNS와 커머스 추천 서버를 개발하고, 5개 채널의 후보 생성, 화면별 순위 결정, 재정렬, 광고 노출 정책 검사를 구현했습니다.</p></div>
-      <div><p class="f-k">사용자 행동 통합 분석</p><p class="f-d">SNS와 쇼핑 서비스의 이용 기록을 같은 기준으로 분석하는 서버를 개발했습니다. 같은 회사의 서비스는 분석 결과를 함께 활용하고, 다른 회사의 데이터는 분리했습니다.</p></div>
-      <div><p class="f-k">AI 모델 연동과 영상 분석</p><p class="f-d">Gemini로 영상의 장면과 대사를 분석해 검색에 활용하는 프로그램을 개발했습니다. 입력과 분석 결과를 검증하고, 모델 제공자나 저장소를 바꾸기 쉬운 구조로 설계했습니다.</p></div>
     </div>
   </section>
 
   <nav class="index" aria-label="최근 핵심 프로젝트">
     <h2>최근 핵심 프로젝트</h2>
     <ul>
-      <li><a href="#/ax"><span class="i-name">AI 개발 자동화 (AX)</span><span class="i-desc">AI 에이전트가 코드를 고치기 전에 영향 범위를 검사하고, 기획 문서와 코드를 연결한 개발 자동화 도구</span><span class="i-date">2025.12 – 26.08</span></a></li>
-      <li><a href="#/addeep/sns"><span class="i-name">SNS 서비스 백엔드</span><span class="i-desc">회원과 인증 API, 관리자 2단계 인증, 개인정보 암호화와 키 관리를 개발한 SNS 서버</span><span class="i-date">2026.01 – 04</span></a></li>
-      <li><a href="#/addeep/rec"><span class="i-name">AI 개인화 추천 서버</span><span class="i-desc">5개 채널의 후보 생성부터 광고 정책 검사까지 처리하는 SNS와 커머스 추천 서버</span><span class="i-date">2026.04 – 08</span></a></li>
-      <li><a href="#/addeep/behavior"><span class="i-name">사용자 행동 통합 분석</span><span class="i-desc">여러 서비스의 이용 기록을 같은 기준으로 분석하는 서버</span><span class="i-date">2026.06 – 08</span></a></li>
-      <li><a href="#/addeep/vlm"><span class="i-name">영상 분석 파이프라인</span><span class="i-desc">Gemini로 영상의 장면, 대사, 화면 속 글자를 추출해 검색 데이터로 저장하는 파이프라인</span><span class="i-date">2026.07 – 08</span></a></li>
-      <li><a href="#/addeep/commerce"><span class="i-name">커머스 추천</span><span class="i-desc">추천 엔진에서 분리한 상품 추천 서비스로, 응답 시간을 2,455ms에서 16.6ms로 줄였습니다</span><span class="i-date">2026.07 – 08</span></a></li>
+      <li><a href="#/ax"><span class="i-name">AI 개발 자동화 (AX)</span><span class="i-desc">AI 에이전트가 코드를 고치기 전에 영향 범위를 검사하고, 기획 문서와 코드를 연결한 개발 자동화 도구</span><span class="i-date">2025.12 – 2026.08</span></a></li>
+      <li><a href="#/addeep/sns"><span class="i-name">SNS 서비스 백엔드</span><span class="i-desc">회원과 인증 API, 관리자 2단계 인증, 개인정보 암호화와 키 관리를 개발한 SNS 서버</span><span class="i-date">2026.01 – 2026.04</span></a></li>
+      <li><a href="#/addeep/rec"><span class="i-name">AI 개인화 추천 서버</span><span class="i-desc">5개 채널의 후보 생성부터 광고 정책 검사까지 처리하는 SNS와 커머스 추천 서버</span><span class="i-date">2026.04 – 2026.08</span></a></li>
+      <li><a href="#/addeep/behavior"><span class="i-name">사용자 행동 통합 분석</span><span class="i-desc">여러 서비스의 이용 기록을 같은 기준으로 분석하는 서버</span><span class="i-date">2026.06 – 2026.08</span></a></li>
+      <li><a href="#/addeep/vlm"><span class="i-name">영상 분석 파이프라인</span><span class="i-desc">Gemini로 영상의 장면, 대사, 화면 속 글자를 추출해 검색 데이터로 저장하는 파이프라인</span><span class="i-date">2026.07 – 2026.08</span></a></li>
+      <li><a href="#/addeep/commerce"><span class="i-name">커머스 추천</span><span class="i-desc">추천 엔진에서 분리한 상품 추천 서비스로, 불필요한 외부 모델 호출을 없애 응답 지연을 줄였습니다</span><span class="i-date">2026.07 – 2026.08</span></a></li>
       <li><a href="#/addeep/image"><span class="i-name">상품 이미지 생성</span><span class="i-desc">상품의 로고와 디자인은 그대로 두고 배경만 바꾸는 이미지 생성 기능</span><span class="i-date">2026.04</span></a></li>
-      <li><a href="#/bokiyo"><span class="i-name">보드게임카페 매장 운영 시스템</span><span class="i-desc">서버, 키오스크 앱, 관리자 웹과 데이터 수집까지 개발해 여러 매장에 배포한 시스템</span><span class="i-date">2023–24, 2025</span></a></li>
-      <li><a href="#/pknu"><span class="i-name">대학 모바일 앱 화면</span><span class="i-desc">부경대학교 앱과 연동되는 화면과 캠퍼스 맵 등 반응형 페이지 약 22개를 구현했습니다</span><span class="i-date">2025.10 – 12</span></a></li>
+      <li><a href="#/bokiyo"><span class="i-name">보드게임카페 매장 운영 시스템</span><span class="i-desc">서버, 키오스크 앱, 관리자 웹과 데이터 수집까지 개발해 여러 매장에 배포한 시스템</span><span class="i-date">2023 – 2024, 2025</span></a></li>
+      <li><a href="#/pknu"><span class="i-name">대학 모바일 앱 화면</span><span class="i-desc">부경대학교 앱과 연동되는 화면과 캠퍼스 맵 등 반응형 페이지 약 22개를 구현했습니다</span><span class="i-date">2025.10 – 2025.12</span></a></li>
     </ul>
     <p class="versions">애딥 전체 서비스 구조는 <a href="#/addeep">애딥 서비스 구성</a>에 있습니다.</p>
     <p class="basis">애딥(2025.12 – 2026.08)에서는 SNS 서버와 관리자 기능을 개발해 앱스토어 출시에 참여했고, 이후 AI 추천, 사용자 행동 분석, 개발 자동화, 영상 분석을 맡았습니다. 자동화 도구와 Next.js 공통 템플릿은 사내 업무에 적용했습니다. 추천과 영상 분석 수치는 개발환경에서 측정한 값이며, 수치마다 측정 조건을 함께 적었습니다.</p>
@@ -714,22 +778,22 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <div class="principle">
         <h3>통과한 테스트도 다시 확인합니다</h3>
         <p>테스트가 통과하거나 성공 응답이 와도, 그 검사가 실제로 무엇을 확인하는지 먼저 살펴봅니다.</p>
-        <p class="case"><b>사례</b>에러나 로그가 남지 않던 벡터 저장소 구조 변경에서, 관심사 벡터가 비어 상위 20건 중 관심사에 맞는 추천이 평균 18.5건에서 2.7건으로 줄어드는 문제를 배포 전에 발견했습니다.</p>
+        <p class="case"><b>사례</b>벡터 저장소 구조 변경에서 배포 전에 찾은 개인화 회귀 <a href="#/addeep/rec">AI 개인화 추천 서버 →</a></p>
       </div>
       <div class="principle">
         <h3>비교 전에 측정 편차부터 확인합니다</h3>
         <p>같은 조건에서 결과가 얼마나 달라지는지 먼저 재고, 그 범위 안의 차이로는 결론을 내리지 않습니다.</p>
-        <p class="case"><b>사례</b>영상 분석을 같은 조건으로 세 번 실행했더니 결과가 44~65%만 겹쳤습니다. 그래서 이 범위 안의 차이로 내렸던 품질 저하 판단을 취소했습니다.</p>
+        <p class="case"><b>사례</b>영상 분석을 같은 조건으로 반복했을 때의 편차 44~65% <a href="#/addeep/vlm">영상 분석 파이프라인 →</a></p>
       </div>
       <div class="principle">
         <h3>틀린 진단은 이유를 남기고 바로잡습니다</h3>
         <p>제 판단이든 다른 사람의 진단이든 측정 결과와 맞지 않으면 수정하고, 수정한 이유를 기록합니다.</p>
-        <p class="case"><b>사례</b>외부 URL로 전달한 영상은 10초짜리와 1시간짜리가 똑같이 31토큰으로 처리됐습니다. 영상이 모델 입력에 들어가지 않았는데도 분석 응답이 반환된 것을 확인하고, 그 응답을 근거로 내렸던 이전 결론을 바로잡았습니다.</p>
+        <p class="case"><b>사례</b>영상이 입력되지 않았는데도 분석 응답이 돌아온 문제 <a href="#/addeep/vlm">영상 분석 파이프라인 →</a></p>
       </div>
       <div class="principle">
         <h3>정한 규칙은 자동 검사로 지킵니다</h3>
         <p>규칙은 훅, 품질 검사, 아키텍처 검사로 옮겨서 사람이 잊어도 지켜지게 합니다.</p>
-        <p class="case"><b>사례</b>AI 에이전트가 영향 범위를 먼저 확인하지 않으면 편집을 차단했고, 가장 많이 수정한 저장소에서는 이 검사를 우회할 수 있는 경로 5곳도 모두 막았습니다.</p>
+        <p class="case"><b>사례</b>영향 범위를 확인하지 않은 편집을 차단한 훅 <a href="#/ax/gate">수정 전 영향 범위 검사 →</a></p>
       </div>
     </div>
   </section>
@@ -798,7 +862,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="child" href="#/ax/planning"><span class="c-k">기획 문서와 코드 연결</span><span class="c-d">Notion 기획 문서, Obsidian 검토 상태, 코드 위치를 연결하고 정책 확인 요청을 주고받는 도구</span></a>
       <a class="child" href="#/ax/spread"><span class="c-k">사내 도입과 교육</span><span class="c-d">사내 교육과 AX KIT, Next.js 공통 템플릿으로 다른 저장소에 적용한 과정</span></a>
       <a class="child" href="#/ax/honesty"><span class="c-k">검사 결과 재확인</span><span class="c-d">일부러 규칙 위반을 넣어 검사가 실제로 잡아내는지 확인한 사례</span></a>
-      <a class="child" href="#/ax/more"><span class="c-k">그 밖의 AX 작업</span><span class="c-d">보안 설계, QA 결과 점검, 데이터 수집기 등 그 밖의 작업</span></a>
     </div>
     <figure class="dgf">
       <p class="fig-title">확인 작업을 도구로 옮기기 전과 후</p>
@@ -1007,19 +1070,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <figcaption>검사 로직은 한 곳에서 관리하고, 서비스마다 다른 값만 설정 파일로 분리했습니다. 파란색으로 표시한 공통 검사는 4개 서비스에 똑같이 적용했습니다.</figcaption>
     </figure>
 
-    <div class="p-body solo">
-      <div>
-        <h3>한 일</h3>
-        <ul class="points">
-          <li>서비스 담당 AI 에이전트 4종과 전략 담당 에이전트 2종의 역할과 권한을 나눴습니다. 코드를 바꾸기 전에 참조 관계와 관련 문서를 확인하는 검사를 만들고, 이 검사를 우회할 수 있는 5개 경로에도 같은 검사를 적용했습니다.</li>
-          <li>기존 업무와 함께 AX KIT를 개발하고, 사내에서 직접 사용하며 개선했습니다. 4개 서비스의 코드 검사와 테스트 구성을 점검해 빠진 검사를 보완했습니다.</li>
-          <li>Turborepo와 pnpm 기반 Next.js 공통 템플릿에 코드 검사, CI, 커밋 메시지 규칙, Git 훅을 적용했습니다. 이 템플릿은 프론트엔드 개발자가 실제 프로젝트에 사용했습니다.</li>
-          <li>공동 개발하던 대외 웹 저장소에서는 타입 검사 7개 중 1개만 통과하던 문제를 수정해 전체 검사를 통과시켰습니다.</li>
-          <li>개발자를 대상으로 이틀 동안 네 차례 교육하며 에이전트 역할 분리, Hooks, MCP, 코드 검사 방법을 설명했습니다. 다른 개발자가 직접 설치할 수 있도록 안내 자료도 작성했습니다.</li>
-        </ul>
-      </div>
-    </div>
-
     <div class="subsec">
       <h3 class="subhead">광고 문구 정책 검사</h3>
       <p class="fig-title flow-title">검사 흐름</p>
@@ -1029,6 +1079,20 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <li><span class="f-k">AI 모델 추가 검사</span><span class="f-d">규칙에 걸리지 않은 표현만 모델로 다시 확인</span></li>
         <li><span class="f-k">결과</span><span class="f-d">통과, 경고, 차단으로 분류</span></li>
       </ol>
+    </div>
+
+    <div class="etc">
+    <h3 class="etc-h">그 밖의 AX 작업</h3>
+    <ul class="etc-list">
+      <li><p class="etc-k">보안 설계 파이프라인<span class="etc-m">2026.01, 규칙 문서와 실행 순서, 에이전트 사이의 결과 형식 설계</span></p></li>
+      <li><p class="etc-k">모바일 QA 자동화와 잘못된 통과 결과 점검<span class="etc-m">2026.05, QA 자동화 부분은 혼자 개발</span></p></li>
+      <li><p class="etc-k">중단된 지점부터 다시 수집하는 공개 정보 수집기<span class="etc-m">2026.08, 혼자 개발</span></p></li>
+      <li><p class="etc-k">대외 웹 CI 복구<span class="etc-m">2026.04 – 07, 공동 저장소에서 CI와 빌드 도구 담당</span></p></li>
+      <li><p class="etc-k">같은 방식을 다른 벤더의 LLM 도구에 적용<span class="etc-m">2026.01, 혼자 개발</span></p></li>
+      <li><p class="etc-k">디자인 파일로 화면 상세 기획서 만들기<span class="etc-m">2025.12, 처음 시작한 AX 작업</span></p></li>
+      <li><p class="etc-k">여러 에이전트에게 나눠 맡긴 코드 감사<span class="etc-m">2026.06 – 08</span></p></li>
+      <li><p class="etc-k">사내 지식 위키<span class="etc-m">2026.04, 혼자 개발</span></p></li>
+    </ul>
     </div>
 
     <ul class="stack" aria-label="사용 기술">
@@ -1475,7 +1539,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <ul class="points">
           <li>하위 에이전트가 사용할 수 있는 도구를 목록으로 제한했습니다. 참조를 조회하는 언어 서버 도구는 허용하고, 심볼을 직접 바꾸는 편집 도구는 제외했습니다.</li>
           <li>보고 형식을 고정해, 무엇을 바꿨고 어떤 검사를 통과했는지 매번 같은 위치에서 확인할 수 있게 했습니다.</li>
-          <li>한 번에 실행된 에이전트 수가 예상보다 많아진 사례를 확인한 뒤, 실제로 실행된 에이전트 수를 기준으로 세는 규칙을 만들고 한꺼번에 많이 실행하는 패턴을 막는 훅을 추가했습니다.</li>
         </ul>
       </div>
       <div>
@@ -1980,14 +2043,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </ol>
       </div>
       <div class="case-card">
-        <h3>스케줄러는 실행됐지만 리포트가 생성되지 않던 문제</h3>
-        <ol class="steps">
-          <li><b>상황</b>숏폼 트렌드 리포트 파이프라인은 매일 실행 기록을 남겼고, 오류 알림도 오지 않았습니다.</li>
-          <li><b>측정</b>확인해 보니 리포트가 한동안 생성되지 않고 있었습니다. 브라우저 런타임이 업데이트되면서 실행 파일 경로가 없어져, 수집이 시작하자마자 실패하고 있었습니다.</li>
-          <li class="fix"><b>배운 것</b>실행 기록이 남아도 결과물이 없으면 멈춘 것으로 판단합니다. 이후 만든 수집기에서는 수집 실패와 쿼터 소진을 서로 다른 종료 코드로 구분했습니다.</li>
-        </ol>
-      </div>
-      <div class="case-card">
         <h3>코드로 예상한 수와 실제로 실행된 에이전트 수가 달랐던 문제</h3>
         <ol class="steps">
           <li><b>상황</b>에이전트 수를 제한하는 규칙이 있었는데도, 항목마다 에이전트를 하나씩 실행하는 작업에서 제한을 크게 넘었습니다.</li>
@@ -2000,73 +2055,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
       <a class="prev" href="#/ax/spread"><span class="pg-k">← 이전</span><span class="pg-t">AX / 사내 도입과 교육</span></a>
-      <a class="next" href="#/ax/more"><span class="pg-k">다음 →</span><span class="pg-t">AX / 그 밖의 AX 작업</span></a>
-    </nav>
-</article>
-<article class="view" data-route="ax/more" data-title="그 밖의 AX 작업" tabindex="-1">
-  <section class="project" id="ax-more">
-    <div class="p-head">
-      <p class="crumbs"><a href="#/ax">AI 개발 자동화 (AX)</a><span aria-hidden="true">/</span><span>그 밖의 AX 작업</span></p>
-      <p class="label">애딥, 2025.12 – 2026.08</p>
-      <h2>그 밖의 AX 작업</h2>
-      <p class="ctx">개발 자동화 도구를 만들기 전후에 같은 방식으로 한 작업들입니다. 작업마다 핵심 흐름만 적었습니다.</p>
-    </div>
-    <div class="works">
-      <div class="work">
-        <h3>보안 설계 파이프라인</h3>
-        <p class="w-meta">2026.01, 규칙 문서와 실행 순서, 에이전트 사이의 결과 형식 설계</p>
-        <ul class="mini"><li>보안 기준 규칙 문서</li><li>설계 에이전트</li><li>별도 감사 에이전트</li><li>위협 모델링</li><li>버전별 마이그레이션</li></ul>
-        <p>개인정보 DB를 설계할 때 설계 에이전트가 자기 설계를 직접 감사하지 않도록 설계와 감사 단계를 나눴습니다. 검색에 필요한 값은 단방향 해시로, 원문이 필요한 값은 대칭키로 암호화해 컬럼을 나누는 기준을 정했고, 별도 감사 단계에서 접근 제어의 보완할 점을 찾았습니다.</p>
-        <p class="w-note">감사와 위협 모델링 에이전트 중 일부는 외부 플러그인을 사용했습니다.</p>
-      </div>
-      <div class="work">
-        <h3>모바일 QA 자동화와 잘못된 통과 결과 점검</h3>
-        <p class="w-meta">2026.05, QA 자동화 부분은 혼자 개발</p>
-        <ul class="mini"><li>시나리오 실행</li><li>결과 기록</li><li>등급별 감사</li><li>강등</li><li>재발 방지 규칙</li></ul>
-        <p>배포된 앱을 화면 텍스트와 접근성 라벨 기준으로 자동 검사하고, 그 결과를 다시 감사했습니다. 통과 기록의 15~20%는 잘못된 통과이거나 확인이 부족한 통과였고, 시나리오가 확인하지 않은 지점에서 실제 결함도 찾았습니다. 상태를 바꾼 뒤 결과를 다시 확인하지 않는 시나리오는 약한 통과로 낮추는 규칙을 만들었습니다.</p>
-      </div>
-      <div class="work">
-        <h3>중단된 지점부터 다시 수집하는 공개 정보 수집기</h3>
-        <p class="w-meta">2026.08, 혼자 개발</p>
-        <ul class="mini"><li>검색어와 기간 조합 선택</li><li>브라우저 수집</li><li>순수 함수로 추출</li><li>시트에 저장</li><li>종료 코드로 다음 작업 결정</li></ul>
-        <p>수집이 중간에 중단돼도 정상 종료처럼 보이던 문제는 전용 종료 코드로 구분했고, 다음 실행에서는 중단된 지점부터 이어서 수집합니다. 데이터 추출 부분은 외부 모듈을 import하지 않는 순수 함수로 분리해, 브라우저 없이도 정확도를 다시 측정할 수 있습니다.</p>
-        <p class="w-note">추출 정확도는 고정된 표본으로 측정했습니다.</p>
-      </div>
-      <div class="work">
-        <h3>대외 웹 CI 복구</h3>
-        <p class="w-meta">2026.04 – 07, 공동 저장소에서 CI와 빌드 도구 담당</p>
-        <ul class="mini"><li>노드 설정</li><li>설치</li><li>타입 검사</li><li>린트</li><li>빌드</li><li>배포</li></ul>
-        <p>린트, 타입 검사, 빌드가 실패하던 원인을 하나씩 찾아 수정했습니다. 그중에는 두 포매터가 같은 규칙을 각자 적용해 서로의 수정을 되돌리던 문제도 있었습니다.</p>
-        <p class="w-note">문의 폼, 관리자 뷰어 등 일부 기능은 함께 작업한 개발자가 개발했습니다.</p>
-      </div>
-      <div class="work">
-        <h3>같은 방식을 다른 벤더의 LLM 도구에 적용</h3>
-        <p class="w-meta">2026.01, 혼자 개발</p>
-        <ul class="mini"><li>자료 수집</li><li>문서 구조화</li><li>슬라이드</li></ul>
-        <p>스킬 사이에 주고받는 결과는 meta, payload, errors 형식으로 고정했습니다. 일부가 실패하면 전체를 되돌리던 방식을 바꿔, 성공한 항목은 반영하고 실패한 항목만 errors에 담아 보고합니다.</p>
-      </div>
-      <div class="work">
-        <h3>디자인 파일로 화면 상세 기획서 만들기</h3>
-        <p class="w-meta">2025.12, 처음 시작한 AX 작업</p>
-        <ul class="mini"><li>디자인 파일</li><li>MCP로 읽기</li><li>고정 서식 기획서</li><li>문서 도구</li></ul>
-        <p>화면 ID, 요소 명세와 상태 전이, API 스키마, 에러 유형을 하나의 서식으로 고정해, 누가 실행해도 같은 형식의 문서가 나오도록 했습니다. 팀원들이 같은 도구를 설치할 수 있도록 연동 방법도 문서로 정리해 공유했습니다.</p>
-      </div>
-      <div class="work">
-        <h3>여러 에이전트에게 나눠 맡긴 코드 감사</h3>
-        <p class="w-meta">2026.06 – 08</p>
-        <ul class="mini"><li>감사 항목 나누기</li><li>에이전트 병렬 실행</li><li>반박 시도</li><li>남은 것만 확정</li></ul>
-        <p>보안, 문서와 코드의 불일치, 신호 누락 감사를 여러 에이전트에게 나눠 맡겼습니다. 발견한 내용은 보고서에 적기 전에 반박할 근거가 있는지 먼저 확인했고, 오탐으로 판단한 내용도 함께 적었습니다. 여러 에이전트가 같은 결론을 내도 서로의 결과를 다시 확인하지 않았다면 검증된 것으로 보지 않았습니다.</p>
-      </div>
-      <div class="work">
-        <h3>사내 지식 위키</h3>
-        <p class="w-meta">2026.04, 혼자 개발</p>
-        <ul class="mini"><li>원본 자료</li><li>수집</li><li>에이전트가 관리하는 위키</li><li>점검</li><li>결함 리포트</li></ul>
-        <p>사내 문서와 저장소 내용을 에이전트가 관리하는 위키로 정리했습니다. 깨진 링크, 연결된 곳이 없는 페이지, 기준 문서 간 충돌, 용어 불일치를 점검해 결함 리포트로 만듭니다.</p>
-      </div>
-    </div>
-  </section>
-    <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/ax/honesty"><span class="pg-k">← 이전</span><span class="pg-t">AX / 검사 결과 재확인</span></a>
       <a class="next" href="#/addeep"><span class="pg-k">다음 →</span><span class="pg-t">애딥 서비스 구성</span></a>
     </nav>
 </article>
@@ -2085,9 +2073,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="child" href="#/addeep/rec"><span class="c-k">AI 개인화 추천 서버</span><span class="c-d">5개 채널 후보 생성, 기간별 3단계 사용자 상태, 개인정보 삭제 처리 구현과 문제 해결 4건</span></a>
       <a class="child" href="#/addeep/behavior"><span class="c-k">사용자 행동 통합 분석</span><span class="c-d">행동 기록을 공통 형식으로 변환하고 회사별로 데이터를 분리한 방법, 추천 엔진에서 분리한 과정</span></a>
       <a class="child" href="#/addeep/vlm"><span class="c-k">영상 분석 파이프라인</span><span class="c-d">헥사고날 구조로 개발하고 긴 영상의 병목과 반복 측정 편차를 확인한 과정</span></a>
-      <a class="child" href="#/addeep/commerce"><span class="c-k">커머스 추천</span><span class="c-d">분리할 범위를 조사하고 응답 지연을 2,455ms에서 16.6ms로 줄인 과정</span></a>
+      <a class="child" href="#/addeep/commerce"><span class="c-k">커머스 추천</span><span class="c-d">분리할 범위를 심볼 참조로 다시 세고 불필요한 외부 모델 호출을 없앤 과정</span></a>
       <a class="child" href="#/addeep/image"><span class="c-k">상품 이미지 생성</span><span class="c-d">로고와 디자인을 유지한 채 배경만 바꾸는 상품 이미지 생성과 보존 영역 검사</span></a>
-      <a class="child" href="#/addeep/more"><span class="c-k">그 밖의 작업</span><span class="c-d">벡터 검색 성능 측정, 영상 모델 비교, 앱 이벤트 수집 점검 등 그 밖의 작업</span></a>
     </div>
     <figure class="dgf">
       <p class="fig-title">서비스와 데이터 흐름</p>
@@ -2173,28 +2160,39 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     <div class="timeline">
       <div class="t-row">
         <p class="t-date">2026.01 – 2026.04</p>
-        <div><p class="t-title">SNS 백엔드<span>공동 저장소 최대 기여자</span></p><p class="t-desc">회원과 인증 API, 관리자 콘솔, 개인정보 암호화와 키 관리, 도메인 중심 패키지 구조를 맡았습니다.</p></div>
+        <div><p class="t-title">SNS 백엔드<span>공동 저장소 최대 기여자</span></p></div>
       </div>
       <div class="t-row">
         <p class="t-date">2026.04 – 2026.08</p>
-        <div><p class="t-title">AI 개인화 추천 엔진<span>서버 단독 설계와 구현. 추천 알고리즘 연구는 연구원과 공동</span></p><p class="t-desc">SNS 피드와 커머스 상품을 개인화하는 추천 서버입니다.</p></div>
+        <div><p class="t-title">AI 개인화 추천 엔진<span>서버 단독 설계와 구현. 추천 알고리즘 연구는 연구원과 공동</span></p></div>
       </div>
       <div class="t-row">
         <p class="t-date">2026.06 – 2026.08</p>
-        <div><p class="t-title">행동 분석 서버<span>공통 서버와 데이터 처리 담당. SDK, 파트너 포털, 인프라는 다른 개발자</span></p><p class="t-desc">추천 엔진에 있던 사용자 상태 분석 기능을 여러 서비스가 함께 사용하는 서버로 분리했습니다.</p></div>
+        <div><p class="t-title">행동 분석 서버<span>공통 서버와 데이터 처리 담당. SDK, 파트너 포털, 인프라는 다른 개발자</span></p></div>
       </div>
       <div class="t-row">
         <p class="t-date">2026.07 – 2026.08</p>
-        <div><p class="t-title">영상 분석 파이프라인<span>단독, 컨테이너 단계</span></p><p class="t-desc">이미지와 영상을 분석해 검색과 추천에 사용할 벡터로 저장합니다.</p></div>
+        <div><p class="t-title">영상 분석 파이프라인<span>단독, 컨테이너 단계</span></p></div>
       </div>
       <div class="t-row">
         <p class="t-date">2026.07 – 2026.08</p>
-        <div><p class="t-title">커머스 추천<span>단독, 컨테이너 단계</span></p><p class="t-desc">추천 엔진과 사용자 상태는 공유하되, 서로 직접 호출하지 않는 별도의 상품 추천 서비스입니다.</p></div>
+        <div><p class="t-title">커머스 추천<span>단독, 컨테이너 단계</span></p></div>
       </div>
+    </div>
+    <div class="etc">
+    <h3 class="etc-h">그 밖의 애딥 작업</h3>
+    <ul class="etc-list">
+      <li><p class="etc-k">측정 결과로 정한 벡터 검색 구성<span class="etc-m">2026.03, 혼자 작업</span></p></li>
+      <li><p class="etc-k">생성 영상 모델 비교 도구<span class="etc-m">2026.04 – 08, 혼자 개발</span></p></li>
+      <li><p class="etc-k">앱 행동 데이터 수집 점검<span class="etc-m">2026.03, 혼자 작업</span></p></li>
+      <li><p class="etc-k">실험용 상품 데이터셋 구축<span class="etc-m">2026.03, 혼자 작업</span></p></li>
+      <li><p class="etc-k">실시간 3D 웹으로 만든 회사 소개 키노트<span class="etc-m">2026.07, 혼자 개발</span></p></li>
+      <li><p class="etc-k">브랜드 사이트 (WebGL)<span class="etc-m">2026.04 – 05, 혼자 개발</span></p></li>
+    </ul>
     </div>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/ax/more"><span class="pg-k">← 이전</span><span class="pg-t">AX / 그 밖의 AX 작업</span></a>
+      <a class="prev" href="#/ax/honesty"><span class="pg-k">← 이전</span><span class="pg-t">AX / 검사 결과 재확인</span></a>
       <a class="next" href="#/addeep/sns"><span class="pg-k">다음 →</span><span class="pg-t">애딥 / SNS 서비스 백엔드</span></a>
     </nav>
 </article>
@@ -2457,11 +2455,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
             <span class="m-label">부하 테스트에서 추천 응답 p99</span>
             <span class="m-val">0.5초 이내</span>
             <span class="m-cond">가상 사용자 3,282명의 상호작용 50만 건을 재생, HTTP 요청 약 104만 건</span>
-          </div>
-          <div class="m">
-            <span class="m-label">커머스 추천 응답 시간 중앙값</span>
-            <span class="m-val"><span class="from">2,455ms</span><span class="arr">→</span>16.6ms</span>
-            <span class="m-cond">별도 커머스 추천 서비스에서 불필요한 외부 모델 호출을 제거한 결과</span>
           </div>
         </div>
       </div>
@@ -2863,59 +2856,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
       <a class="prev" href="#/addeep/commerce"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / 커머스 추천</span></a>
-      <a class="next" href="#/addeep/more"><span class="pg-k">다음 →</span><span class="pg-t">애딥 / 그 밖의 작업</span></a>
-    </nav>
-</article>
-<article class="view" data-route="addeep/more" data-title="그 밖의 작업" tabindex="-1">
-  <section class="project" id="addeep-more">
-    <div class="p-head">
-      <p class="crumbs"><a href="#/addeep">애딥 서비스 구성</a><span aria-hidden="true">/</span><span>그 밖의 작업</span></p>
-      <p class="label">애딥, 2026.03 – 2026.08</p>
-      <h2>그 밖의 백엔드와 AI 작업</h2>
-      <p class="ctx">서비스 개발과 별도로, 기술 선택의 근거를 측정하거나 결정을 내리기 위해 한 작업입니다.</p>
-    </div>
-    <div class="works">
-      <div class="work">
-        <h3>측정 결과로 정한 벡터 검색 구성</h3>
-        <p class="w-meta">2026.03, 혼자 작업</p>
-        <ul class="mini"><li>공개 이미지-텍스트 데이터셋</li><li>임베딩 생성</li><li>인덱스 조합</li><li>전수 탐색 정답셋</li><li>반복 측정</li><li>유의성 검정</li></ul>
-        <p>벡터 차원, 인덱스, 거리 함수는 직접 측정한 결과로 선택했습니다. 워밍업 결과 제외, 시드 고정, 단일 커넥션 같은 비교 조건은 실행 전에 정했습니다. 인덱스 차이는 모든 조합에서 통계적으로 유의했지만 차원 차이는 절반의 조합에서만 유의해서, 차원에 대해서는 결론을 일반화하지 않았습니다. 텍스트로 이미지를 검색할 때 리콜이 떨어지는 정도는 인덱스마다 크게 달랐습니다.</p>
-        <p class="w-note">로컬 환경에서 공개 데이터셋으로 측정한 값입니다.</p>
-      </div>
-      <div class="work">
-        <h3>생성 영상 모델 비교 도구</h3>
-        <p class="w-meta">2026.04 – 08, 혼자 개발</p>
-        <ul class="mini"><li>골든셋 고정</li><li>공통 첫 프레임 1회 생성</li><li>같은 조건으로 모델별 실행</li><li>블라인드 투표</li><li>비교 리포트</li></ul>
-        <p>실서비스 파이프라인에서 생성 단계만 분리해, 사용할 영상 모델을 통제 실험으로 정했습니다. 투표할 때는 어떤 모델인지와 비용을 가리고 1인 1표로 받았으며, 다시 모을 수 없는 투표 데이터는 삭제 방지 트리거로 보호했습니다. 한 대안 모델은 편당 비용이 더 낮았지만 가장 빠른 모델은 따로 있어서, 용도에 따라 모델을 나눠 사용하기로 했습니다.</p>
-        <p class="w-note">비용은 단가와 길이로 계산한 값입니다.</p>
-      </div>
-      <div class="work">
-        <h3>앱 행동 데이터 수집 점검</h3>
-        <p class="w-meta">2026.03, 혼자 작업</p>
-        <ul class="mini"><li>설계에 필요한 신호</li><li>실제 호출 위치와 비교</li><li>빠진 신호 목록</li><li>수집 보완 설계</li><li>같은 스키마의 모의 로그</li></ul>
-        <p>사용자 상태 설계에 필요한 행동 신호가 실제 앱에서 수집되고 있는지 수집 코드를 직접 확인했습니다. 수집되지 않던 신호는 보완 설계안을 작성했고, 같은 스키마로 모의 로그를 만들어 이후 설계를 미리 검증했습니다.</p>
-      </div>
-      <div class="work">
-        <h3>실험용 상품 데이터셋 구축</h3>
-        <p class="w-meta">2026.03, 혼자 작업</p>
-        <ul class="mini"><li>브랜드 목록</li><li>결과 파일 있으면 건너뜀</li><li>상품 수집</li><li>브랜드별 파일 저장</li></ul>
-        <p>검색과 생성 파이프라인 실험에 사용할 상품 데이터셋을 만들었습니다. 결과 파일이 있는 브랜드는 건너뛰도록 해서, 오래 걸리는 수집이 중간에 중단돼도 이어서 수집할 수 있습니다.</p>
-      </div>
-      <div class="work">
-        <h3>실시간 3D 웹으로 만든 회사 소개 키노트</h3>
-        <p class="w-meta">2026.07, 혼자 개발</p>
-        <ul class="mini"><li>재생, 탐색, 휠, 나레이션 시각</li><li>하나의 진행도 값</li><li>정지 타임라인 샘플링</li><li>공유 상태에 저장</li><li>렌더 루프는 읽기만</li></ul>
-        <p>3D 카메라가 끊김 없이 이동하며 장면을 보여 주는 키노트입니다. 재생, 탐색, 스크롤 입력은 모두 하나의 진행도 값만 바꾸고, 애니메이션은 이 값을 기준으로 움직입니다. 그래서 프레임마다 화면 컴포넌트를 다시 렌더링하지 않습니다.</p>
-      </div>
-      <div class="work">
-        <h3>브랜드 사이트 (WebGL)</h3>
-        <p class="w-meta">2026.04 – 05, 혼자 개발</p>
-        <p>3D 인터랙티브 회사 소개 사이트입니다. 첫 글자가 표시되기까지 1.45초가 걸렸는데, 원인이 의도적으로 넣은 연출 지연이어서 0.35초로 줄였습니다. 첫 화면의 정적 파일 용량도 절반 이상 줄였습니다.</p>
-      </div>
-    </div>
-  </section>
-    <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/addeep/image"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / 상품 이미지 생성</span></a>
       <a class="next" href="#/bokiyo"><span class="pg-k">다음 →</span><span class="pg-t">보드게임카페 매장 운영 시스템</span></a>
     </nav>
 </article>
@@ -3077,9 +3017,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
             <h3>한 일</h3>
             <ul class="points">
               <li>아키텍처 설계부터 구현, 배포까지 혼자 맡았고, 키오스크와 관리자 웹이 하나의 API 서버를 함께 사용하도록 설계했습니다.</li>
-              <li>프로토타입에서 만든 게임 데이터 구조(테마와 메커니즘 목록, 카드 규격)와 3계층 저장소 구조를 정식 서버에 그대로 적용해, 데이터 모델을 처음부터 다시 설계하지 않았습니다.</li>
               <li>보드요잉 단계에서는 모임 목록과 상세, 일정 추가, 보드게임카페 정보 화면을 갖춘 Flutter 시험 앱을 만들어 현장에서 먼저 시험했습니다.</li>
-              <li>AI 코딩 도구가 정해진 구조대로 코드를 작성하도록, 키오스크에는 Cursor 규칙 파일(MVVM, Provider, GetIt과 Injectable, 기능별 폴더)을, 서버에는 Claude Code용 CLAUDE.md(계층 구조, 3계층 저장소 패턴)를 작성했습니다.</li>
             </ul>
           </div>
           <div>
@@ -3108,7 +3046,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </ul>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/addeep/more"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / 그 밖의 작업</span></a>
+      <a class="prev" href="#/addeep/image"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / 상품 이미지 생성</span></a>
       <a class="next" href="#/bokiyo/server"><span class="pg-k">다음 →</span><span class="pg-t">매장 운영 시스템 / 서버</span></a>
     </nav>
 </article>
@@ -3222,119 +3160,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
           </div>
           <p class="scroll-hint">옆으로 밀면 전체 도식을 볼 수 있습니다.</p>
           <figcaption>요청은 nginx를 거쳐 Controller, Service, Repository 순서로 처리됩니다. Service는 Repository 인터페이스에만 의존하고, 단순 조회는 JpaRepository가, 동적 조건 검색은 구현체가 Specification으로 처리합니다. DB와 외부 서비스 접속 정보는 Elastic Beanstalk 환경 변수로 주입했습니다.</figcaption>
-        </figure>
-
-        <p class="fig-title flow-title">배포 흐름</p>
-        <ol class="flow" style="--n:5" aria-label="배포 흐름">
-          <li><span class="f-k">Gradle 빌드</span><span class="f-d">실행 파일 생성</span></li>
-          <li><span class="f-k">Elastic Beanstalk 배포</span><span class="f-d">배포 명령이 실행 파일을 정해진 이름으로 복사</span></li>
-          <li><span class="f-k">Procfile 실행</span><span class="f-d">운영 프로필로 서버 시작</span></li>
-          <li><span class="f-k">nginx 연결</span><span class="f-d">리버스 프록시, 업로드 용량 제한</span></li>
-          <li><span class="f-k">외부 서비스</span><span class="f-d">RDS, S3, FCM을 환경 변수로 연결</span></li>
-        </ol>
-
-        <figure class="dgf">
-          <p class="fig-title">도메인 모델</p>
-          <div class="fig-scroll">
-            <svg class="dg dg-wide" viewBox="0 0 1000 540" role="img" aria-label="매장 하나에 테이블, 이용 기록, 공지, 배너, 스크린세이버, 매장 보유 게임, 추천 코스가 여러 개씩 붙고, 공통 게임 하나는 여러 매장의 보유 게임으로 복사되며, 공통 게임과 분류는 연결 테이블로 이어지고, 추천 코스와 매장 보유 게임은 코스별 게임으로 이어진다. 모든 참조는 JPA 연관관계 대신 ID 컬럼으로 한다">
-              <defs>
-                <marker id="sm-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head"/></marker>
-                <marker id="sm-ah-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head-accent"/></marker>
-              </defs>
-              <rect class="zone" x="280" y="40" width="460" height="100" rx="6"/>
-              <text class="t-b" x="296" y="66">읽는 법</text>
-              <text class="t-s" x="296" y="90">선 양끝 1, N: 한쪽 하나에 다른 쪽 여러 개가 연결됩니다.</text>
-              <text class="t-s" x="296" y="110">연관관계 매핑 없이 shopId 같은 ID 컬럼으로 참조합니다.</text>
-              <text class="t-s" x="296" y="128">목록 필드(테마, 영상, 카드 규격)는 JSON 문자열로 저장합니다.</text>
-
-              <rect class="box-strong" x="20" y="40" width="200" height="56" rx="6"/>
-              <text class="t-b" x="34" y="64">분류</text>
-              <text class="t-m" x="34" y="82">Category</text>
-              <line class="edge" x1="120" y1="96" x2="120" y2="136"/>
-              <text class="t-m" x="128" y="110">1</text><text class="t-m" x="128" y="132">N</text>
-              <rect class="box-strong" x="20" y="136" width="200" height="56" rx="6"/>
-              <text class="t-b" x="34" y="160">게임 ↔ 분류</text>
-              <text class="t-m" x="34" y="178">BoardGameCategory</text>
-              <line class="edge" x1="120" y1="192" x2="120" y2="232"/>
-              <text class="t-m" x="128" y="206">N</text><text class="t-m" x="128" y="228">1</text>
-              <rect class="box-strong" x="20" y="232" width="200" height="140" rx="6"/>
-              <text class="t-b" x="34" y="256">공통 게임</text>
-              <text class="t-m" x="34" y="274">BoardGame</text>
-              <text class="t-s" x="34" y="296">이름(한/영), 출시일</text>
-              <text class="t-s" x="34" y="314">인원, 시간, 난이도</text>
-              <text class="t-s" x="34" y="332">테마, 메커니즘 목록</text>
-              <text class="t-s" x="34" y="350">카드 규격, 설명 영상</text>
-              <line class="edge-accent" x1="220" y1="300" x2="280" y2="300"/>
-              <text class="t-m" x="226" y="294">1</text><text class="t-m" x="274" y="294" text-anchor="end">N</text>
-              <rect class="box-accent" x="280" y="232" width="200" height="140" rx="6"/>
-              <text class="t-b" x="294" y="256">매장 보유 게임</text>
-              <text class="t-m" x="294" y="274">ShopBoardGame</text>
-              <text class="t-s" x="294" y="296">공통 게임 정보 복사본</text>
-              <text class="t-s" x="294" y="314">난이도 문구, 추천 점수</text>
-              <text class="t-s" x="294" y="332">테이블 세팅, 설명서</text>
-              <text class="t-s" x="294" y="350">보관 위치, 고른 영상</text>
-              <line class="edge" x1="480" y1="300" x2="540" y2="300"/>
-              <text class="t-m" x="486" y="294">N</text><text class="t-m" x="534" y="294" text-anchor="end">1</text>
-              <rect class="box-accent" x="540" y="232" width="200" height="140" rx="6"/>
-              <text class="t-b" x="554" y="256">매장</text>
-              <text class="t-m" x="554" y="274">Shop</text>
-              <text class="t-s" x="554" y="296">이름, 와이파이</text>
-              <text class="t-s" x="554" y="314">연락처 QR</text>
-              <text class="t-s" x="554" y="332">이용 안내 영상</text>
-              <line class="edge" x1="380" y1="372" x2="380" y2="412"/>
-              <text class="t-m" x="388" y="386">1</text><text class="t-m" x="388" y="408">N</text>
-              <rect class="box-strong" x="280" y="412" width="200" height="90" rx="6"/>
-              <text class="t-b" x="294" y="436">코스별 게임</text>
-              <text class="t-m" x="294" y="454">ShopCourseBoardGame</text>
-              <text class="t-s" x="294" y="476">추천 이유</text>
-              <line class="edge" x1="480" y1="457" x2="540" y2="457"/>
-              <text class="t-m" x="486" y="451">N</text><text class="t-m" x="534" y="451" text-anchor="end">1</text>
-              <rect class="box-strong" x="540" y="412" width="200" height="90" rx="6"/>
-              <text class="t-b" x="554" y="436">추천 코스</text>
-              <text class="t-m" x="554" y="454">ShopRecommendCourse</text>
-              <text class="t-s" x="554" y="476">인원, 시간, 난이도</text>
-              <line class="edge" x1="640" y1="372" x2="640" y2="412"/>
-              <text class="t-m" x="648" y="386">1</text><text class="t-m" x="648" y="408">N</text>
-              <path class="edge" d="M740 300 H770 M770 84 V476"/><text class="t-m" x="746" y="294">1</text>
-              <rect class="box" x="800" y="40" width="180" height="88" rx="6"/>
-              <text class="t-b" x="814" y="64">테이블</text>
-              <text class="t-m" x="814" y="82">Room</text>
-              <text class="t-s" x="814" y="104">번호, 기기 토큰</text>
-              <text class="t-s" x="814" y="122">시작/종료, 인원</text>
-              <line class="edge" x1="770" y1="84" x2="800" y2="84"/>
-              <text class="t-m" x="786" y="78">N</text>
-              <rect class="box" x="800" y="138" width="180" height="88" rx="6"/>
-              <text class="t-b" x="814" y="162">이용 기록</text>
-              <text class="t-m" x="814" y="180">RoomUsageHistory</text>
-              <text class="t-s" x="814" y="202">테이블 번호, 인원</text>
-              <text class="t-s" x="814" y="220">시작/종료 시각</text>
-              <line class="edge" x1="770" y1="182" x2="800" y2="182"/>
-              <text class="t-m" x="786" y="176">N</text>
-              <rect class="box" x="800" y="236" width="180" height="88" rx="6"/>
-              <text class="t-b" x="814" y="260">공지</text>
-              <text class="t-m" x="814" y="278">ShopNotice</text>
-              <text class="t-s" x="814" y="300">제목, 내용</text>
-              <text class="t-s" x="814" y="318">작성 시각</text>
-              <line class="edge" x1="770" y1="280" x2="800" y2="280"/>
-              <text class="t-m" x="786" y="274">N</text>
-              <rect class="box" x="800" y="334" width="180" height="88" rx="6"/>
-              <text class="t-b" x="814" y="358">배너</text>
-              <text class="t-m" x="814" y="376">Banner</text>
-              <text class="t-s" x="814" y="398">이미지, 영상</text>
-              <text class="t-s" x="814" y="416">메인, 인트로 구분</text>
-              <line class="edge" x1="770" y1="378" x2="800" y2="378"/>
-              <text class="t-m" x="786" y="372">N</text>
-              <rect class="box" x="800" y="432" width="180" height="88" rx="6"/>
-              <text class="t-b" x="814" y="456">스크린세이버</text>
-              <text class="t-m" x="814" y="474">ScreenSaver</text>
-              <text class="t-s" x="814" y="496">이미지, 영상</text>
-              <text class="t-s" x="814" y="514">등록 시각</text>
-              <line class="edge" x1="770" y1="476" x2="800" y2="476"/>
-              <text class="t-m" x="786" y="470">N</text>
-            </svg>
-          </div>
-          <p class="scroll-hint">옆으로 밀면 전체 도식을 볼 수 있습니다.</p>
-          <figcaption>매장을 중심으로 테이블, 콘텐츠, 보유 게임, 추천 코스를 연결했습니다. 공통 게임은 한 번만 저장하고 매장마다 복사본을 만들어, 매장별 사진과 설명 영상을 따로 관리합니다.</figcaption>
         </figure>
 
         <figure class="dgf">
@@ -3492,14 +3317,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
           <figcaption>공통 게임 정보는 한 번만 수집하고, 매장은 보유한 게임을 골라 복사해 사용합니다. 테이블 세팅 사진이나 설명서처럼 매장마다 다른 정보는 복사본에서 따로 관리합니다.</figcaption>
         </figure>
 
-        <p class="fig-title flow-title">영상 업로드 처리</p>
-        <ol class="flow" style="--n:4" aria-label="영상 업로드 처리 흐름">
-          <li><span class="f-k">업로드</span><span class="f-d">관리자 웹에서 배너, 이용 안내 영상 업로드</span></li>
-          <li><span class="f-k">임시 파일</span><span class="f-d">원본을 서버에 임시 저장</span></li>
-          <li><span class="f-k">FFmpeg 변환</span><span class="f-d">480p로 줄이고 압축 품질 조정</span></li>
-          <li><span class="f-k">S3 저장</span><span class="f-d">용도별 폴더에 저장하고 변환 전후 크기 기록</span></li>
-        </ol>
-
         <div class="p-body">
           <div>
             <h3>한 일</h3>
@@ -3606,56 +3423,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
           </div>
           <p class="scroll-hint">옆으로 밀면 전체 도식을 볼 수 있습니다.</p>
           <figcaption>손님이 가장 많이 사용하는 흐름은 인트로, 홈, 게임 검색, 게임 상세 순서입니다(파란 경로). 스크린세이버, 관리자 메시지, 이용 종료 알림은 어느 화면에서든 맨 위에 표시됩니다.</figcaption>
-        </figure>
-
-        <figure class="dgf">
-          <p class="fig-title">이용 시간 기록</p>
-          <div class="fig-scroll">
-            <svg class="dg dg-mid" viewBox="0 0 1000 330" role="img" aria-label="이용을 시작하면 키오스크는 시작·종료 시각을 기기에 저장하고 서버는 같은 세션을 서버 시각으로 기록합니다. 앱이 꺼지거나 백그라운드로 가도 키오스크는 기기 저장소에서 복원하고 경과 시간을 반영해 남은 시간을 이어 가며, 관리자 웹이 이용 현황을 조회하면 서버가 서버 시각으로 남은 시간과 사용 시간을 계산하고 만료된 세션을 정리하는 흐름">
-              <defs>
-                <marker id="bk-ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head"/></marker>
-                <marker id="bk-ah2-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head-accent"/></marker>
-              </defs>
-              <text class="t-b" x="20" y="81">키오스크</text>
-              <text class="t-b" x="20" y="191">서버</text>
-              <text class="t-b" x="20" y="301">관리자 웹</text>
-
-              <line class="lane" x1="130" y1="76" x2="330" y2="76"/>
-              <line class="lane-off" x1="330" y1="76" x2="520" y2="76"/>
-              <line class="lane" x1="520" y1="76" x2="960" y2="76"/>
-              <line class="lane" x1="130" y1="186" x2="960" y2="186"/>
-              <line class="lane" x1="130" y1="296" x2="960" y2="296"/>
-
-              <circle class="dot" cx="180" cy="76" r="6"/>
-              <text class="t-r" x="180" y="52" text-anchor="middle">이용 시작</text>
-              <text class="t-m" x="196" y="104">기기에 시작/종료 시각 저장</text>
-              <line class="edge" x1="180" y1="84" x2="180" y2="176" marker-end="url(#bk-ah2)"/>
-              <text class="t-m" x="190" y="146">이용 요청, 인원, 시간</text>
-              <circle class="dot" cx="180" cy="186" r="6"/>
-              <text class="t-s" x="190" y="214">서버 시각으로 시작과 종료 기록</text>
-
-              <text class="t-s" x="425" y="60" text-anchor="middle">앱 종료, 백그라운드</text>
-
-              <circle class="dot" cx="600" cy="76" r="6"/>
-              <text class="t-r" x="600" y="52" text-anchor="middle">다시 실행, 복귀</text>
-              <text class="t-m" x="600" y="104" text-anchor="middle">기기 저장소에서 복원, 지난 시간 반영</text>
-
-              <circle class="dot" cx="860" cy="76" r="6"/>
-              <text class="t-r" x="860" y="52" text-anchor="middle">남은 시간 표시</text>
-
-              <circle class="dot" cx="760" cy="296" r="6"/>
-              <text class="t-r" x="760" y="322" text-anchor="middle">이용 현황 조회</text>
-              <line class="edge" x1="748" y1="288" x2="748" y2="196" marker-end="url(#bk-ah2)"/>
-              <text class="t-m" x="738" y="246" text-anchor="end">현황 요청</text>
-              <line class="edge-accent" x1="772" y1="194" x2="772" y2="286" marker-end="url(#bk-ah2-a)"/>
-              <text class="t-a" x="782" y="236">남은, 사용 시간</text>
-              <text class="t-a" x="782" y="252">서버 시각 기준</text>
-              <circle class="dot-accent" cx="760" cy="186" r="6"/>
-              <text class="t-s" x="760" y="160" text-anchor="middle">만료 세션 자동 정리</text>
-            </svg>
-          </div>
-          <p class="scroll-hint">옆으로 밀면 전체 도식을 볼 수 있습니다.</p>
-          <figcaption>키오스크는 시작과 종료 시각을 기기에 저장해, 앱이 종료되거나 백그라운드로 전환돼도 남은 시간을 이어서 표시합니다. 서버는 같은 세션을 서버 시각으로 따로 기록하고, 관리자 화면에서 조회할 때 남은 시간과 사용 시간을 계산합니다. 요금은 계산하지 않습니다.</figcaption>
         </figure>
 
         <figure class="dgf">
@@ -3906,71 +3673,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </figure>
 
         <figure class="dgf">
-          <p class="fig-title">수집 서버 구조</p>
-          <div class="fig-scroll">
-            <svg class="dg dg-wide" viewBox="0 0 1000 420" role="img" aria-label="테스트 코드로 실행하는 배치가 Spring Boot 수집 서버의 수집 서비스와 HTTP 클라이언트를 부르고, 수집 서비스는 Selenium으로 게임 정보 사이트와 YouTube 검색 결과를 읽고 HTTP 클라이언트는 슬리브 정보 사이트를 조회한다. 파싱 보조 계층이 Chrome 드라이버 생성, 인원과 시간 파싱, 출시일 변환, 선택자 상수를 맡고, 시간 기반 ID 생성기와 3계층 Repository 다섯 개를 거쳐 Docker PostgreSQL에 저장하며, 테스트는 H2에서 돌린다. 저장된 데이터와 구조는 보키요 공통 게임 정보로 이어진다">
-              <defs>
-                <marker id="dc-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head"/></marker>
-                <marker id="dc-ah-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head-accent"/></marker>
-              </defs>
-              <rect class="box-strong" x="20" y="40" width="190" height="96" rx="6"/>
-              <text class="t-b" x="36" y="66">실행, 테스트 배치</text>
-              <text class="t-s" x="36" y="88">수집 작업마다</text>
-              <text class="t-s" x="36" y="106">테스트 클래스 1개</text>
-              <text class="t-s" x="36" y="124">ID 범위별로 다시 실행</text>
-              <line class="edge-accent" x1="210" y1="88" x2="248" y2="88" marker-end="url(#dc-ah-a)"/>
-
-              <text class="t-m" x="20" y="166">수집 대상</text>
-              <rect class="box" x="20" y="176" width="190" height="50" rx="6"/>
-              <text class="t-r" x="36" y="206">보드게임 정보 사이트</text>
-              <rect class="box" x="20" y="238" width="190" height="50" rx="6"/>
-              <text class="t-r" x="36" y="268">슬리브 정보 사이트</text>
-              <rect class="box" x="20" y="300" width="190" height="50" rx="6"/>
-              <text class="t-r" x="36" y="330">YouTube 검색</text>
-              <line class="edge" x1="210" y1="201" x2="248" y2="201" marker-end="url(#dc-ah)"/>
-              <line class="edge" x1="210" y1="263" x2="248" y2="263" marker-end="url(#dc-ah)"/>
-              <line class="edge" x1="210" y1="325" x2="248" y2="325" marker-end="url(#dc-ah)"/>
-
-              <rect class="box-strong" x="250" y="28" width="500" height="376" rx="6"/>
-              <text class="t-b" x="266" y="52">Spring Boot 3.0 수집 서버</text>
-              <rect class="inner-accent" x="266" y="66" width="468" height="50" rx="4"/>
-              <text class="t-r" x="280" y="88">수집 서비스</text>
-              <text class="t-s" x="280" y="106">게임 정보, 설명 영상: Selenium으로 화면 읽기</text>
-              <rect class="inner" x="266" y="126" width="468" height="50" rx="4"/>
-              <text class="t-r" x="280" y="148">HTTP 클라이언트</text>
-              <text class="t-s" x="280" y="166">슬리브 정보: RestTemplate, 응답 DTO 매핑</text>
-              <rect class="inner" x="266" y="186" width="468" height="50" rx="4"/>
-              <text class="t-r" x="280" y="208">파싱, 보조</text>
-              <text class="t-s" x="280" y="226">Chrome 드라이버, 인원/시간 파싱, 출시일 변환, 선택자 상수</text>
-              <rect class="inner" x="266" y="246" width="468" height="50" rx="4"/>
-              <text class="t-r" x="280" y="268">ID 생성</text>
-              <text class="t-s" x="280" y="286">시간 기반 고유 ID 문자열, 테마, 메커니즘, 제작자</text>
-              <rect class="inner-accent" x="266" y="306" width="468" height="40" rx="4"/>
-              <text class="t-r" x="280" y="331">Repository 3계층 × 5</text>
-              <text class="t-m" x="720" y="331" text-anchor="end">게임, 테마, 메커니즘, 디자이너, 아티스트</text>
-              <rect class="inner" x="266" y="354" width="468" height="40" rx="4"/>
-              <text class="t-r" x="280" y="379">조회 API</text>
-              <text class="t-m" x="720" y="379" text-anchor="end">순위 목록, 커서 페이징</text>
-
-              <rect class="box-strong" x="790" y="150" width="190" height="64" rx="6"/>
-              <text class="t-b" x="806" y="176">PostgreSQL</text>
-              <text class="t-s" x="806" y="198">Docker 컨테이너</text>
-              <line class="edge-accent" x1="750" y1="326" x2="770" y2="326"/>
-              <path class="edge-accent" d="M770 326 V182 H788" marker-end="url(#dc-ah-a)"/>
-              <rect class="box" x="790" y="236" width="190" height="56" rx="6"/>
-              <text class="t-b" x="806" y="260">H2</text>
-              <text class="t-s" x="806" y="280">저장소 테스트용</text>
-              <rect class="box-accent" x="790" y="330" width="190" height="64" rx="6"/>
-              <text class="t-b" x="806" y="356">보키요</text>
-              <text class="t-s" x="806" y="378">공통 게임 정보로 사용</text>
-              <path class="edge-accent" d="M980 182 H990 V362 H982" marker-end="url(#dc-ah-a)"/>
-            </svg>
-          </div>
-          <p class="scroll-hint">옆으로 밀면 전체 도식을 볼 수 있습니다.</p>
-          <figcaption>수집은 서버 API를 거치지 않고 테스트 코드에서 배치로 직접 실행했습니다. 화면을 읽는 수집기와 API를 호출하는 클라이언트를 분리하고, 파싱 로직과 선택자는 별도 계층에 모아 사이트 구조가 바뀌면 그 계층만 수정하면 됩니다.</figcaption>
-        </figure>
-
-        <figure class="dgf">
           <p class="fig-title">게임 정보 수집기 동작</p>
           <div class="fig-scroll">
             <svg class="dg dg-wide" viewBox="0 0 1000 230" role="img" aria-label="목록 페이지에서 게임을 하나씩 새 탭으로 열고 요소가 뜰 때까지 기다린 뒤 이름, 인원, 플레이 시간, 출시일, 평점, 대표 이미지를 추출하고, 디자이너·아티스트·메커니즘·테마는 이름으로 찾아 없을 때만 새로 만든 뒤 탭을 닫고 5초 쉬고 다음 게임으로 넘어가며, 페이지의 게임을 다 읽으면 다음 페이지로 이동한다">
@@ -4031,14 +3733,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
           <li><span class="f-k">이어서 수집</span><span class="f-d">마지막으로 처리한 ID부터 다음 묶음</span></li>
         </ol>
         <p class="flow-note">보키요에서는 이 영상 목록 중 매장이 고른 영상을 키오스크의 게임 상세 화면에 표시합니다.</p>
-
-
-        <p class="fig-title flow-title">보키요에서 그대로 사용한 것</p>
-        <div class="sys screens" aria-label="보키요로 이어진 것">
-          <div><p class="f-k">게임 데이터 구조</p><p class="f-d">게임, 테마, 메커니즘, 디자이너, 아티스트로 나눈 구조를 공통 게임 정보에 그대로 적용했습니다.</p></div>
-          <div><p class="f-k">카드 규격 모델과 목록 변환기</p><p class="f-d">슬리브 수집 때 만든 카드 크기와 장수 모델, 목록을 JSON으로 저장하는 변환기를 그대로 사용했습니다.</p></div>
-          <div><p class="f-k">3계층 저장소</p><p class="f-d">JpaRepository, 인터페이스, 구현체로 나눈 저장소 구조를 정식 서버에서도 유지했습니다.</p></div>
-        </div>
 
         <div class="p-body">
           <div>
@@ -4972,5 +4666,75 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   render();
 })();
 </script>
+<script>
+(function () {
+  /* 도식 확대 보기 */
+  var lb = document.createElement('div'); lb.className = 'lightbox'; lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true');
+  lb.innerHTML = '<div class="lightbox-inner"><div class="lightbox-top"><p class="lightbox-title"></p><button type="button" class="lightbox-close">닫기</button></div><div class="lightbox-body"></div><p class="lightbox-cap"></p></div>';
+  document.body.appendChild(lb);
+  var lbTitle = lb.querySelector('.lightbox-title'), lbBody = lb.querySelector('.lightbox-body'), lbCap = lb.querySelector('.lightbox-cap');
+  var lastFocus = null;
+  function closeLb() { lb.classList.remove('on'); lbBody.innerHTML = ''; document.body.style.overflow = ''; if (lastFocus) { try { lastFocus.focus(); } catch (e) {} } }
+  function openLb(fig) {
+    var svg = fig.querySelector('svg'); if (!svg) return;
+    var t = fig.querySelector('.fig-title'); var c = fig.querySelector('figcaption');
+    lbTitle.textContent = t ? t.textContent : ''; lbCap.textContent = c ? c.textContent : '';
+    lbBody.innerHTML = ''; lbBody.appendChild(svg.cloneNode(true));
+    lastFocus = document.activeElement; lb.classList.add('on'); document.body.style.overflow = 'hidden';
+    lb.querySelector('.lightbox-close').focus();
+  }
+  lb.addEventListener('click', function (e) { if (e.target === lb || e.target.classList.contains('lightbox-close')) closeLb(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && lb.classList.contains('on')) closeLb(); });
+  Array.prototype.forEach.call(document.querySelectorAll('figure.dgf'), function (fig) {
+    if (!fig.querySelector('svg')) return;
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'zoom-btn'; b.textContent = '크게 보기';
+    b.addEventListener('click', function () { openLb(fig); });
+    fig.insertBefore(b, fig.firstChild);
+    var sc = fig.querySelector('.fig-scroll');
+    if (sc) sc.addEventListener('click', function () { openLb(fig); });
+  });
+
+  /* 사례 접기: 제목만 보이고 클릭하면 펼침 */
+  Array.prototype.forEach.call(document.querySelectorAll('.case-card'), function (card) {
+    var h = card.querySelector('h3'); if (!h) return;
+    if (!card.previousElementSibling || !card.previousElementSibling.classList.contains('case-card')) card.classList.add('open');
+    h.setAttribute('tabindex', '0'); h.setAttribute('role', 'button'); h.setAttribute('aria-expanded', card.classList.contains('open') ? 'true' : 'false');
+    function toggle() { var on = card.classList.toggle('open'); h.setAttribute('aria-expanded', on ? 'true' : 'false'); }
+    h.addEventListener('click', toggle);
+    h.addEventListener('keydown', function (e) { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+  });
+  /* 긴 '한 일' 목록: 5개 넘으면 접기 */
+  Array.prototype.forEach.call(document.querySelectorAll('ul.points'), function (ul) {
+    var items = ul.querySelectorAll(':scope > li'); if (items.length <= 5) return;
+    var extra = Array.prototype.slice.call(items, 4);
+    extra.forEach(function (li) { li.classList.add('extra'); li.hidden = true; });
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'more-btn'; b.textContent = '더 보기 (' + extra.length + ')';
+    b.addEventListener('click', function () {
+      var show = extra[0].hidden; extra.forEach(function (li) { li.hidden = !show; });
+      b.textContent = show ? '접기' : '더 보기 (' + extra.length + ')';
+    });
+    ul.parentNode.insertBefore(b, ul.nextSibling);
+  });
+
+  /* 맨 위로 */
+  var top = document.createElement('button'); top.type = 'button'; top.className = 'to-top'; top.textContent = '↑ 맨 위로';
+  top.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
+  document.body.appendChild(top);
+  function onScroll() { top.classList.toggle('show', window.scrollY > 700); }
+  window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+
+  /* 키보드 ← → 로 이전·다음 페이지 */
+  document.addEventListener('keydown', function (e) {
+    if (e.altKey || e.ctrlKey || e.metaKey || lb.classList.contains('on')) return;
+    var tag = (e.target && e.target.tagName) || '';
+    if (tag === 'INPUT' || tag === 'TEXTAREA' || (e.target && e.target.isContentEditable)) return;
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    var view = document.querySelector('.view:not([hidden])'); if (!view) return;
+    var a = view.querySelector(e.key === 'ArrowRight' ? '.pager .next' : '.pager .prev');
+    if (a) { location.hash = a.getAttribute('hash') || a.getAttribute('href'); }
+  });
+})();
+</script>
+
 
 </body></html>
