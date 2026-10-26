@@ -2538,11 +2538,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
             <span class="m-val">205 / 205<small>사례</small></span>
             <span class="m-cond">무작위 표본과 경계 사례를 근사 없이 비교, 불일치 0</span>
           </div>
-          <div class="m">
-            <span class="m-label">새 서비스 연결에 필요한 작업</span>
-            <span class="m-val">변환기 1개</span>
-            <span class="m-cond">상태 계산 로직은 수정하지 않음</span>
-          </div>
         </div>
       </div>
     </div>
@@ -3027,11 +3022,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
                 <span class="m-val">5만<small>건 이상</small></span>
                 <span class="m-cond">Selenium으로 자동 수집해 수작업 등록을 줄임</span>
               </div>
-              <div class="m">
-                <span class="m-label">서버 API</span>
-                <span class="m-val">39<small>개</small></span>
-                <span class="m-cond">6개 영역으로 나눠 Swagger로 문서화</span>
-              </div>
             </div>
           </div>
         </div>
@@ -3321,21 +3311,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
               <li>매장 이용 안내 영상을 서버에서 FFmpeg로 변환해 용량을 줄인 뒤 S3에 저장했습니다.</li>
             </ul>
           </div>
-          <div>
-            <h3>기록</h3>
-            <div class="metrics">
-              <div class="m">
-                <span class="m-label">REST API</span>
-                <span class="m-val">39<small>개</small></span>
-                <span class="m-cond">게임 12, 이용 시간 6, 추천 코스 6, 매장과 공지 8, 화면 콘텐츠 6, 알림 1</span>
-              </div>
-              <div class="m">
-                <span class="m-label">업로드 영상 평균 크기</span>
-                <span class="m-val"><span class="from">100MB</span><span class="arr">→</span>5MB</span>
-                <span class="m-cond">FFmpeg로 변환한 뒤 S3에 저장해 용량 95% 감소</span>
-              </div>
-            </div>
-          </div>
         </div>
         <ul class="stack" aria-label="사용 기술">
           <li>Java 17</li><li>Spring Boot 3.5</li><li>JPA</li><li>JPA Specification</li><li>PostgreSQL</li><li>Amazon RDS</li><li>AWS Elastic Beanstalk</li><li>nginx</li><li>S3</li><li>Firebase Admin</li><li>FFmpeg</li><li>Swagger</li>
@@ -3574,7 +3549,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
           <figcaption>관리자 웹에서 수정한 게임, 코스, 공지, 화면 콘텐츠는 키오스크가 같은 API로 다시 불러옵니다. 파란 선은 관리자가 특정 테이블에 메시지를 보내는 흐름입니다.</figcaption>
         </figure>
 
-        <div class="p-body">
+        <div class="p-body solo">
           <div>
             <h3>한 일</h3>
             <ul class="points">
@@ -3582,18 +3557,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
               <li>공통 게임 목록에서 매장이 보유한 게임을 골라 등록하고, 테이블 세팅과 설명서 사진은 매장별로 업로드하도록 했습니다.</li>
               <li>추천 코스, 공지, 배너, 스크린세이버를 수정하면 키오스크 화면에도 반영되도록 했습니다.</li>
             </ul>
-          </div>
-          <div>
-            <h3>기록</h3>
-            <div class="metrics">
-              <div class="m">
-                <span class="m-label">관리자 웹</span>
-                <span class="m-val">11<small>페이지</small>, 30<small>개+ 기능</small></span>
-                <span class="m-cond">한 달 동안 개발</span>
-              </div>
-            </div>
-          </div>
-        </div>
+          </div></div>
         <ul class="stack" aria-label="사용 기술">
           <li>Next.js</li><li>App Router</li><li>TypeScript</li><li>React Query</li>
         </ul>
@@ -3728,7 +3692,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </ol>
         <p class="flow-note">보키요에서는 이 영상 목록 중 매장이 고른 영상을 키오스크의 게임 상세 화면에 표시합니다.</p>
 
-        <div class="p-body">
+        <div class="p-body solo">
           <div>
             <h3>한 일</h3>
             <ul class="points">
@@ -3739,18 +3703,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
               <li>사이트 화면 구조에 따라 달라지는 CSS 선택자는 상수로 모아, 대상 사이트가 바뀌어도 상수만 수정하면 되도록 했습니다.</li>
               <li>개발 DB는 Docker 컨테이너의 PostgreSQL로, 테스트 DB는 H2로 나눠 수집 로직과 저장소를 각각 테스트했습니다. 기능 개발은 브랜치와 PR 단위로 진행했습니다.</li>
             </ul>
-          </div>
-          <div>
-            <h3>기록</h3>
-            <div class="metrics">
-              <div class="m">
-                <span class="m-label">수집한 보드게임 정보</span>
-                <span class="m-val">5만<small>건 이상</small></span>
-                <span class="m-cond">Selenium으로 자동 수집해 수작업 등록을 줄임</span>
-              </div>
-            </div>
-          </div>
-        </div>
+          </div></div>
         <ul class="stack" aria-label="사용 기술">
           <li>Java 17</li><li>Spring Boot 3.0</li><li>JPA</li><li>PostgreSQL</li><li>Docker</li><li>H2</li><li>Selenium</li><li>RestTemplate</li>
         </ul>
@@ -3896,7 +3849,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <div><p class="f-k">프로젝트 규칙(CLAUDE.md)</p><p class="f-d">스타일 우선순위(MUI → Tailwind → sx → Sass), React Hook Form + Yup 폼 패턴, 라우트 그룹과 레이아웃 역할</p></div>
       <div><p class="f-k">품질 명령</p><p class="f-d">빌드 전에 포맷, 린트 자동 수정, 타입 검사 실행</p></div>
     </div>
-    <div class="p-body">
+    <div class="p-body solo">
       <div>
         <h3>한 일</h3>
         <ul class="points">
@@ -3906,18 +3859,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
           <li>실제 API 응답 구조에 맞춘 타입과 목 데이터로 화면을 먼저 완성해, API를 연결할 때 화면 코드를 크게 수정하지 않도록 했습니다.</li>
           <li>이 스킬과 규칙에 커밋 스킬, 코드 리뷰 에이전트, 프론트엔드 에이전트를 더해 다음 프로젝트에서 바로 사용할 수 있는 Next.js 템플릿으로 분리했습니다(2025.12).</li>
         </ul>
-      </div>
-      <div>
-        <h3>기록</h3>
-        <div class="metrics">
-          <div class="m">
-            <span class="m-label">구현한 반응형 페이지</span>
-            <span class="m-val">약 22<small>개</small></span>
-            <span class="m-cond">Figma 시안 기준</span>
-          </div>
-        </div>
-      </div>
-    </div>
+      </div></div>
     <ul class="stack" aria-label="사용 기술">
       <li>Next.js 15</li><li>React 19</li><li>TypeScript</li><li>Tailwind CSS 4</li><li>MUI 7</li><li>Zustand</li><li>React Hook Form</li><li>Yup</li><li>Kakao Map</li><li>Claude Code Skills</li>
     </ul>
@@ -4080,7 +4022,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <figcaption>입력된 답변에 실측 등급을 붙이려면 근거 문서의 행을 함께 보내야 하고, 서버가 위 순서대로 확인합니다. 한 단계라도 어긋나면 답변을 저장하지 않고, 근거 없이 저장된 답은 나중에 실측으로 바꿀 수 없습니다.</figcaption>
     </figure>
 
-    <div class="p-body">
+    <div class="p-body solo">
       <div>
         <h3>한 일</h3>
         <ul class="points">
@@ -4092,33 +4034,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
           <li>API 키마다 접근할 수 있는 테넌트를 정하고, 키만으로 테넌트를 알 수 없는 자원은 서비스에서 소유 테넌트를 찾은 뒤 컨트롤러에서 다시 확인했습니다. 다른 테넌트의 자원을 요청하면 소유 테넌트가 드러나지 않는 같은 오류 문장으로 거절합니다.</li>
           <li>화면은 Next.js로 만들고, 환율 영향 분석, 1페이지 보고서, 경로, 결정, 운영 화면을 구현했습니다.</li>
         </ul>
-      </div>
-      <div>
-        <h3>기록</h3>
-        <div class="metrics">
-          <div class="m">
-            <span class="m-label">백엔드 커밋</span>
-            <span class="m-val">517<small>개</small></span>
-            <span class="m-cond">2026.08 – 2026.10, 전부 직접 작성</span>
-          </div>
-          <div class="m">
-            <span class="m-label">REST API</span>
-            <span class="m-val">163<small>개</small></span>
-            <span class="m-cond">컨트롤러 35개, 테넌트별 API 키로 접근 제한</span>
-          </div>
-          <div class="m">
-            <span class="m-label">테스트</span>
-            <span class="m-val">1,867<small>개</small></span>
-            <span class="m-cond">DB 테스트는 Testcontainers의 PostgreSQL로 실행</span>
-          </div>
-          <div class="m">
-            <span class="m-label">DB 마이그레이션</span>
-            <span class="m-val">77<small>개</small></span>
-            <span class="m-cond">Flyway로 관리하고 외래키는 두지 않음</span>
-          </div>
-        </div>
-      </div>
-    </div>
+      </div></div>
     <ul class="stack" aria-label="사용 기술">
       <li>Java 17</li><li>Spring Boot 3.5</li><li>JPA</li><li>PostgreSQL</li><li>Flyway</li><li>Testcontainers</li><li>Python</li><li>Next.js 16</li><li>React 19</li><li>TypeScript</li><li>Docker</li><li>GitHub Actions</li>
     </ul>
