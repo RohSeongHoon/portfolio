@@ -351,6 +351,7 @@ h1 { font-size: clamp(44px, 8vw, 84px); font-weight: 700; line-height: 1.05; let
 
 /* 일하는 방식 */
 .section { padding-block: 72px 8px; border-top: 1px solid var(--line); margin-top: 56px; }
+.index + .section { border-top: 0; margin-top: 8px; padding-top: 40px; }
 .section > h2 { font-size: clamp(24px, 3.2vw, 30px); font-weight: 700; }
 .section > p.sub { color: var(--muted); margin-top: 8px; max-width: 42em; }
 .principles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 28px; }
@@ -636,8 +637,35 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .to-top.show { opacity: 1; pointer-events: auto; }
 .to-top:hover { border-color: var(--accent); color: var(--accent); }
 .kbd-hint { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
-@media (max-width: 759px) { .kbd-hint { display: none; } .lightbox { padding: 8px; } .lightbox-inner { padding: 10px; } .zoom-btn { top: -2px; } }
+@media (max-width: 759px) { .kbd-hint { display: none; } .lightbox { padding: 8px; } .lightbox-inner { padding: 10px; } .zoom-btn { top: -2px; } .to-top { right: 12px; bottom: 12px; padding: 6px 11px; font-size: 12px; } }
 @media (prefers-reduced-motion: reduce) { .to-top { transition: none; } }
+
+
+/* ---- 하위 페이지 카드, 홈 목록, 수치 타일: 클릭 가능한 행으로 보이게 ---- */
+.child, .index li a, .fact, .pager a { position: relative; z-index: 0; transition: color 0.15s; }
+.child::before, .index li a::before, .fact::before, .pager a::before {
+  content: ""; position: absolute; inset: 0 -14px; border-radius: 6px; background: var(--tint); opacity: 0; z-index: -1; transition: opacity 0.15s;
+}
+.child:hover::before, .child:focus-visible::before, .index li a:hover::before, .index li a:focus-visible::before,
+.fact:hover::before, .fact:focus-visible::before, .pager a:hover::before, .pager a:focus-visible::before { opacity: 1; }
+.child, .index li a { padding-right: 36px; }
+.fact::after { content: "→"; position: absolute; right: 8px; top: 18px; color: var(--muted); font-size: 14px; transition: transform 0.15s, color 0.15s; }
+.fact:hover::after, .fact:focus-visible::after { color: var(--accent); transform: translateX(4px); }
+.child::after, .index li a::after {
+  content: "→"; position: absolute; right: 6px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 15px; transition: transform 0.15s, color 0.15s;
+}
+.child:hover::after, .child:focus-visible::after, .index li a:hover::after, .index li a:focus-visible::after { color: var(--accent); transform: translate(4px, -50%); }
+.child:hover .c-k, .child:focus-visible .c-k { color: var(--accent); text-decoration: none; }
+.index li a:hover .i-name, .index li a:focus-visible .i-name { color: var(--accent); text-decoration: none; }
+.pager a:hover .pg-t, .pager a:focus-visible .pg-t { color: var(--accent); text-decoration: none; }
+.child:focus-visible, .index li a:focus-visible, .fact:focus-visible, .pager a:focus-visible { outline: none; }
+.child:focus-visible::before, .index li a:focus-visible::before, .fact:focus-visible::before, .pager a:focus-visible::before { box-shadow: 0 0 0 2px var(--accent); }
+.index li a, .child { cursor: pointer; }
+@media (max-width: 759px) {
+  .child::before, .index li a::before, .fact::before, .pager a::before { inset: 0 -8px; }
+  .child, .index li a { padding-right: 28px; }
+}
+@media (prefers-reduced-motion: reduce) { .child, .index li a, .fact, .pager a, .child::before, .child::after, .index li a::before, .index li a::after { transition: none; } }
 
 </style>
 
@@ -709,7 +737,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   <div class="wrap top-grid">
     <div class="top-main">
       <img class="photo" src="profile.jpg" alt="노성훈 사진" width="354" height="472">
-      <p class="role">백엔드 개발자</p>
+      <p class="role">백엔드 개발자 · AI 개발 자동화</p>
       <h1>노성훈</h1>
       <p class="lede">AI 에이전트로 개발 과정을 개선하고, 맡은 서비스를 끝까지 구현하는 백엔드 개발자입니다. Java와 Spring Boot, Python과 FastAPI로 서비스를 개발해 왔고, 최근에는 AI가 코드를 작성하는 과정에 영향 범위 검사, 코드 리뷰, 기획 문서 확인을 연결해 팀 업무에 적용했습니다.</p>
       <p class="career-line"><span>2022년부터 백엔드 개발</span><span>최근: 애딥 백엔드·AI R&amp;D, 2025.12 – 2026.08</span><span>주 언어: Java, Python</span></p>
@@ -732,7 +760,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   <div class="facts" aria-label="대표 수치">
     <a class="fact" href="#/addeep/commerce"><span class="f-val"><span class="from">2,455ms</span><span class="arr">→</span>16.6ms</span><span class="f-lab">커머스 추천 응답 시간 중앙값</span><span class="f-cond">개발환경, 불필요한 외부 모델 호출 제거</span></a>
     <a class="fact" href="#/addeep/rec"><span class="f-val"><span class="from">8.3%</span><span class="arr">→</span>93.3%</span><span class="f-lab">같은 사용자 반복 호출 시 추천 결과 일치율</span><span class="f-cond">개발환경, A/A 테스트로 자연 변동 폭 확인</span></a>
-    <a class="fact" href="#/addeep/sns"><span class="f-val">167<small>/ 290</small></span><span class="f-lab">SNS 서버 저장소에서 작성한 커밋</span><span class="f-cond">서버 초기 개발과 API 통합 담당</span></a>
+    <a class="fact" href="#/addeep/vlm"><span class="f-val"><span class="from">296초</span><span class="arr">→</span>28초</span><span class="f-lab">영상 10건 분석 시간</span><span class="f-cond">개발환경, 병렬 처리하고 사용하지 않는 출력 제외</span></a>
   </div>
 
   <section class="caps" aria-label="주요 개발 역량">
@@ -754,7 +782,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <li><a href="#/addeep/vlm"><span class="i-name">영상 분석 파이프라인</span><span class="i-desc">Gemini로 영상의 장면, 대사, 화면 속 글자를 추출해 검색 데이터로 저장하는 파이프라인</span><span class="i-date">2026.07 – 2026.08</span></a></li>
       <li><a href="#/addeep/commerce"><span class="i-name">커머스 추천</span><span class="i-desc">추천 엔진에서 분리한 상품 추천 서비스로, 불필요한 외부 모델 호출을 없애 응답 지연을 줄였습니다</span><span class="i-date">2026.07 – 2026.08</span></a></li>
       <li><a href="#/addeep/image"><span class="i-name">상품 이미지 생성</span><span class="i-desc">상품의 로고와 디자인은 그대로 두고 배경만 바꾸는 이미지 생성 기능</span><span class="i-date">2026.04</span></a></li>
-      <li><a href="#/bokiyo"><span class="i-name">보드게임카페 매장 운영 시스템</span><span class="i-desc">서버, 키오스크 앱, 관리자 웹과 데이터 수집까지 개발해 여러 매장에 배포한 시스템</span><span class="i-date">2023 – 2024, 2025</span></a></li>
+      <li><a href="#/bokiyo"><span class="i-name">보드게임카페 매장 운영 시스템</span><span class="i-desc">2023년 프로토타입을 거쳐 서버, 키오스크 앱, 관리자 웹, 데이터 수집까지 개발해 여러 매장에 배포한 시스템</span><span class="i-date">2025.06 – 2025.10</span></a></li>
       <li><a href="#/pknu"><span class="i-name">대학 모바일 앱 화면</span><span class="i-desc">부경대학교 앱과 연동되는 화면과 캠퍼스 맵 등 반응형 페이지 약 22개를 구현했습니다</span><span class="i-date">2025.10 – 2025.12</span></a></li>
     </ul>
     <p class="versions">애딥 전체 서비스 구조는 <a href="#/addeep">애딥 서비스 구성</a>에 있습니다.</p>
@@ -1097,6 +1125,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/"><span class="pg-k">← 이전</span><span class="pg-t">홈</span></a>
       <a class="next" href="#/ax/gate"><span class="pg-k">다음 →</span><span class="pg-t">AX / 수정 전 영향 범위 검사</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="ax/gate" data-title="수정 전 영향 범위 검사" tabindex="-1">
   <section class="project" id="ax-gate">
@@ -1347,6 +1376,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/ax"><span class="pg-k">← 이전</span><span class="pg-t">AI 개발 자동화 (AX)</span></a>
       <a class="next" href="#/ax/limits"><span class="pg-k">다음 →</span><span class="pg-t">AX / 에이전트에게 맡기는 범위</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="ax/limits" data-title="에이전트에게 맡기는 범위" tabindex="-1">
   <section class="project" id="ax-limits">
@@ -1443,6 +1473,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/ax/gate"><span class="pg-k">← 이전</span><span class="pg-t">AX / 수정 전 영향 범위 검사</span></a>
       <a class="next" href="#/ax/agents"><span class="pg-k">다음 →</span><span class="pg-t">AX / 에이전트 구성</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="ax/agents" data-title="에이전트 구성" tabindex="-1">
   <section class="project" id="ax-agents">
@@ -1548,6 +1579,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/ax/limits"><span class="pg-k">← 이전</span><span class="pg-t">AX / 에이전트에게 맡기는 범위</span></a>
       <a class="next" href="#/ax/review"><span class="pg-k">다음 →</span><span class="pg-t">AX / 커밋 전 AI 코드 리뷰</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="ax/review" data-title="커밋 전 AI 코드 리뷰" tabindex="-1">
   <section class="project" id="ax-review">
@@ -1665,6 +1697,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/ax/agents"><span class="pg-k">← 이전</span><span class="pg-t">AX / 에이전트 구성</span></a>
       <a class="next" href="#/ax/planning"><span class="pg-k">다음 →</span><span class="pg-t">AX / 기획 문서와 코드 연결</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="ax/planning" data-title="기획 문서와 코드 연결" tabindex="-1">
   <section class="project" id="ax-planning">
@@ -1831,6 +1864,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/ax/review"><span class="pg-k">← 이전</span><span class="pg-t">AX / 커밋 전 AI 코드 리뷰</span></a>
       <a class="next" href="#/ax/spread"><span class="pg-k">다음 →</span><span class="pg-t">AX / 사내 도입과 교육</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="ax/spread" data-title="사내 도입과 교육" tabindex="-1">
   <section class="project" id="ax-spread">
@@ -1994,6 +2028,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/ax/planning"><span class="pg-k">← 이전</span><span class="pg-t">AX / 기획 문서와 코드 연결</span></a>
       <a class="next" href="#/ax/honesty"><span class="pg-k">다음 →</span><span class="pg-t">AX / 검사 결과 재확인</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="ax/honesty" data-title="검사 결과 재확인" tabindex="-1">
   <section class="project" id="ax-honesty">
@@ -2051,6 +2086,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/ax/spread"><span class="pg-k">← 이전</span><span class="pg-t">AX / 사내 도입과 교육</span></a>
       <a class="next" href="#/addeep"><span class="pg-k">다음 →</span><span class="pg-t">애딥 서비스 구성</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="addeep" data-title="애딥 서비스 구성" tabindex="-1">
   <section class="project" id="addeep">
@@ -2189,6 +2225,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/ax/honesty"><span class="pg-k">← 이전</span><span class="pg-t">AX / 검사 결과 재확인</span></a>
       <a class="next" href="#/addeep/sns"><span class="pg-k">다음 →</span><span class="pg-t">애딥 / SNS 서비스 백엔드</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="addeep/sns" data-title="SNS 서비스 백엔드" tabindex="-1">
   <section class="project" id="addeep-sns">
@@ -2336,6 +2373,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/addeep"><span class="pg-k">← 이전</span><span class="pg-t">애딥 서비스 구성</span></a>
       <a class="next" href="#/addeep/rec"><span class="pg-k">다음 →</span><span class="pg-t">애딥 / AI 개인화 추천 서버</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="addeep/rec" data-title="AI 개인화 추천 서버" tabindex="-1">
   <section class="project" id="addeep-rec">
@@ -2497,6 +2535,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/addeep/sns"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / SNS 서비스 백엔드</span></a>
       <a class="next" href="#/addeep/behavior"><span class="pg-k">다음 →</span><span class="pg-t">애딥 / 사용자 행동 통합 분석</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="addeep/behavior" data-title="사용자 행동 통합 분석" tabindex="-1">
   <section class="project" id="addeep-behavior">
@@ -2549,6 +2588,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/addeep/rec"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / AI 개인화 추천 서버</span></a>
       <a class="next" href="#/addeep/vlm"><span class="pg-k">다음 →</span><span class="pg-t">애딥 / 영상 분석 파이프라인</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="addeep/vlm" data-title="영상 분석 파이프라인" tabindex="-1">
   <section class="project" id="addeep-vlm">
@@ -2739,6 +2779,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/addeep/behavior"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / 사용자 행동 통합 분석</span></a>
       <a class="next" href="#/addeep/commerce"><span class="pg-k">다음 →</span><span class="pg-t">애딥 / 커머스 추천</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="addeep/commerce" data-title="커머스 추천" tabindex="-1">
   <section class="project" id="addeep-commerce">
@@ -2822,6 +2863,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/addeep/vlm"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / 영상 분석 파이프라인</span></a>
       <a class="next" href="#/addeep/image"><span class="pg-k">다음 →</span><span class="pg-t">애딥 / 상품 이미지 생성</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="addeep/image" data-title="상품 이미지 생성" tabindex="-1">
   <section class="project" id="addeep-image">
@@ -2847,6 +2889,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/addeep/commerce"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / 커머스 추천</span></a>
       <a class="next" href="#/bokiyo"><span class="pg-k">다음 →</span><span class="pg-t">보드게임카페 매장 운영 시스템</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="bokiyo" data-title="보드게임카페 매장 운영 시스템" tabindex="-1">
   <section class="project" id="bokiyo">
@@ -3033,6 +3076,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/addeep/image"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / 상품 이미지 생성</span></a>
       <a class="next" href="#/bokiyo/server"><span class="pg-k">다음 →</span><span class="pg-t">매장 운영 시스템 / 서버</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="bokiyo/server" data-title="서버" tabindex="-1">
   <section class="project" id="bokiyo-server">
@@ -3320,6 +3364,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/bokiyo"><span class="pg-k">← 이전</span><span class="pg-t">보드게임카페 매장 운영 시스템</span></a>
       <a class="next" href="#/bokiyo/kiosk"><span class="pg-k">다음 →</span><span class="pg-t">매장 운영 시스템 / 키오스크 앱</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="bokiyo/kiosk" data-title="키오스크 앱" tabindex="-1">
   <section class="project" id="bokiyo-kiosk">
@@ -3468,6 +3513,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/bokiyo/server"><span class="pg-k">← 이전</span><span class="pg-t">매장 운영 시스템 / 서버</span></a>
       <a class="next" href="#/bokiyo/admin"><span class="pg-k">다음 →</span><span class="pg-t">매장 운영 시스템 / 관리자 웹</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="bokiyo/admin" data-title="관리자 웹" tabindex="-1">
   <section class="project" id="bokiyo-admin">
@@ -3566,6 +3612,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/bokiyo/kiosk"><span class="pg-k">← 이전</span><span class="pg-t">매장 운영 시스템 / 키오스크 앱</span></a>
       <a class="next" href="#/bokiyo/data"><span class="pg-k">다음 →</span><span class="pg-t">매장 운영 시스템 / 데이터 수집</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="bokiyo/data" data-title="데이터 수집" tabindex="-1">
   <section class="project" id="bokiyo-data">
@@ -3712,6 +3759,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/bokiyo/admin"><span class="pg-k">← 이전</span><span class="pg-t">매장 운영 시스템 / 관리자 웹</span></a>
       <a class="next" href="#/pknu"><span class="pg-k">다음 →</span><span class="pg-t">대학 모바일 앱 화면</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="pknu" data-title="대학 모바일 앱 화면" tabindex="-1">
   <section class="project" id="pknu">
@@ -3868,6 +3916,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/bokiyo/data"><span class="pg-k">← 이전</span><span class="pg-t">매장 운영 시스템 / 데이터 수집</span></a>
       <a class="next" href="#/side"><span class="pg-k">다음 →</span><span class="pg-t">사이드 프로젝트</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="side" data-title="사이드 프로젝트" tabindex="-1">
   <section class="project" id="side">
@@ -3888,6 +3937,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/pknu"><span class="pg-k">← 이전</span><span class="pg-t">대학 모바일 앱 화면</span></a>
       <a class="next" href="#/side/cascade"><span class="pg-k">다음 →</span><span class="pg-t">사이드 프로젝트 / 외부 변화 영향 판정 엔진</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="side/cascade" data-title="외부 변화 영향 판정 엔진" tabindex="-1">
   <section class="project side-page" id="side-cascade">
@@ -4043,6 +4093,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/side"><span class="pg-k">← 이전</span><span class="pg-t">사이드 프로젝트</span></a>
       <a class="next" href="#/side/travel"><span class="pg-k">다음 →</span><span class="pg-t">사이드 프로젝트 / 여행 일정과 가계부 서버</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="side/travel" data-title="여행 일정과 가계부 서버" tabindex="-1">
   <section class="project side-page" id="side-travel">
@@ -4186,6 +4237,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/side/cascade"><span class="pg-k">← 이전</span><span class="pg-t">사이드 프로젝트 / 외부 변화 영향 판정 엔진</span></a>
       <a class="next" href="#/side/timer"><span class="pg-k">다음 →</span><span class="pg-t">사이드 프로젝트 / 운동 타이머 앱</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="side/timer" data-title="운동 타이머 앱" tabindex="-1">
   <section class="project side-page" id="side-timer">
@@ -4339,6 +4391,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="prev" href="#/side/travel"><span class="pg-k">← 이전</span><span class="pg-t">사이드 프로젝트 / 여행 일정과 가계부 서버</span></a>
       <a class="next" href="#/side/flutter-base"><span class="pg-k">다음 →</span><span class="pg-t">사이드 프로젝트 / Flutter 앱 공통 기반</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 <article class="view" data-route="side/flutter-base" data-title="Flutter 앱 공통 기반" tabindex="-1">
   <section class="project side-page" id="side-flutter-base">
@@ -4480,6 +4533,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     <nav class="pager" aria-label="이전과 다음 페이지">
       <a class="prev" href="#/side/timer"><span class="pg-k">← 이전</span><span class="pg-t">사이드 프로젝트 / 운동 타이머 앱</span></a>
     </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
 
 <footer class="wrap foot">
@@ -4607,7 +4661,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   /* 사례 접기: 제목만 보이고 클릭하면 펼침 */
   Array.prototype.forEach.call(document.querySelectorAll('.case-card'), function (card) {
     var h = card.querySelector('h3'); if (!h) return;
-    if (!card.previousElementSibling || !card.previousElementSibling.classList.contains('case-card')) card.classList.add('open');
+    card.classList.add('open');
     h.setAttribute('tabindex', '0'); h.setAttribute('role', 'button'); h.setAttribute('aria-expanded', card.classList.contains('open') ? 'true' : 'false');
     function toggle() { var on = card.classList.toggle('open'); h.setAttribute('aria-expanded', on ? 'true' : 'false'); }
     h.addEventListener('click', toggle);
@@ -4630,7 +4684,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   var top = document.createElement('button'); top.type = 'button'; top.className = 'to-top'; top.textContent = '↑ 맨 위로';
   top.addEventListener('click', function () { window.scrollTo({ top: 0, behavior: 'smooth' }); });
   document.body.appendChild(top);
-  function onScroll() { top.classList.toggle('show', window.scrollY > 700); }
+  function onScroll() { var nearEnd = window.scrollY + window.innerHeight > document.documentElement.scrollHeight - 260; top.classList.toggle('show', window.scrollY > 700 && !nearEnd); }
   window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
 
   /* 키보드 ← → 로 이전·다음 페이지 */
