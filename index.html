@@ -675,6 +675,17 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 }
 @media (prefers-reduced-motion: reduce) { .child, .index li a, .fact, .pager a, .child::before, .child::after, .index li a::before, .index li a::after { transition: none; } }
 
+/* ---- 서비스 화면 이미지 ---- */
+.shot { margin: 28px 0 0; }
+.shot img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--tint); }
+.shot figcaption { font-size: 14px; line-height: 1.65; color: var(--muted); margin-top: 10px; max-width: 52em; }
+.shot-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: start; }
+.shot.phone img { width: auto; max-width: min(100%, 420px); }
+.shot.mid img { max-width: 560px; }
+.t-row .shot { margin-top: 16px; }
+.child .shot { grid-column: 1 / -1; margin-top: 14px; }
+@media (max-width: 759px) { .shot-two { grid-template-columns: 1fr; } }
+
 </style>
 
 <div class="topbar">
@@ -828,6 +839,10 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <div>
           <p class="t-title">언컷젬스 백엔드</p>
           <p class="t-desc">주얼리 서비스의 후기와 이미지를 관리하는 관리자 API를 Spring Boot와 MySQL로 개발했습니다. QueryDSL 검색, Selenium 이미지 수집, Swagger 문서 작성과 AWS 배포를 담당했습니다.</p>
+          <figure class="shot phone">
+            <img loading="lazy" src="img/uncutgems-app.png" width="583" height="732" alt="언컷젬스 주얼리 앱의 후기 목록 화면과 후기 작성 화면">
+            <figcaption>주얼리 앱 화면(후기 목록, 후기 작성). 이 화면에 쓰이는 후기·이미지 관리자 API를 만들었습니다. 사용자 사진은 흐리게 처리했습니다.</figcaption>
+          </figure>
         </div>
       </div>
       <div class="t-row">
@@ -835,6 +850,10 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <div>
           <p class="t-title">플라브 PLAV 백엔드</p>
           <p class="t-desc">개발자 4명 중 백엔드 담당 2명 중 한 명으로 참여해 Spring Boot와 PostgreSQL 기반 소셜 큐레이션 앱을 개발했습니다. 인증, 피드, FCM 알림과 AWS 배포를 맡아 두 달 만에 출시했고, 출시 후 월간 활성 사용자 300명 이상을 기록했습니다.</p>
+          <figure class="shot phone">
+            <img loading="lazy" src="img/plav-app.jpg" width="694" height="732" alt="플라브 앱의 시작 화면과 피드 화면">
+            <figcaption>앱 시작 화면과 피드 화면. 이 화면 뒤의 로그인·피드·알림 API를 만들었습니다. 사용자 사진은 흐리게 처리했습니다.</figcaption>
+          </figure>
         </div>
       </div>
     </div>
@@ -2838,6 +2857,13 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <p class="scope">기획과 아키텍처 설계부터 서버, 키오스크 앱, 관리자 웹 개발까지 혼자 맡았고, 여러 매장에 정식으로 배포했습니다.</p>
       <p class="ctx">보드게임카페의 테이블 이용 시간, 게임 안내, 매장 운영을 관리하는 시스템입니다. 2023년 보드요잉 프로토타입에서 게임 정보 수집 방식과 데이터 구조를 먼저 검증했고, 2025년 보키요에서 Spring Boot 서버, Flutter 키오스크 앱, Next.js 관리자 웹을 새로 개발해 실제 매장에 배포했습니다.</p>
     </div>
+    <figure class="shot">
+      <div class="shot-two">
+        <img loading="lazy" src="img/bokiyo-kiosk-tablet.jpg" width="1080" height="1080" alt="매장 테이블용 태블릿 키오스크 앱의 이용 시작 화면">
+        <img loading="lazy" src="img/bokiyo-admin-web.jpg" width="1600" height="1200" alt="노트북과 휴대폰에 띄운 점주용 관리자 웹 대시보드">
+      </div>
+      <figcaption>왼쪽은 매장 테이블에 두는 태블릿 키오스크 앱(Flutter), 오른쪽은 점주용 관리자 웹(Next.js)입니다. 두 화면 모두 직접 만든 Spring Boot 서버 하나를 씁니다.</figcaption>
+    </figure>
     <p class="fig-title flow-title">세부 페이지</p>
     <div class="child-grid">
       <a class="child" href="#/bokiyo/server"><span class="c-k">서버</span><span class="c-d">Spring Boot API 39개로 기기 등록과 이용 세션, 게임 검색과 커서 페이징, 영상 압축을 처리하는 서버</span></a>
@@ -3432,6 +3458,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
           <figcaption>기능마다 같은 계층 구조를 적용했습니다. Repository가 서버 요청과 기기 저장을 함께 처리해 앱이 종료돼도 이용 정보가 유지됩니다. AI 코딩 도구가 이 구조와 의존성 주입 방식을 따르도록 Cursor 규칙 파일에 정리했습니다.</figcaption>
         </figure>
 
+        <figure class="shot">
+          <img loading="lazy" src="img/bokiyo-kiosk-add-time.jpg" width="1600" height="1000" alt="키오스크 앱에서 남은 시간을 보여 주며 30분, 1시간, 2시간, 3시간 중 추가할 시간을 고르는 창">
+          <figcaption>이용 시간 추가 화면입니다(영어 설정). 이용 시작과 종료 시각을 기기에 저장해 앱을 다시 실행하거나 백그라운드에서 돌아와도 남은 시간을 이어서 보여 주고, 시간 추가와 이용 종료는 서버에도 함께 반영합니다.</figcaption>
+        </figure>
+
         <div class="p-body solo">
           <div>
             <h3>한 일</h3>
@@ -3463,6 +3494,10 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <p class="scope">한 달 동안 혼자 11페이지를 개발했습니다.</p>
       <p class="ctx">매장 운영자가 원격으로 매장을 관리하는 웹입니다. Next.js로 11개 페이지와 30개 이상의 기능을 개발했고, 관리자 웹에서 바꾼 내용은 같은 API를 거쳐 키오스크 화면에 반영됩니다.</p>
     </div>
+    <figure class="shot">
+      <img loading="lazy" src="img/bokiyo-admin-web.jpg" width="1600" height="1200" alt="노트북과 휴대폰에 띄운 관리자 웹 대시보드. 빠른 작업, 실시간 방 현황, 오늘의 현황, 최근 활동이 보인다">
+      <figcaption>점주용 관리자 웹입니다. 대시보드에서 테이블(화면에서는 '방')별 실시간 이용 현황과 오늘 현황을 보고, 매장, 게임, 방, 공지, 추천 코스를 관리합니다.</figcaption>
+    </figure>
 
 
         <figure class="dgf">
@@ -3868,7 +3903,12 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     <div class="child-grid">
       <a class="child" href="#/side/cascade"><span class="c-k">외부 변화 영향 판정 엔진 (cascade)</span><span class="c-d">2026.08 – 2026.10, 환율 같은 외부 변화가 회사의 손익과 현금흐름에 닿는 경로를 계산하고, 같은 입력이면 같은 결과가 나오게 만든 판정 엔진</span></a>
       <div class="child plain"><span class="c-k">여행 일정과 가계부 서버</span><span class="c-d">2024.08 – 2024.09, JWT와 게스트 로그인을 지원하고, 일정은 여행, 일, 시간의 3단 구조로, 공개 범위는 3단계로 나눈 Spring Boot 서버</span></div>
-      <div class="child plain"><span class="c-k">운동 타이머 앱</span><span class="c-d">2025.04, 타바타, 인터벌, 랩 타이머를 지원하고 광고 버전을 따로 만든 Flutter 앱</span></div>
+      <div class="child plain"><span class="c-k">운동 타이머 앱</span><span class="c-d">2025.04, 타바타, 인터벌, 랩 타이머를 지원하고 광고 버전을 따로 만든 Flutter 앱</span>
+        <figure class="shot mid">
+          <img loading="lazy" src="img/tabata-timer.jpg" width="1600" height="1200" alt="운동 타이머 앱의 타바타 타이머 화면 네 개를 담은 홍보 이미지">
+          <figcaption>스토어 홍보용으로 만든 이미지입니다.</figcaption>
+        </figure>
+      </div>
       <div class="child plain"><span class="c-k">Flutter 앱 공통 기반 (로그인, 지도)</span><span class="c-d">2025.01 – 2025.02, 로그인 7종을 공통으로 처리하고 구글과 네이버 지도를 연동한 Flutter 앱 기본 구조</span></div>
     </div>
   </section>
