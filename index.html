@@ -720,6 +720,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
             <li><a href="#/addeep/behavior">사용자 행동 통합 분석</a></li>
             <li><a href="#/addeep/vlm">영상 분석 파이프라인</a></li>
             <li><a href="#/addeep/commerce">커머스 추천</a></li>
+            <li><a href="#/addeep/site">서비스 소개 사이트</a></li>
           </ul>
         </li>
         <li><a href="#/bokiyo">보드게임카페 매장 운영 시스템</a>
@@ -782,6 +783,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <li><a href="#/addeep/behavior"><span class="i-name">사용자 행동 통합 분석</span><span class="i-desc">여러 서비스의 이용 기록을 같은 기준으로 분석하는 서버</span><span class="i-date">2026.06 – 2026.08</span></a></li>
       <li><a href="#/addeep/vlm"><span class="i-name">영상 분석 파이프라인</span><span class="i-desc">Gemini로 영상의 장면, 대사, 화면 속 글자를 추출해 검색 데이터로 저장하는 파이프라인</span><span class="i-date">2026.07 – 2026.08</span></a></li>
       <li><a href="#/addeep/commerce"><span class="i-name">커머스 추천</span><span class="i-desc">추천 엔진에서 분리한 상품 추천 서비스로, 불필요한 외부 모델 호출을 없애 응답 지연을 줄였습니다</span><span class="i-date">2026.07 – 2026.08</span></a></li>
+      <li><a href="#/addeep/site"><span class="i-name">서비스 소개 사이트</span><span class="i-desc">애딥의 AI API를 기업 고객에게 소개하는 웹사이트로, 디자인부터 Next.js 구현과 Vercel 배포까지 맡아 acpgpr.com에서 운영 중입니다</span><span class="i-date">2026.05 – 2026.07</span></a></li>
       <li><a href="#/bokiyo"><span class="i-name">보드게임카페 매장 운영 시스템</span><span class="i-desc">2023년 프로토타입을 거쳐 서버, 키오스크 앱, 관리자 웹, 데이터 수집까지 개발해 여러 매장에 배포한 시스템</span><span class="i-date">2025.06 – 2025.10</span></a></li>
       <li><a href="#/pknu"><span class="i-name">대학 모바일 앱 화면</span><span class="i-desc">부경대학교 앱과 연동되는 화면과 캠퍼스 맵 등 반응형 페이지 약 22개를 구현했습니다</span><span class="i-date">2025.10 – 2025.12</span></a></li>
     </ul>
@@ -2105,7 +2107,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     <div class="p-head">
       <p class="label">애딥, 2025.12 – 2026.08</p>
       <h2>애딥 서비스 구성</h2>
-      <p class="scope">SNS 백엔드 개발을 시작으로 AI R&amp;D 업무까지 맡았고, 모두 5개 서비스 개발에 참여했습니다.</p>
+      <p class="scope">SNS 백엔드 개발을 시작으로 AI R&amp;D 업무까지 맡았고, 모두 5개 서비스 개발에 참여했습니다. 서비스를 소개하는 웹사이트도 디자인부터 배포까지 만들었습니다.</p>
       <p class="ctx">SNS 앱과 연결된 서비스 다섯 개의 개발에 참여했습니다. 서비스별로 맡은 범위는 아래 일정에 적었고, 도식에는 제가 맡은 서비스만 간단히 표시했습니다. 설계 내용과 문제 해결 과정은 세부 페이지에 정리했습니다.</p>
     </div>
     <p class="basis">애딥 관련 수치는 모두 개발환경에서 직접 측정한 값입니다. SNS 앱은 앱스토어 출시까지 참여했고, 커머스 추천과 영상 분석(VLM)은 컨테이너 단계까지 개발했습니다.</p>
@@ -2116,6 +2118,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <a class="child" href="#/addeep/behavior"><span class="c-k">사용자 행동 통합 분석</span><span class="c-d">행동 기록을 공통 형식으로 변환하고 회사별로 데이터를 분리한 방법, 추천 엔진에서 분리한 과정</span></a>
       <a class="child" href="#/addeep/vlm"><span class="c-k">영상 분석 파이프라인</span><span class="c-d">헥사고날 구조로 개발하고 긴 영상의 병목과 반복 측정 편차를 확인한 과정</span></a>
       <a class="child" href="#/addeep/commerce"><span class="c-k">커머스 추천</span><span class="c-d">분리할 범위를 심볼 참조로 다시 세고 불필요한 외부 모델 호출을 없앤 과정</span></a>
+      <a class="child" href="#/addeep/site"><span class="c-k">서비스 소개 사이트</span><span class="c-d">직접 디자인하고 Next.js로 만든 뒤, GitHub Actions에서 Vercel로 배포하고 도메인을 연결한 과정</span></a>
     </div>
     <figure class="dgf">
       <p class="fig-title">서비스와 데이터 흐름</p>
@@ -2222,6 +2225,10 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <div class="t-row">
         <p class="t-date">2026.04</p>
         <div><p class="t-title">상품 이미지 생성<span>단독, 배포 전 단계</span></p><p class="t-desc">상품 이미지에서 로고와 디자인은 유지하고 배경만 바꾼 이미지를 생성하는 플랫폼입니다. 유지할 영역이 바뀌지 않았는지 임베딩으로 검사했고, 설계 문서와 코드를 비교해 검색 순위를 벡터 분산값으로 정하던 결함을 찾아 수정했습니다.</p></div>
+      </div>
+      <div class="t-row">
+        <p class="t-date">2026.05 – 2026.07</p>
+        <div><p class="t-title">서비스 소개 사이트<span>디자인, Next.js 구현, Vercel 배포. acpgpr.com 운영 중</span></p></div>
       </div>
     </div>
   </section>
@@ -2865,6 +2872,54 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
       <a class="prev" href="#/addeep/vlm"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / 영상 분석 파이프라인</span></a>
+      <a class="next" href="#/addeep/site"><span class="pg-k">다음 →</span><span class="pg-t">애딥 / 서비스 소개 사이트</span></a>
+    </nav>
+    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
+</article>
+<article class="view" data-route="addeep/site" data-title="서비스 소개 사이트" tabindex="-1">
+  <section class="project" id="addeep-site">
+    <div class="p-head">
+      <p class="crumbs"><a href="#/addeep">애딥 서비스 구성</a><span aria-hidden="true">/</span><span>서비스 소개 사이트</span></p>
+      <p class="label">애딥, 2026.05 – 2026.07</p>
+      <h2>기업 고객용 서비스 소개 사이트</h2>
+      <p class="scope">디자인부터 Next.js 구현, Vercel 배포와 도메인 연결까지 맡았고, 지금 <a href="https://acpgpr.com" target="_blank" rel="noopener">acpgpr.com</a>에서 운영 중입니다.</p>
+      <p class="ctx">애딥의 고객 상태 추론 API(LMM)와 상품 장면 생성 API(ACT)를 기업 고객에게 소개하는 사이트입니다. 메인, LMM, ACT 페이지로 나뉘고 한국어와 영어를 지원하며, 페이지마다 서비스 흐름, 도입 사례, 요금제, 문의 영역을 두었습니다.</p>
+    </div>
+    <figure class="shot">
+      <img loading="lazy" src="img/acp-home-hero.jpg" width="1600" height="778" alt="acpgpr.com 메인 페이지 첫 화면. 상단 메뉴 아래 '고객이 머무는 1초, 숨은 의도를 읽어냅니다'라는 문구가 있는 어두운 히어로 영역">
+      <figcaption>메인 페이지 첫 화면입니다. 운영 중인 사이트를 2026년 11월에 데스크톱 폭(1440px)으로 캡처했습니다.</figcaption>
+    </figure>
+    <div class="p-body">
+      <div>
+        <h3>구현</h3>
+        <ul class="points">
+          <li>Next.js App Router와 TypeScript, pnpm·Turborepo 모노레포로 만들었습니다. 브랜드 색, 글꼴, 간격, 모서리 같은 디자인 값을 토큰 파일로 정의하고 세 페이지가 같은 토큰을 참조하게 했습니다.</li>
+          <li>한국어와 영어 문구를 한 곳에서 관리하고, 고른 언어를 브라우저에 저장해 다시 방문하거나 다른 탭에서 바꿔도 같은 언어로 보이게 했습니다.</li>
+          <li>헤더 로고를 키우면서 좁은 휴대폰 화면에서 로고가 가로로 눌리지 않게 조정했고, 320px부터 1440px까지 여러 화면 폭에서 비율 왜곡과 가로 스크롤이 없는지 확인했습니다.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>배포</h3>
+        <ul class="points">
+          <li>main 브랜치에 push하면 GitHub Actions가 Vercel에 프로덕션 배포를 만들고 커스텀 도메인을 새 배포에 연결합니다. 배포 토큰 권한으로는 CLI의 도메인 연결 명령을 쓸 수 없어, 같은 작업을 Vercel REST API로 처리했습니다.</li>
+          <li>커밋 전 검사와 CI에서 타입 검사, 린트, 빌드를 실행하게 했습니다. 패키지 사이의 설정 경로 해석과 라이브러리 버전 충돌을 바로잡아 모노레포 전체가 타입 검사를 통과합니다.</li>
+        </ul>
+      </div>
+    </div>
+    <figure class="shot">
+      <div class="shot-two">
+        <img loading="lazy" src="img/acp-lmm-top.jpg" width="1600" height="1200" alt="LMM 페이지 첫 화면. '단 한 번의 ADK 연동으로 AI 마케팅 엔진이 됩니다'라는 문구와 모델 소개 제목">
+        <img loading="lazy" src="img/acp-act-top.jpg" width="1600" height="1200" alt="ACT 페이지 첫 화면. '고객의 상태를 이해하고, 콘텐츠와 상품을 하나의 경험으로 연결합니다'라는 문구와 기능 단계 표시">
+      </div>
+      <figcaption>왼쪽은 고객 상태 추론 API를 소개하는 LMM 페이지, 오른쪽은 상품 장면 생성 API를 소개하는 ACT 페이지의 첫 화면입니다.</figcaption>
+    </figure>
+    <figure class="shot">
+      <img loading="lazy" src="img/acp-home-services.jpg" width="1600" height="1100" alt="메인 페이지의 서비스 비교 카드. 흰 카드는 고객 행동을 구매 상태로 해석하는 흐름, 검은 카드는 상품을 고객이 반응할 장면으로 바꾸는 흐름을 같은 단계 구조로 보여 준다">
+      <figcaption>메인 페이지에서 두 서비스를 나란히 보여 주는 카드입니다. 고객 상태를 읽는 흐름과 상품 장면을 만드는 흐름을 같은 단계 구조로 맞췄습니다.</figcaption>
+    </figure>
+  </section>
+    <nav class="pager" aria-label="이전과 다음 페이지">
+      <a class="prev" href="#/addeep/commerce"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / 커머스 추천</span></a>
       <a class="next" href="#/bokiyo"><span class="pg-k">다음 →</span><span class="pg-t">보드게임카페 매장 운영 시스템</span></a>
     </nav>
     <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
@@ -3058,7 +3113,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </ul>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/addeep/commerce"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / 커머스 추천</span></a>
+      <a class="prev" href="#/addeep/site"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / 서비스 소개 사이트</span></a>
       <a class="next" href="#/bokiyo/server"><span class="pg-k">다음 →</span><span class="pg-t">매장 운영 시스템 / 서버</span></a>
     </nav>
     <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
