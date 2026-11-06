@@ -1701,6 +1701,10 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <p class="scope">설계와 구축을 맡았습니다. 기획자와 프론트엔드 개발자가 실제 업무에 사용했습니다.</p>
       <p class="ctx">확정된 기획은 Notion에, 검토 상태는 Obsidian에, 실제 동작은 코드에 나뉘어 있어서 서로 어긋나도 알아채기 어려웠습니다. 그래서 세 곳을 연결하고, 각 단계에서 정보가 한 방향으로만 넘어가도록 했습니다.</p>
     </div>
+    <figure class="shot">
+      <img loading="lazy" src="img/ax-docs-index-graph.jpg" width="1600" height="1000" alt="Obsidian 문서 볼트 화면. 왼쪽에 폴더 목록과 인덱스 문서가, 오른쪽에 노트끼리 이어진 연결 그래프가 있고 그래프의 색은 폴더별로 다르다">
+      <figcaption>같은 구조로 만든 추천·사용자 상태 엔진 문서 볼트입니다. 왼쪽은 볼트의 진입점인 인덱스 문서, 오른쪽은 노트 288개의 연결 그래프이고, 색은 폴더(나침반, 용어, 엔진 카탈로그, 거버넌스, 대시보드)를 나타냅니다. 문서 본문은 흐리게 처리했습니다.</figcaption>
+    </figure>
     <figure class="dgf">
       <p class="fig-title">Notion ↔ Obsidian ↔ 코드 위치</p>
       <div class="fig-scroll"><svg class="dg dg-wide" viewBox="0 0 1000 470" role="img" aria-label="Notion의 확정 기획 문서를 Obsidian 볼트의 위키로 단방향 수집하고, 에이전트가 위키를 근거로 기획서 초안을 대기 영역에 만든다. 사람이 승인하면 위키 커밋과 Notion 등록이 한 번에 처리되고, 폐기는 파일 하나 삭제로 끝난다. 개발 담당자가 Notion 기획서에 결정이 필요한 항목 표를 붙이면 기획자가 결정 칸을 채우고, 그 결정이 위키로 역동기화돼 개발 표에 반영된다. 볼트의 개념 노트는 코드 위치를 참조하고, 목록은 코드에서 생성해 코드와 문서의 불일치를 찾는다.">
@@ -1778,6 +1782,13 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 </svg></div>
       <p class="scroll-hint">옆으로 밀면 전체 도식을 볼 수 있습니다.</p>
       <figcaption>확정된 기획은 Notion에서 Obsidian으로만 가져오고, Notion에는 사람이 승인한 기획서만 올립니다. 파란 경로는 기획서 한 건을 만들어 등록하는 과정입니다. Obsidian의 개념 노트에는 코드 위치를 적어 두고, 노트 목록을 코드에서 생성해 문서와 코드가 어긋난 곳을 찾습니다.</figcaption>
+    </figure>
+    <figure class="shot">
+      <div class="shot-two">
+        <img loading="lazy" src="img/ax-notion-source-note.jpg" width="1333" height="1000" alt="Notion 문서를 가져온 Obsidian 노트. 속성에 원본 Notion 링크와 문서 ID가 남아 있고 본문은 흐리게 처리했다">
+        <img loading="lazy" src="img/ax-code-linked-note.jpg" width="1333" height="1000" alt="Obsidian 개념 노트. 속성에 코드 위치를 적는 canonical_source 항목이 있고 값과 본문은 흐리게 처리했다">
+      </div>
+      <figcaption>왼쪽은 Notion 문서를 가져와 원본 링크(notion_url)를 남긴 노트, 오른쪽은 코드 위치(canonical_source)를 적은 개념 노트입니다. 같은 구조로 만든 R&amp;D 문서 위키와 위 문서 볼트에서 가져온 화면이며, 본문과 속성 값은 흐리게 처리했습니다.</figcaption>
     </figure>
     <figure class="dgf">
       <p class="fig-title">비교 결과와 결정 흐름</p>
@@ -2013,9 +2024,17 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <ul class="points">
           <li>다른 개발자가 직접 설치할 수 있도록 설치 안내 자료와 문제 해결 가이드를 작성했습니다.</li>
           <li>논문 스터디를 운영하며 논문마다 기초 지식, 본문, 쉬운 설명의 3단계로 정리했습니다.</li>
+          <li>실행 중인 파트너 포털 코드에서 색, 글꼴, 간격 토큰과 공통 컴포넌트 11종을 추출해 디자인 시스템 문서로 정리하고, AI로 화면을 만들거나 고칠 때 그대로 붙여 넣는 프롬프트 블록을 만들었습니다.</li>
         </ul>
       </div>
       </div>
+    <figure class="shot">
+      <div class="shot-two">
+        <img loading="lazy" src="img/ax-ds-colors.jpg" width="1600" height="1200" alt="디자인 시스템 문서의 컬러 토큰 카드. 라벤더 단일 강조 램프와 잉크, 크림, 상태 색상 견본이 있다">
+        <img loading="lazy" src="img/ax-ds-buttons.jpg" width="1600" height="1200" alt="디자인 시스템 문서의 버튼 카드. 버튼 클래스 4종과 컴포넌트 변형, 크기별 버튼이 있다">
+      </div>
+      <figcaption>정리한 디자인 시스템 문서의 컬러 토큰(왼쪽)과 버튼 컴포넌트(오른쪽) 카드입니다. 디자인 값은 포털 코드에 있던 그대로이고, 저는 추출과 문서화를 맡았습니다.</figcaption>
+    </figure>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
       <a class="prev" href="#/ax/planning"><span class="pg-k">← 이전</span><span class="pg-t">AX / 기획 문서와 코드 연결</span></a>
