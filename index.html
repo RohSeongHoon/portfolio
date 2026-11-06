@@ -679,7 +679,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .shot { margin: 28px 0 0; }
 .shot img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--tint); }
 .shot figcaption { font-size: 14px; line-height: 1.65; color: var(--muted); margin-top: 10px; max-width: 52em; }
-.shot-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: start; }
+.shot-two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; align-items: stretch; }
+.shot-two img { aspect-ratio: 4 / 3; object-fit: cover; }
 .shot.phone img { width: auto; max-width: min(100%, 420px); }
 .shot.mid img { max-width: 560px; }
 .t-row .shot { margin-top: 16px; }
@@ -2859,7 +2860,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     </div>
     <figure class="shot">
       <div class="shot-two">
-        <img loading="lazy" src="img/bokiyo-kiosk-tablet.jpg" width="1080" height="1080" alt="매장 테이블용 태블릿 키오스크 앱의 이용 시작 화면">
+        <img loading="lazy" src="img/bokiyo-kiosk-tablet.jpg" width="1080" height="810" alt="매장 테이블용 태블릿 키오스크 앱의 이용 시작 화면">
         <img loading="lazy" src="img/bokiyo-admin-web.jpg" width="1600" height="1200" alt="노트북과 휴대폰에 띄운 점주용 관리자 웹 대시보드">
       </div>
       <figcaption>왼쪽은 매장 테이블에 두는 태블릿 키오스크 앱(Flutter), 오른쪽은 점주용 관리자 웹(Next.js)입니다. 두 화면 모두 직접 만든 Spring Boot 서버 하나를 씁니다.</figcaption>
