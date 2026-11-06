@@ -342,6 +342,7 @@ h1 { font-size: clamp(44px, 8vw, 84px); font-weight: 700; line-height: 1.05; let
 .p-body.solo { grid-template-columns: minmax(0, 1fr); }
 .p-body .points + h3 { margin-top: 28px; }
 .p-body.solo .points { max-width: 52em; }
+.p-body .ax-note { margin-top: 16px; padding-left: 18px; font-size: 14.5px; line-height: 1.7; color: var(--muted); }
 .summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0 28px; margin-top: 28px; }
 .summary .m { border-top: 1px solid var(--line); border-bottom: 0; padding: 14px 0 4px; align-content: start; }
 @media (max-width: 899px) { .summary { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 24px; } }
@@ -1666,7 +1667,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <ul class="points">
           <li>훅 세 곳에 중복돼 있던 시간 제한, 심각도 판단, 감사 기록 로직을 공용 엔진 하나로 합쳐, 한 곳만 고쳐서 동작이 어긋나는 일을 막았습니다.</li>
           <li>엔진을 점검하는 스크립트를 만들어 심각도 판단의 오탐을 찾았습니다. 가장 높은 등급을 찾는 패턴이 이름이 비슷한 다른 등급까지 잡고 있었습니다.</li>
-          <li>계층 간 의존 방향은 import 검사기 규칙으로 만들어 PR 단계에서 확인했습니다. 품질 검사는 빠른 검사, PR 검사, 전체 검사의 3단계로 나눴습니다.</li>
+          <li>계층 간 의존 방향은 import 검사기 규칙으로 만들어 PR을 올리기 전 검사에서 확인했습니다. 품질 검사는 빠른 검사, PR 검사, 전체 검사의 3단계로 나눴습니다.</li>
           <li>계획 문서 없이 정식 작업을 마치려고 하면 세션 종료를 막아, 권고에 그치던 개발 절차를 규칙으로 바꿨습니다.</li>
         </ul>
       </div>
@@ -2349,6 +2350,25 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </ul>
       </div>
     </div>
+    <div class="p-body">
+      <div>
+        <h3>아키텍처</h3>
+        <ul class="points">
+          <li>앱 사용자 API와 관리자 API는 인증 필터부터 나눴습니다. 사용자 요청은 Firebase ID 토큰으로, 관리자 요청은 TOTP 2단계 인증을 거친 세션으로 확인합니다. 관리자 경로는 사용자 토큰 필터를 건너뛰게 해 관리자 인증 정보가 사용자 정보로 덮이지 않습니다.</li>
+          <li>캐시와 감사 로그에는 커밋된 변경만 남기지만, 관리자 로그인 실패 횟수와 활동 기록은 반대로 별도 트랜잭션(REQUIRES_NEW)으로 저장했습니다. 인증에 실패해 요청이 롤백돼도 실패 횟수가 남아야 시도 횟수 제한이 풀리지 않기 때문입니다.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>AI 개발 방식</h3>
+        <ul class="points">
+          <li>새 API는 명령 하나로 도메인, 저장소, 서비스, 컨트롤러 순서로 만들게 하고, 단계마다 제가 확인한 뒤 다음 단계로 넘어가게 했습니다. 저장소 단계는 DB 설계 점검 에이전트가, 서비스와 컨트롤러 단계는 보안 점검 에이전트가 만든 코드를 다시 검토합니다. 점검 에이전트는 외부 플러그인을 Java·Spring 기준으로 고쳐 썼습니다.</li>
+          <li>개발 규칙 문서에는 새 파일을 프로젝트 스킬로만 만들게 적어, 에이전트가 만든 코드도 도메인 패키지 구조와 저장소 3계층(JPA·커스텀 인터페이스·구현체)을 따르게 했습니다.</li>
+          <li>관리자 기능을 넓히면서 코드 리뷰, 보안 감사, 구조 분석 에이전트로 나눠 동시에 점검했습니다. 사용자 토큰 필터가 관리자 인증을 덮어쓸 수 있는 필터 순서, 로그인 실패 횟수의 동시 갱신, 최고 관리자가 자기 계정을 정지할 수 있는 경로를 찾아 고쳤습니다.</li>
+          <li>사내 백엔드 저장소 가운데 AI 작업 규칙과 스킬을 갖춘 곳은 이 저장소뿐이어서, 이를 일반화해 다른 저장소에도 설치할 수 있는 AX KIT를 만들었습니다.</li>
+        </ul>
+        <p class="ax-note">AX KIT 설치 과정은 <a href="#/ax/spread">AX / 사내 도입과 교육</a>에 정리했습니다.</p>
+      </div>
+    </div>
     <ul class="stack" aria-label="사용 기술">
       <li>Java 21</li><li>Spring Boot 3.4</li><li>Spring Security</li><li>JPA</li><li>QueryDSL</li><li>PostgreSQL</li><li>Firestore</li><li>GCP KMS</li>
     </ul>
@@ -2450,7 +2470,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <div>
         <h3>한 일</h3>
         <ul class="points">
-          <li>코드를 역할에 따라 5계층 클린 아키텍처로 나누고, 새 추천 채널은 레지스트리에 등록만 하면 추가되도록 만들었습니다.</li>
           <li>개인정보 삭제 요청이 들어오면 관련 저장소의 데이터를 모두 삭제하고, 필수 작업이 하나라도 실패하면 성공 응답을 보내지 않도록 구현했습니다.</li>
           <li>광고 문구는 과장·허위·건강 효능 같은 고위험 표현을 규칙 목록으로 먼저 거르고, 규칙이 못 잡는 우회 표현은 모델로 다시 탐지해 통과·위험·차단으로 나눴습니다. 브랜드별 금칙어와 표현 정책은 DB에서 관리합니다.</li>
         </ul>
@@ -2477,6 +2496,26 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       </div>
     </div>
 
+    <div class="p-body">
+      <div>
+        <h3>아키텍처</h3>
+        <ul class="points">
+          <li>코드를 역할에 따라 5계층 클린 아키텍처로 나누고, 새 추천 채널은 레지스트리에 등록만 하면 추가되도록 만들었습니다. 라우터에 섞여 있던 의존성 조립과 재정렬 호출은 조립 전용 모듈과 오케스트레이터 계층으로 옮겼습니다.</li>
+          <li>도메인과 유스케이스 계층에는 웹 프레임워크와 검증 라이브러리를 들이지 않았습니다. 유스케이스는 예외 대신 성공·실패 결과를 돌려주고, 이를 HTTP 오류로 바꾸는 일은 API 경계의 어댑터 한 곳에서만 합니다.</li>
+          <li>계층 규칙을 import 검사기 계약으로 걸 때는 이미 있던 위반을 예외 목록에 올리고 시작했습니다. 이후 유스케이스가 직접 쓰던 구현체를 도메인 인터페이스(Protocol)로 바꿔 예외 목록을 비웠습니다.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>AI 개발 방식</h3>
+        <ul class="points">
+          <li>편집 전 훅에 이 서버의 계층 규칙을 넣었습니다. 도메인·유스케이스의 웹 프레임워크 import와 유스케이스의 광범위한 예외 처리는 파일에 쓰기 전에 막고, API 밖에서 HTTP 예외를 만들면 경고합니다. 다른 AI 모델의 리뷰가 유스케이스에서 예외를 넓게 잡자고 권했을 때도 이 규칙에 따라 예외 처리를 저장소 계층에 맡겼습니다.</li>
+          <li>개인정보, 저장소 쓰기, 외부 호출, API 계약, 계층 경계 중 하나라도 건드리는 작업은 크기와 상관없이 정식 작업으로 분류했습니다. 정식 작업은 구현 전에 다른 AI 모델에게 계획서의 대안과 빈틈을 검토받고, 합친 계획을 다시 승인받습니다. 개인정보 삭제 기능에서는 이 검토로, 삭제 범위가 데이터 보관 기간보다 짧아 일부 기록이 남는 문제와 끝내 실패한 삭제 요청을 자동으로 지워 처리 기록이 사라지는 문제를 구현 전에 찾았습니다.</li>
+          <li>에이전트가 쓰이지 않는 코드를 지울 때 '호출하는 곳이 없다'와 '지워도 된다'를 따로 판단하게 했습니다. 일부러 남겨 둔 준비 코드와 계약 선언은 해제 조건을 적은 보존 목록으로 지키고, 지운 모듈을 아직 가져오는 스크립트는 깨진 import 검사로 잡습니다.</li>
+          <li>해석할 수 없는 사용자 벡터는 저장하지 않기로 한 팀 결정을 커밋 전 검사로 강제해, 그런 벡터를 저장하거나 계산하는 코드는 커밋되지 않습니다.</li>
+        </ul>
+        <p class="ax-note">영향 범위 검사의 우회 경로를 모두 막은 곳과 커밋 전 AI 리뷰를 운영한 곳도 이 저장소입니다. <a href="#/ax/gate">AX / 수정 전 영향 범위 검사</a>, <a href="#/ax/review">AX / 커밋 전 AI 코드 리뷰</a></p>
+      </div>
+    </div>
     <h3 class="sub-h">문제 해결</h3>
     <div class="cases">
       <div class="case-card">
@@ -2579,6 +2618,25 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
             <span class="m-cond">무작위 표본과 경계 사례를 근사 없이 비교</span>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="p-body">
+      <div>
+        <h3>아키텍처</h3>
+        <ul class="points">
+          <li>외부에 공개하는 성향 요약은 두 층으로 계산합니다. 장바구니나 환불 같은 서비스별 필드는 채널별 변환기에서만 읽어 중립 신호로 바꾸고, 공통 계산층은 중립 신호만 봅니다. 행동 기록만으로는 측정할 수 없는 성격 5요인 추정 모듈은 두 층 모두 가져다 쓰지 못하게 막았습니다.</li>
+          <li>성향 요약은 축마다 값과 함께 근거의 양을 돌려주고, 근거가 없는 축은 0으로 채우지 않고 응답에서 뺍니다. 0을 돌려주면 '그 성향이 낮다'는 다른 주장이 되기 때문입니다.</li>
+          <li>다른 서비스가 호출자의 테넌트를 확인할 수 있도록 토큰 검사 API를 만들었습니다. 헤더와 별도 허용 목록 대신 API 키로 테넌트를 정해, 테넌트를 정지하면 재배포 없이 그 테넌트의 모든 키가 바로 무효가 됩니다. 유효기간 동안 계속 통과하는 JWT 대신 조회 방식을 골랐고, 무효 토큰에는 사유 없이 비활성 여부만 돌려줘 테넌트 상태가 드러나지 않게 했습니다.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>AI 개발 방식</h3>
+        <ul class="points">
+          <li>변환기끼리의 참조와 계산층에서 변환층으로의 참조는 import 검사 규칙으로 막았습니다. 계산층이 서비스별 필드를 직접 읽지 않는다는 규칙은 주석으로만 있어서 테스트로 옮겼습니다. 중립 신호 이름에도 '구매' 같은 단어가 들어 있어 문자열 검색은 오탐이 나므로, 구문 트리로 필드 접근을 검사하고 검사할 필드 목록은 엔티티 정의에서 자동으로 뽑았습니다.</li>
+          <li>테이블을 비우는 테스트는 일회용 DB에서만 실행되게 했습니다. 접속 문자열이 아니라 실제로 접속한 DB 이름으로 다시 확인하고, 설정 파일의 접속 정보가 테스트에 들어오는 경로도 막아, 에이전트가 테스트를 돌려도 개발 DB를 지우지 않습니다.</li>
+          <li>추천 서버의 테스트를 옮길 때는 코드를 일부러 바꿔 테스트가 실제로 실패하는지 확인했고, 원본 테스트에도 없던 분기를 찾아 케이스를 추가했습니다. 파일 이름 규칙 때문에 한 번도 실행되지 않던 테스트도 찾아, 테스트 함수가 있는데 수집되지 않는 파일이 있으면 실패하게 했습니다.</li>
+        </ul>
+        <p class="ax-note">검사가 실제로 위반을 잡는지 확인하는 방법은 <a href="#/ax/honesty">AX / 검사 결과 재확인</a>에 정리했습니다.</p>
       </div>
     </div>
     <ul class="stack" aria-label="사용 기술">
@@ -2773,6 +2831,25 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </div>
       </div>
     </div>
+    <div class="p-body">
+      <div>
+        <h3>아키텍처</h3>
+        <ul class="points">
+          <li>임베딩 모델과 저장 형식 같은 공유 계약은 복사하지 않고 추천 서버의 코드를 그대로 가져다 씁니다. 의존 방향은 영상 분석에서 추천 서버 쪽으로만 둬서 두 서비스가 같은 벡터 공간에 저장합니다.</li>
+          <li>임베딩 모델을 불러오지 못하면 추천 서버는 다른 채널로 넘어가면 되지만, 영상 분석은 분석 비용만 쓰고 아무것도 저장하지 못합니다. 그래서 공유 코드는 그대로 두고, 이 서비스의 어댑터에서 분석을 시작하기 전에 실패하게 했습니다.</li>
+          <li>모델 제공자는 등록부에 등록하는 방식으로 바꾸고, 등록되지 않은 이름이면 시작 단계에서 멈추게 했습니다. 전에는 모르는 이름을 넣어도 오류 없이 기존 모델로 실행됐습니다. 제공자 SDK는 선택 설치로 나눠, 쓰지 않는 제공자의 SDK는 컨테이너 이미지에 넣지 않습니다.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>AI 개발 방식</h3>
+        <ul class="points">
+          <li>import 검사기 규칙으로 계층 순서를 잠갔습니다. 도메인 계층에는 외부 라이브러리를 금지하고 모델·저장소 SDK는 어댑터에서만 가져오게 했으며, 규칙마다 일부러 위반을 넣어 실제로 잡는지 확인했습니다. 핵심 로직에 모델 제공자 이름이 나오면 실패하는 테스트도 두어, 제공자를 분리한 뒤 남아 있던 이름을 찾았습니다.</li>
+          <li>롱폼, 숏폼, 이미지 경로를 에이전트에게 하나씩 맡겨 따로 감사하게 하고, 지적은 모두 재현한 뒤 고쳤습니다. 롱폼인지 판단하는 조건을 프롬프트 선택, 분석 캐시, 해상도 설정이 각자 계산해 서로 다른 답을 내던 것을 함수 하나로 모았고, 숏폼 경로는 수정 전후의 융합 텍스트와 프롬프트, 응답 스키마를 바이트 단위로 비교해 바뀐 것이 없음을 확인했습니다.</li>
+          <li>설계 문서와 구현을 대조한 결과는 일치였지만, 실제 벡터 저장소를 조회하자 롱폼 분석 결과가 병합 단계에서 빠지는 결함이 나왔습니다. 대조가 단위 테스트와 같은 지름길로 병합 단계를 건너뛰었기 때문입니다. 이후에는 계획의 요구사항 전체를 대조하고, 단위 테스트가 건너뛰는 경로를 거치며, 메모리 저장소가 아니라 실제 저장소를 조회해 확인했습니다.</li>
+        </ul>
+        <p class="ax-note">검사가 실제로 위반을 잡는지 확인하는 방법은 <a href="#/ax/honesty">AX / 검사 결과 재확인</a>에 정리했습니다.</p>
+      </div>
+    </div>
     <ul class="stack" aria-label="사용 기술">
       <li>Python</li><li>Gemini 2.5 Flash</li><li>Qdrant</li><li>PostgreSQL</li><li>FFmpeg</li><li>Cloud Run Job</li>
     </ul>
@@ -2861,6 +2938,24 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </ul>
       </div>
     </div>
+    <div class="p-body">
+      <div>
+        <h3>아키텍처</h3>
+        <ul class="points">
+          <li>상품 추천 경로를 새 서비스에 기본 꺼짐 상태로 먼저 추가하고, 같은 요청을 구버전과 새 서비스에 보내 결과를 비교한 뒤 추천 서버에서 옮긴 코드만 지웠습니다. 재고 확인과 상품 벡터 조회처럼 양쪽이 쓰는 코드는 그대로 남겼습니다. 기본값은 모든 상품 벡터에 테넌트 정보가 채워진 것을 확인한 뒤에 켰고, 다시 끄는 경로도 테스트로 남겼습니다.</li>
+          <li>상품 벡터는 추천 서버가 관리하는 컬렉션 하나를 기준으로 두고, 커머스는 읽기만 합니다. 차원이 다른 벡터 공간을 하나 더 만들던 커머스 자체 임베딩 생산 경로는 없앴고, 읽기 전용은 테스트용 가짜 저장소에 쓰기 메서드를 아예 두지 않는 방식으로 확인합니다.</li>
+          <li>행동 분석 서버에는 원본 행동 이벤트만 보내고, 구매 의도나 퍼널 단계 같은 상태 계산은 행동 분석 서버에 맡겼습니다. 전송용 키는 추천 서버의 키를 다시 쓰지 않고, 수집 권한만 가진 키를 따로 발급했습니다.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>AI 개발 방식</h3>
+        <ul class="points">
+          <li>분리할 때 쓴 비교 도구는 처음에 상품 ID 집합만 비교해, 응답 형식이 달라도 같다고 통과시켰습니다. 구현과 따로 진행한 반박 리뷰에서 이 문제를 찾아 응답 형식까지 비교하게 고쳤고, 같은 형식 검사를 PR 전 품질 검사의 단위 테스트에도 넣었습니다.</li>
+          <li>회귀 테스트는 수정 전 코드에서 먼저 실패하는지 확인했고, 수정 전에도 통과하면 무효 테스트로 보고 다시 썼습니다. 코드를 일부러 망가뜨려 테스트가 실제로 깨지는지도 확인했습니다. 반박 검증에서는 재정렬기가 아무것도 바꾸지 않는 데이터로 통과하던 테스트를 찾아, 실제로 순서가 바뀌는 데이터로 바꿨습니다.</li>
+        </ul>
+        <p class="ax-note">검사가 실제로 위반을 잡는지 확인하는 방법은 <a href="#/ax/honesty">AX / 검사 결과 재확인</a>에 정리했습니다.</p>
+      </div>
+    </div>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
       <a class="prev" href="#/addeep/vlm"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / 영상 분석 파이프라인</span></a>
@@ -2894,8 +2989,18 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <h3>배포</h3>
         <ul class="points">
           <li>main 브랜치에 push하면 GitHub Actions가 Vercel에 프로덕션 배포를 만들고 커스텀 도메인을 새 배포에 연결합니다. 배포 토큰 권한으로는 CLI의 도메인 연결 명령을 쓸 수 없어, 같은 작업을 Vercel REST API로 처리했습니다.</li>
-          <li>커밋 전 검사와 CI에서 타입 검사, 린트, 빌드를 실행하게 했습니다. 패키지 사이에서 설정 경로가 잘못 해석되던 문제와 라이브러리 버전 충돌을 바로잡아 모노레포 전체가 타입 검사를 통과합니다.</li>
+          <li>커밋 전에는 바뀐 파일의 린트를, 푸시 전에는 타입 검사와 전체 린트를 실행하게 했습니다. 두 린트 도구가 import 순서를 서로 되돌리던 충돌은 한 도구로 정리했고, 패키지 사이에서 설정 경로가 잘못 해석되던 문제와 라이브러리 버전 충돌을 바로잡아 모노레포 전체가 타입 검사를 통과합니다.</li>
         </ul>
+      </div>
+    </div>
+    <div class="p-body solo">
+      <div>
+        <h3>AI 개발 방식</h3>
+        <ul class="points">
+          <li>AX 페이지에서 소개한 Next.js 공통 템플릿으로 이 사이트를 시작해, 템플릿의 AI 작업 규칙과 편집 전 훅을 그대로 적용했습니다. AI가 운영 환경 변수 파일을 직접 고치거나 API 키·개인 키 형태의 문자열을 쓰려 하면, 파일에 쓰기 전에 그 편집을 막습니다.</li>
+          <li>린트가 잡은 문제를 고친 뒤에는 브라우저 자동화 도구(Playwright MCP)로 사이트를 직접 열어 확인하고 커밋했습니다. 내부 링크를 누를 때마다 전체 페이지를 다시 불러오던 문제와 렌더할 때마다 컴포넌트가 새로 만들어지던 문제를 고쳤고, 언어 전환, 새로고침 뒤 언어 유지, 전체 새로고침 없는 페이지 이동을 확인했습니다.</li>
+        </ul>
+        <p class="ax-note">공통 템플릿은 <a href="#/ax/spread">AX / 사내 도입과 교육</a>에 정리했습니다.</p>
       </div>
     </div>
     <figure class="shot">
@@ -3336,7 +3441,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <figure class="dgf">
           <p class="fig-title">키오스크 앱 구조</p>
           <div class="fig-scroll">
-            <svg class="dg dg-wide" viewBox="0 0 1000 290" role="img" aria-label="키오스크 앱의 기능 폴더마다 View, ViewModel, Service, Repository 계층을 두고, Repository가 REST로 서버를 부르거나 Hive로 기기에 저장하며, GetIt과 Injectable이 각 계층에 의존성을 주입하고, Cursor 규칙 파일로 이 구조를 고정한 구성">
+            <svg class="dg dg-wide" viewBox="0 0 1000 290" role="img" aria-label="키오스크 앱의 기능 폴더마다 View, ViewModel, Service, Repository 계층을 두고, Repository가 REST로 서버를 부르거나 Hive로 기기에 저장하며, GetIt과 Injectable이 각 계층에 의존성을 주입하고, Cursor 규칙 파일로 이 구조를 정리한 구성">
               <defs>
                 <marker id="kk-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head"/></marker>
                 <marker id="kk-ah-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head-accent"/></marker>
@@ -3450,7 +3555,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
           <div>
             <h3>아키텍처</h3>
             <ul class="points">
-              <li>기능별로 View, ViewModel, Service, Repository 계층을 나눈 MVVM 구조로 만들었습니다. Repository는 서버 요청(REST)과 기기 저장(Hive) 중 어느 쪽을 쓸지 정합니다.</li>
+              <li>기능별로 View, ViewModel, Service, Repository, DataSource 계층을 나눈 MVVM 구조로 만들었습니다. 서버 요청(REST)과 기기 저장(Hive)은 DataSource로 따로 두고 Repository가 둘을 묶어, 이용을 시작하면 종료 시각을 기기에 먼저 저장한 뒤 서버에 알립니다.</li>
               <li>의존성은 GetIt과 Injectable로 주입했습니다. AI 코딩 도구가 이 구조와 주입 방식을 따르도록 MVVM, Provider, 폴더 규칙을 Cursor 규칙 파일에 정리했습니다.</li>
               <li>한국어와 영어 문구는 번역 파일로 분리했습니다.</li>
             </ul>
@@ -4010,6 +4115,24 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
           <li>Next.js로 환율 영향 분석, 1페이지 보고서, 경로, 결정, 운영 화면을 만들었습니다.</li>
         </ul>
       </div></div>
+    <div class="p-body">
+      <div>
+        <h3>아키텍처</h3>
+        <ul class="points">
+          <li>실행 기록에는 입력 데이터의 해시와 엔진 코드의 해시를 따로 남겼습니다. 엔진 버전을 데이터 해시에 넣으면 배포할 때마다 저장된 해시가 모두 달라져, 입력이 같은지 비교할 수 없기 때문입니다. 결과가 다시 나오지 않을 때 원인이 데이터인지 코드인지 먼저 나눠 볼 수 있습니다.</li>
+          <li>그래프는 적용 범위로 먼저 좁히고, 그 안에서 회사로 실제로 이어지는 상류 엣지만 해석합니다. 전체 엣지를 해석하던 때는 회사와 관계없는 노드만 추가해도 실행 해시가 바뀌었습니다.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>AI 개발 방식</h3>
+        <ul class="points">
+          <li>저장소만의 규칙은 문서에만 두지 않고 Docker 없이 도는 소스 검사 테스트로 옮겼습니다. 외래키를 쓰거나 회사 단위 삭제 대상 목록에서 테이블이 빠지면 실패합니다. 규칙 문서에 적은 경로, 명령, 클래스 이름이 소스와 맞는지는 CI 첫 단계에서 확인합니다.</li>
+          <li>계산 커널에 Spring, JPA, 저장소, 현재 시각, 난수가 들어오면 실패하는 소스 검사 테스트를 커널과 함께 만들었습니다. 이어서 에이전트들에게 커널을 여러 관점에서 적대적으로 검증하게 했는데, 그중 한 에이전트가 커널을 별도 JVM에서 반복 실행해 Java 불변 맵의 순회 순서 때문에 결과 순서가 실행마다 달라지는 문제를 찾았습니다. 그 뒤로 순서가 흔들리는 컬렉션도 금지 목록에 넣고, 금지 목록이 실제 위반 코드를 잡는지도 테스트로 확인합니다.</li>
+          <li>고객과 직원 역할을 맡은 에이전트가 코드를 보지 않고 회사 범위 API 키로 실제 서버만 써 보게 하고, 막히면 우회하지 말고 결함으로 적게 했습니다. 이 시험에서 회사 키로 전체 그래프가 조회되던 인증 필터 순서 문제와, 다른 회사 승인자 이름이 보이던 조회 범위를 찾아 고쳤습니다.</li>
+          <li>프론트엔드는 화면이 숫자를 만들지 않도록 소스 검사 테스트로 규칙을 강제했습니다. 화면 계층에 합계·정렬·반올림 코드가 들어오거나, 정해진 파일 밖에서 백엔드를 호출하거나 API 키를 읽으면 실패합니다. 화면 문구는 백엔드가 내보낸 화면 명세와 대조해, 명세가 바뀌면 테스트가 깨집니다.</li>
+        </ul>
+      </div>
+    </div>
     <ul class="stack" aria-label="사용 기술">
       <li>Java 17</li><li>Spring Boot 3.5</li><li>JPA</li><li>PostgreSQL</li><li>Flyway</li><li>Testcontainers</li><li>Python</li><li>Next.js 16</li><li>React 19</li><li>TypeScript</li><li>Docker</li><li>GitHub Actions</li>
     </ul>
