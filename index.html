@@ -2350,6 +2350,73 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </ul>
       </div>
     </div>
+    <figure class="dgf">
+      <p class="fig-title">요청 경로별 인증과 롤백 뒤에 남기는 기록</p>
+      <div class="fig-scroll"><svg class="dg dg-wide" viewBox="0 0 1000 376" role="img" aria-label="SNS 백엔드의 요청 경로별 인증과 트랜잭션 처리. 위: 관리자 경로 요청은 관리자 세션 필터가 TOTP 2단계 인증 세션을 확인하고, 요청마다 DB에서 계정 상태를 다시 확인한 뒤 관리자 API로 간다. 그 밖의 요청은 Firebase 토큰 필터가 ID 토큰을 확인해 앱 API로 가며, 이 필터는 관리자 경로를 건너뛴다. 아래: 관리자 요청이 롤백되면 커밋 뒤에만 실행되는 캐시 반영과 감사 로그는 남지 않고, 별도 트랜잭션으로 저장하는 로그인 실패 횟수와 활동 기록은 남아 시도 횟수 제한이 유지된다.">
+  <defs>
+    <marker id="ax6s-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head"/></marker>
+    <marker id="ax6s-ah-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head-accent"/></marker>
+  </defs>
+
+  <text class="t-h" x="20" y="22">인증 필터, 경로별로 분리</text>
+  <rect class="box" x="20" y="62" width="130" height="60" rx="4"/>
+  <text class="t-r" x="36" y="88">요청</text>
+  <text class="t-m" x="36" y="108">앱, 관리자 웹</text>
+
+  <path class="edge-accent" d="M150 80 H190 V58 H228" marker-end="url(#ax6s-ah-a)"/>
+  <text class="t-a" x="158" y="46">/admin/</text>
+  <path class="edge" d="M150 104 H190 V126 H228" marker-end="url(#ax6s-ah)"/>
+  <text class="t-m" x="158" y="146">그 외</text>
+
+  <rect class="box-accent" x="230" y="34" width="230" height="48" rx="4"/>
+  <text class="t-r" x="246" y="54">관리자 세션 필터</text>
+  <text class="t-m" x="246" y="72">TOTP 2단계 인증 세션 확인</text>
+  <line class="edge-accent" x1="460" y1="58" x2="498" y2="58" marker-end="url(#ax6s-ah-a)"/>
+  <rect class="box-accent" x="500" y="34" width="230" height="48" rx="4"/>
+  <text class="t-r" x="516" y="54">계정 상태 다시 확인</text>
+  <text class="t-m" x="516" y="72">요청마다 DB 조회, 정지면 차단</text>
+  <line class="edge-accent" x1="730" y1="58" x2="768" y2="58" marker-end="url(#ax6s-ah-a)"/>
+  <rect class="box" x="770" y="34" width="210" height="48" rx="4"/>
+  <text class="t-r" x="786" y="54">관리자 API</text>
+  <text class="t-m" x="786" y="72">개인정보를 다루는 관리 화면</text>
+
+  <rect class="box" x="230" y="102" width="230" height="48" rx="4"/>
+  <text class="t-r" x="246" y="122">Firebase 토큰 필터</text>
+  <text class="t-m" x="246" y="140">ID 토큰 확인</text>
+  <line class="edge" x1="460" y1="126" x2="768" y2="126" marker-end="url(#ax6s-ah)"/>
+  <text class="t-n" x="614" y="116" text-anchor="middle">관리자 경로는 이 필터를 건너뜀</text>
+  <rect class="box" x="770" y="102" width="210" height="48" rx="4"/>
+  <text class="t-r" x="786" y="122">앱 API</text>
+  <text class="t-m" x="786" y="140">게시물, 회원, 팔로우</text>
+
+  <line class="edge-dash" x1="20" y1="178" x2="980" y2="178"/>
+  <text class="t-h" x="20" y="206">요청이 롤백될 때 버리는 기록과 남기는 기록</text>
+
+  <rect class="box-strong" x="20" y="252" width="200" height="72" rx="4"/>
+  <text class="t-r" x="36" y="282">관리자 요청 트랜잭션</text>
+  <text class="t-m" x="36" y="302">인증에 실패하면 롤백</text>
+
+  <path class="edge" d="M220 272 H252 V250 H298" marker-end="url(#ax6s-ah)"/>
+  <rect class="box" x="300" y="222" width="300" height="56" rx="4"/>
+  <text class="t-r" x="316" y="244">캐시 반영, 감사 로그</text>
+  <text class="t-m" x="316" y="264">커밋 뒤에만 실행 (AFTER_COMMIT)</text>
+  <line class="edge" x1="600" y1="250" x2="658" y2="250" marker-end="url(#ax6s-ah)"/>
+  <rect class="inner" x="660" y="222" width="320" height="56" rx="4"/>
+  <text class="t-r" x="676" y="244">롤백되면 남지 않음</text>
+  <text class="t-m" x="676" y="264">롤백된 변경은 캐시와 감사 로그에 없음</text>
+
+  <path class="edge-accent" d="M220 304 H252 V330 H298" marker-end="url(#ax6s-ah-a)"/>
+  <rect class="box-accent" x="300" y="302" width="300" height="56" rx="4"/>
+  <text class="t-r" x="316" y="324">로그인 실패 횟수, 활동 기록</text>
+  <text class="t-m" x="316" y="344">별도 트랜잭션 (REQUIRES_NEW)</text>
+  <line class="edge-accent" x1="600" y1="330" x2="658" y2="330" marker-end="url(#ax6s-ah-a)"/>
+  <rect class="inner-accent" x="660" y="302" width="320" height="56" rx="4"/>
+  <text class="t-r" x="676" y="324">롤백돼도 남음</text>
+  <text class="t-a" x="676" y="344">실패 횟수가 남아 시도 제한이 유지됨</text>
+</svg></div>
+      <p class="scroll-hint">옆으로 밀면 전체 도식을 볼 수 있습니다.</p>
+      <figcaption>관리자 경로는 사용자 토큰 필터를 거치지 않아 관리자 인증 정보가 사용자 정보로 덮이지 않습니다. 아래는 같은 롤백에서 버려야 하는 기록과 남겨야 하는 기록을 나눈 방식입니다. 파란 경로가 관리자 요청과 롤백돼도 남겨야 하는 기록입니다.</figcaption>
+    </figure>
     <div class="p-body">
       <div>
         <h3>아키텍처</h3>
@@ -2496,6 +2563,60 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       </div>
     </div>
 
+    <figure class="dgf">
+      <p class="fig-title">계층 의존 방향과 검사가 막는 시점</p>
+      <div class="fig-scroll"><svg class="dg dg-wide" viewBox="0 0 1000 400" role="img" aria-label="추천 서버의 계층 의존 방향과 검사 시점. 프레임워크(API, 조립 모듈)는 오케스트레이터를, 오케스트레이터는 유스케이스와 인프라를 의존하고, 유스케이스와 인프라는 도메인만 의존한다. 인프라는 도메인 인터페이스를 구현한다. 유스케이스는 인프라를 직접 참조하지 않고, 도메인과 유스케이스에는 웹 프레임워크와 검증 라이브러리를 들이지 않는다. 오른쪽은 검사 시점이다. 파일 쓰기 전에는 편집 전 훅이 웹 프레임워크 import와 광범위한 예외 처리를 막고 API 밖 HTTP 예외는 경고한다. 커밋 전에는 도메인 순수성, 단위 테스트, 해석할 수 없는 사용자 벡터 저장을 확인하고, 위험 경로를 건드린 커밋은 다른 AI 모델이 리뷰한다. PR을 올리기 전에는 import 검사기로 계층 계약을 확인하고 미사용 코드와 깨진 import를 검사한다.">
+  <defs>
+    <marker id="ax6r-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head"/></marker>
+    <marker id="ax6r-ah-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head-accent"/></marker>
+  </defs>
+
+  <text class="t-h" x="20" y="22">의존 방향, 안쪽으로만</text>
+  <rect class="box" x="20" y="34" width="440" height="50" rx="4"/>
+  <text class="t-r" x="36" y="56">프레임워크: API, 조립 모듈</text>
+  <text class="t-m" x="36" y="74">라우터, 의존성 조립, 설정</text>
+  <line class="edge" x1="240" y1="84" x2="240" y2="112" marker-end="url(#ax6r-ah)"/>
+  <rect class="box" x="20" y="114" width="440" height="50" rx="4"/>
+  <text class="t-r" x="36" y="136">오케스트레이터</text>
+  <text class="t-m" x="36" y="154">후보 생성 뒤 재정렬 조정</text>
+  <line class="edge" x1="125" y1="164" x2="125" y2="192" marker-end="url(#ax6r-ah)"/>
+  <line class="edge" x1="355" y1="164" x2="355" y2="192" marker-end="url(#ax6r-ah)"/>
+  <rect class="box-accent" x="20" y="194" width="210" height="60" rx="4"/>
+  <text class="t-r" x="36" y="218">유스케이스</text>
+  <text class="t-m" x="36" y="238">성공·실패 결과 반환</text>
+  <rect class="box" x="250" y="194" width="210" height="60" rx="4"/>
+  <text class="t-r" x="266" y="218">인프라</text>
+  <text class="t-m" x="266" y="238">저장소, 채널 구현체</text>
+  <line class="edge-accent" x1="125" y1="254" x2="125" y2="282" marker-end="url(#ax6r-ah-a)"/>
+  <line class="edge" x1="355" y1="254" x2="355" y2="282" marker-end="url(#ax6r-ah)"/>
+  <text class="t-m" x="365" y="273">인터페이스 구현</text>
+  <rect class="box-strong" x="20" y="284" width="440" height="56" rx="4"/>
+  <text class="t-r" x="36" y="308">도메인</text>
+  <text class="t-m" x="36" y="328">엔티티, 인터페이스(Protocol)</text>
+  <text class="t-n" x="20" y="366">유스케이스 → 인프라 직접 참조 금지, 도메인 인터페이스로 대체</text>
+  <text class="t-n" x="20" y="386">도메인·유스케이스에 웹 프레임워크와 검증 라이브러리 금지</text>
+
+  <text class="t-h" x="520" y="22">검사가 막는 시점</text>
+  <rect class="box-accent" x="520" y="34" width="460" height="96" rx="4"/>
+  <text class="t-b" x="536" y="58">파일 쓰기 전, 편집 전 훅</text>
+  <text class="t-m" x="536" y="82">도메인·유스케이스의 웹 프레임워크 import 차단</text>
+  <text class="t-m" x="536" y="100">유스케이스의 광범위한 예외 처리 차단</text>
+  <text class="t-m" x="536" y="118">API 밖에서 만드는 HTTP 예외는 경고</text>
+  <line class="edge" x1="750" y1="130" x2="750" y2="144" marker-end="url(#ax6r-ah)"/>
+  <rect class="box" x="520" y="146" width="460" height="96" rx="4"/>
+  <text class="t-b" x="536" y="170">커밋 전, 커밋 전 검사</text>
+  <text class="t-m" x="536" y="194">도메인 순수성, 단위 테스트</text>
+  <text class="t-m" x="536" y="212">해석할 수 없는 사용자 벡터 저장 차단</text>
+  <text class="t-m" x="536" y="230">위험 경로를 건드린 커밋은 다른 AI 모델이 리뷰</text>
+  <line class="edge" x1="750" y1="242" x2="750" y2="256" marker-end="url(#ax6r-ah)"/>
+  <rect class="box" x="520" y="258" width="460" height="78" rx="4"/>
+  <text class="t-b" x="536" y="282">PR 올리기 전, 품질 검사</text>
+  <text class="t-m" x="536" y="306">import 검사기로 계층 계약 확인</text>
+  <text class="t-m" x="536" y="324">미사용 코드, 깨진 import 검사</text>
+</svg></div>
+      <p class="scroll-hint">옆으로 밀면 전체 도식을 볼 수 있습니다.</p>
+      <figcaption>왼쪽 화살표는 의존 방향이고 안쪽으로만 향합니다. 같은 계층 규칙을 파일을 쓰기 전, 커밋 전, PR을 올리기 전에 나눠 검사합니다. 파란 상자는 에이전트가 파일을 쓰기 전에 막는 규칙입니다.</figcaption>
+    </figure>
     <div class="p-body">
       <div>
         <h3>아키텍처</h3>
@@ -2620,6 +2741,76 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </div>
       </div>
     </div>
+    <figure class="dgf">
+      <p class="fig-title">공개 성향 요약의 두 층 계산</p>
+      <div class="fig-scroll"><svg class="dg dg-wide" viewBox="0 0 1000 392" role="img" aria-label="행동 분석 서버가 외부에 공개하는 성향 요약의 두 층 계산. 커머스, 콘텐츠, 소셜, 광고 변환기가 각 서비스의 필드만 읽어 서비스 이름이 없는 중립 신호로 바꾸고, 공통 계산층은 중립 신호만 읽어 축마다 값과 근거 양을 계산한다. 응답은 근거가 없는 축을 0으로 채우지 않고 뺀다. 변환기끼리의 참조, 계산층에서 변환층으로의 참조, 두 층에서 성격 5요인 추정 모듈을 쓰는 것은 import 검사 규칙으로 막고, 계산층이 서비스별 필드에 접근하는 것은 구문 트리 테스트로 막는다.">
+  <defs>
+    <marker id="ax6u-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head"/></marker>
+    <marker id="ax6u-ah-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head-accent"/></marker>
+  </defs>
+
+  <text class="t-h" x="20" y="22">채널 변환층, 서비스별</text>
+  <text class="t-h" x="340" y="22">중립 신호</text>
+  <text class="t-h" x="580" y="22">공통 계산층</text>
+  <text class="t-h" x="820" y="22">공개 성향 요약</text>
+
+  <rect class="box-accent" x="20" y="34" width="250" height="50" rx="4"/>
+  <text class="t-r" x="36" y="55">커머스 변환기</text>
+  <text class="t-m" x="36" y="74">장바구니·환불·찜 필드만 읽음</text>
+  <rect class="box" x="20" y="94" width="250" height="50" rx="4"/>
+  <text class="t-r" x="36" y="115">콘텐츠 변환기</text>
+  <text class="t-m" x="36" y="134">콘텐츠 서비스 필드만 읽음</text>
+  <rect class="box" x="20" y="154" width="250" height="50" rx="4"/>
+  <text class="t-r" x="36" y="175">소셜 변환기</text>
+  <text class="t-m" x="36" y="194">소셜 서비스 필드만 읽음</text>
+  <rect class="box" x="20" y="214" width="250" height="50" rx="4"/>
+  <text class="t-r" x="36" y="235">광고 변환기</text>
+  <text class="t-m" x="36" y="254">광고 서비스 필드만 읽음</text>
+
+  <line class="edge" x1="270" y1="119" x2="300" y2="119"/>
+  <line class="edge" x1="270" y1="179" x2="300" y2="179"/>
+  <line class="edge" x1="270" y1="239" x2="300" y2="239"/>
+  <line class="edge" x1="300" y1="149" x2="300" y2="239"/>
+  <path class="edge-accent" d="M270 59 H300 V149 H338" marker-end="url(#ax6u-ah-a)"/>
+
+  <rect class="box-strong" x="340" y="99" width="190" height="100" rx="4"/>
+  <text class="t-b" x="356" y="127">중립 신호</text>
+  <text class="t-m" x="356" y="151">서비스 이름이 없는 신호</text>
+  <text class="t-m" x="356" y="171">값과 근거 양</text>
+  <line class="edge-accent" x1="530" y1="149" x2="578" y2="149" marker-end="url(#ax6u-ah-a)"/>
+
+  <rect class="box-accent" x="580" y="99" width="200" height="100" rx="4"/>
+  <text class="t-b" x="596" y="127">성향 축 계산</text>
+  <text class="t-m" x="596" y="151">중립 신호만 읽음</text>
+  <text class="t-m" x="596" y="171">축마다 근거 양을 합산</text>
+  <line class="edge-accent" x1="780" y1="149" x2="818" y2="149" marker-end="url(#ax6u-ah-a)"/>
+
+  <rect class="box" x="820" y="69" width="160" height="160" rx="4"/>
+  <text class="t-b" x="836" y="97">성향 요약 응답</text>
+  <text class="t-m" x="836" y="123">축마다 값과 근거 양</text>
+  <text class="t-m" x="836" y="151">근거가 없는 축은</text>
+  <text class="t-m" x="836" y="169">0으로 채우지 않고</text>
+  <text class="t-m" x="836" y="187">응답에서 뺌</text>
+  <text class="t-a" x="836" y="213">0과 '근거 없음'은 다름</text>
+
+  <line class="edge-dash" x1="20" y1="284" x2="980" y2="284"/>
+  <text class="t-h" x="20" y="308">import 검사 규칙과 테스트로 막은 참조</text>
+  <rect class="inner-note" x="20" y="320" width="225" height="56" rx="4"/>
+  <text class="t-r" x="36" y="344">변환기 ↔ 변환기</text>
+  <text class="t-n" x="36" y="364">서로 참조 금지</text>
+  <rect class="inner-note" x="265" y="320" width="225" height="56" rx="4"/>
+  <text class="t-r" x="281" y="344">계산층 → 변환층</text>
+  <text class="t-n" x="281" y="364">역방향 참조 금지</text>
+  <rect class="inner-note" x="510" y="320" width="225" height="56" rx="4"/>
+  <text class="t-r" x="526" y="344">두 층 → 성격 5요인 추정</text>
+  <text class="t-n" x="526" y="364">가져다 쓰기 금지</text>
+  <rect class="inner-note" x="755" y="320" width="225" height="56" rx="4"/>
+  <text class="t-r" x="771" y="344">계산층 → 서비스별 필드</text>
+  <text class="t-n" x="771" y="364">구문 트리 테스트로 차단</text>
+</svg></div>
+      <p class="scroll-hint">옆으로 밀면 전체 도식을 볼 수 있습니다.</p>
+      <figcaption>서비스마다 다른 필드는 변환기에서만 다루고, 공통 계산층은 중립 신호만 봅니다. 아래 칸은 import 검사 규칙과 구문 트리 테스트로 막은 참조입니다. 파란 경로는 커머스 행동 기록이 성향 요약까지 가는 흐름입니다.</figcaption>
+    </figure>
     <div class="p-body">
       <div>
         <h3>아키텍처</h3>
@@ -2831,6 +3022,58 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </div>
       </div>
     </div>
+    <figure class="dgf">
+      <p class="fig-title">추천 서버와 공유하는 계약과 모델 제공자 선택</p>
+      <div class="fig-scroll"><svg class="dg dg-wide" viewBox="0 0 1000 336" role="img" aria-label="영상 분석 파이프라인과 추천 서버의 공유 계약. 영상 분석은 임베딩 모델, 임베딩 버전, 상품·콘텐츠 저장 형식을 추천 서버 코드에서 import해 쓰고 복사하지 않아, 두 서비스가 같은 벡터 공간을 쓴다. 추천 서버는 서빙 중 모델 로드에 실패하면 다른 채널로 넘어가지만, 영상 분석은 분석 비용이 들기 전에 시작 단계에서 종료한다. 아래: 배포 설정의 제공자 이름을 등록부가 받아 등록된 제공자만 어댑터로 만들고, 등록되지 않은 이름이면 시작 단계에서 멈춘다. 고르지 않은 제공자의 SDK는 설치하지 않는다.">
+  <defs>
+    <marker id="ax6v-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head"/></marker>
+    <marker id="ax6v-ah-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head-accent"/></marker>
+  </defs>
+
+  <text class="t-h" x="20" y="22">공유 계약은 가져다 씀</text>
+  <rect class="box-accent" x="20" y="34" width="270" height="110" rx="4"/>
+  <text class="t-b" x="36" y="58">영상 분석 파이프라인</text>
+  <text class="t-m" x="36" y="82">배치 워커, 분석마다 비용 발생</text>
+  <text class="t-m" x="36" y="104">임베딩 모델을 못 불러오면</text>
+  <text class="t-a" x="36" y="124">분석을 시작하기 전에 종료</text>
+  <line class="edge-accent" x1="290" y1="80" x2="368" y2="80" marker-end="url(#ax6v-ah-a)"/>
+  <text class="t-a" x="329" y="72" text-anchor="middle">import</text>
+  <text class="t-m" x="329" y="98" text-anchor="middle">복사 안 함</text>
+  <rect class="box-strong" x="370" y="34" width="270" height="110" rx="4"/>
+  <text class="t-b" x="386" y="58">추천 서버의 공유 계약</text>
+  <text class="t-m" x="386" y="82">임베딩 모델, 임베딩 버전</text>
+  <text class="t-m" x="386" y="104">상품·콘텐츠 저장 형식</text>
+  <text class="t-m" x="386" y="124">서빙에선 로드 실패 시 다른 채널로</text>
+  <line class="edge" x1="640" y1="80" x2="718" y2="80" marker-end="url(#ax6v-ah)"/>
+  <text class="t-m" x="679" y="72" text-anchor="middle">같은 형식</text>
+  <rect class="box" x="720" y="34" width="260" height="110" rx="4"/>
+  <text class="t-b" x="736" y="58">벡터 저장소</text>
+  <text class="t-m" x="736" y="82">같은 벡터 공간 하나</text>
+  <text class="t-m" x="736" y="104">영상 분석이 저장하고</text>
+  <text class="t-m" x="736" y="124">추천 서버가 검색</text>
+
+  <line class="edge-dash" x1="20" y1="172" x2="980" y2="172"/>
+  <text class="t-h" x="20" y="200">모델 제공자 선택</text>
+  <rect class="box" x="20" y="214" width="220" height="84" rx="4"/>
+  <text class="t-r" x="36" y="238">배포 설정</text>
+  <text class="t-m" x="36" y="262">쓸 제공자 이름</text>
+  <text class="t-m" x="36" y="282">고른 제공자의 SDK만 설치</text>
+  <line class="edge" x1="240" y1="256" x2="298" y2="256" marker-end="url(#ax6v-ah)"/>
+  <rect class="box-accent" x="300" y="214" width="260" height="84" rx="4"/>
+  <text class="t-r" x="316" y="238">제공자 등록부</text>
+  <text class="t-m" x="316" y="262">등록된 제공자만 어댑터로 생성</text>
+  <text class="t-m" x="316" y="282">핵심 로직엔 제공자 이름 없음</text>
+  <path class="edge" d="M560 236 H618" marker-end="url(#ax6v-ah)"/>
+  <rect class="box" x="620" y="214" width="360" height="40" rx="4"/>
+  <text class="t-r" x="636" y="239">등록된 이름이면 그 어댑터로 실행</text>
+  <path class="edge-accent" d="M560 278 H618" marker-end="url(#ax6v-ah-a)"/>
+  <rect class="inner-note" x="620" y="258" width="360" height="40" rx="4"/>
+  <text class="t-r" x="636" y="283">등록 안 된 이름이면 시작 단계에서 멈춤</text>
+  <text class="t-m" x="620" y="322">전에는 모르는 이름도 오류 없이 기존 모델로 실행됐음</text>
+</svg></div>
+      <p class="scroll-hint">옆으로 밀면 전체 도식을 볼 수 있습니다.</p>
+      <figcaption>공유 계약은 추천 서버 한 곳에만 두고 가져다 써서 두 서비스의 벡터가 어긋나지 않게 했습니다. 같은 실패라도 서비스마다 처리가 달라야 해서, 공유 코드는 그대로 두고 영상 분석의 어댑터에서만 다르게 처리했습니다.</figcaption>
+    </figure>
     <div class="p-body">
       <div>
         <h3>아키텍처</h3>
@@ -2938,6 +3181,64 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </ul>
       </div>
     </div>
+    <figure class="dgf">
+      <p class="fig-title">추천 서버에서 커머스 추천을 떼어 낸 순서</p>
+      <div class="fig-scroll"><svg class="dg dg-wide" viewBox="0 0 1000 372" role="img" aria-label="커머스 추천을 추천 서버에서 떼어 낸 순서와 나눈 뒤의 데이터 흐름. 1 새 서비스에 기본 꺼짐 상태로 추가하고 구버전이 그대로 응답한다. 2 같은 요청을 양쪽에 보내 응답 형식까지 대조한다. 처음엔 상품 ID 집합만 비교해 형식 차이를 놓쳤고, 반박 리뷰가 찾아 형식 비교를 추가하고 단위 테스트에도 넣었다. 3 추천 서버에서 옮긴 코드만 삭제하고 공유 코드는 남긴다. 4 테넌트 정보를 확인한 뒤 기본값을 켜고, 끄는 경로는 테스트로 유지한다. 아래: 상품 벡터 컬렉션은 추천 서버가 관리하는 하나를 기준으로 두고 커머스는 읽기만 한다. 커머스는 행동 분석 서버에 원본 이벤트만 보내고 상태를 조회하며, 구매 의도와 퍼널 단계는 행동 분석 서버가 수집 전용 키로 이벤트를 받아 계산한다.">
+  <defs>
+    <marker id="ax6c-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head"/></marker>
+    <marker id="ax6c-ah-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head-accent"/></marker>
+  </defs>
+
+  <text class="t-h" x="20" y="22">옮긴 순서</text>
+  <rect class="box" x="20" y="34" width="210" height="84" rx="4"/>
+  <text class="t-b" x="36" y="58">1. 새 서비스에 추가</text>
+  <text class="t-m" x="36" y="82">기본 꺼짐 상태로 배포</text>
+  <text class="t-m" x="36" y="100">구버전이 그대로 응답</text>
+  <line class="edge" x1="230" y1="76" x2="268" y2="76" marker-end="url(#ax6c-ah)"/>
+  <rect class="box-accent" x="270" y="34" width="210" height="84" rx="4"/>
+  <text class="t-b" x="286" y="58">2. 결과 비교</text>
+  <text class="t-m" x="286" y="82">같은 요청을 양쪽에 보냄</text>
+  <text class="t-m" x="286" y="100">응답 형식까지 대조</text>
+  <line class="edge" x1="480" y1="76" x2="518" y2="76" marker-end="url(#ax6c-ah)"/>
+  <rect class="box" x="520" y="34" width="210" height="84" rx="4"/>
+  <text class="t-b" x="536" y="58">3. 옮긴 코드만 삭제</text>
+  <text class="t-m" x="536" y="82">추천 서버에서 삭제</text>
+  <text class="t-m" x="536" y="100">공유 코드는 남김</text>
+  <line class="edge" x1="730" y1="76" x2="768" y2="76" marker-end="url(#ax6c-ah)"/>
+  <rect class="box" x="770" y="34" width="210" height="84" rx="4"/>
+  <text class="t-b" x="786" y="58">4. 기본값 켜기</text>
+  <text class="t-m" x="786" y="82">테넌트 정보 확인 뒤</text>
+  <text class="t-m" x="786" y="100">끄는 경로는 테스트로 유지</text>
+
+  <line class="edge-accent" x1="375" y1="118" x2="375" y2="136"/>
+  <rect class="inner-note" x="270" y="138" width="460" height="52" rx="4"/>
+  <text class="t-n" x="286" y="160">처음엔 상품 ID 집합만 비교해 형식 차이를 놓침</text>
+  <text class="t-m" x="286" y="179">반박 리뷰가 찾아 응답 형식 비교를 추가하고 단위 테스트에도 넣음</text>
+
+  <line class="edge-dash" x1="20" y1="214" x2="980" y2="214"/>
+  <text class="t-h" x="20" y="242">나눈 뒤 데이터를 만드는 곳</text>
+  <rect class="box" x="20" y="256" width="260" height="96" rx="4"/>
+  <text class="t-b" x="36" y="280">상품 벡터 컬렉션</text>
+  <text class="t-m" x="36" y="304">추천 서버가 관리하는 하나</text>
+  <text class="t-m" x="36" y="322">같은 벡터 공간을 함께 씀</text>
+  <line class="edge" x1="368" y1="304" x2="282" y2="304" marker-end="url(#ax6c-ah)"/>
+  <text class="t-m" x="325" y="296" text-anchor="middle">읽기만</text>
+  <rect class="box-accent" x="370" y="256" width="260" height="96" rx="4"/>
+  <text class="t-b" x="386" y="280">커머스 추천</text>
+  <text class="t-m" x="386" y="304">상품 ID와 점수만 반환</text>
+  <text class="t-m" x="386" y="322">자체 임베딩 생산 경로 없앰</text>
+  <line class="edge-accent" x1="630" y1="286" x2="718" y2="286" marker-end="url(#ax6c-ah-a)"/>
+  <text class="t-a" x="675" y="278" text-anchor="middle">원본 이벤트</text>
+  <line class="edge" x1="718" y1="326" x2="632" y2="326" marker-end="url(#ax6c-ah)"/>
+  <text class="t-m" x="675" y="318" text-anchor="middle">상태 조회</text>
+  <rect class="box" x="720" y="256" width="260" height="96" rx="4"/>
+  <text class="t-b" x="736" y="280">행동 분석 서버</text>
+  <text class="t-m" x="736" y="304">구매 의도, 퍼널 단계 계산</text>
+  <text class="t-m" x="736" y="322">수집 전용 키로 이벤트를 받음</text>
+</svg></div>
+      <p class="scroll-hint">옆으로 밀면 전체 도식을 볼 수 있습니다.</p>
+      <figcaption>파란 상자는 분리를 진행해도 되는지 판단한 비교 단계입니다. 나눈 뒤에도 상품 벡터와 사용자 상태는 한 곳에서만 만들고, 커머스는 읽기만 합니다.</figcaption>
+    </figure>
     <div class="p-body">
       <div>
         <h3>아키텍처</h3>
@@ -4115,6 +4416,50 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
           <li>Next.js로 환율 영향 분석, 1페이지 보고서, 경로, 결정, 운영 화면을 만들었습니다.</li>
         </ul>
       </div></div>
+    <figure class="dgf">
+      <p class="fig-title">재실행 결과를 두 해시로 판정</p>
+      <div class="fig-scroll"><svg class="dg dg-wide" viewBox="0 0 1000 292" role="img" aria-label="cascade 실행 기록의 두 해시. 실행 해시는 입력 스냅샷과 정렬·반올림 방식의 버전으로 만들고, 실행 시각과 실행자는 뺀다. 코드 해시는 엔진 커밋과 버전으로 만들고 실행 해시에는 넣지 않는다. 엔진 버전을 실행 해시에 넣으면 배포할 때마다 해시가 달라져 입력이 같은지 비교할 수 없기 때문이다. 실행 해시가 같은데 결과가 다르면, 코드 해시가 다를 때는 예상된 차이, 같을 때는 비결정성 결함으로 판정하고, 커밋을 모르면 같은 코드로 보지 않는다.">
+  <defs>
+    <marker id="ax6k-ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head"/></marker>
+    <marker id="ax6k-ah-a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" class="head-accent"/></marker>
+  </defs>
+
+  <text class="t-h" x="20" y="22">실행 기록에 남기는 두 해시</text>
+  <rect class="box-accent" x="20" y="34" width="420" height="88" rx="4"/>
+  <text class="t-b" x="36" y="58">실행 해시, 데이터</text>
+  <text class="t-m" x="36" y="82">입력 스냅샷, 정렬·반올림 방식의 버전</text>
+  <text class="t-m" x="36" y="102">실행 시각과 실행자는 해시 입력에서 뺌</text>
+  <rect class="box" x="20" y="138" width="420" height="88" rx="4"/>
+  <text class="t-b" x="36" y="162">코드 해시, 매니페스트</text>
+  <text class="t-m" x="36" y="186">엔진 커밋과 버전</text>
+  <text class="t-m" x="36" y="206">실행 해시에는 넣지 않음</text>
+  <text class="t-m" x="20" y="256">엔진 버전을 실행 해시에 넣으면 배포할 때마다 해시가 달라져</text>
+  <text class="t-m" x="20" y="274">입력이 같은지 비교할 수 없음</text>
+
+  <text class="t-h" x="500" y="22">같은 입력으로 다시 실행했는데 결과가 다를 때</text>
+  <rect class="box-strong" x="500" y="34" width="480" height="44" rx="4"/>
+  <text class="t-r" x="516" y="61">실행 해시는 같고 결과는 다름</text>
+  <path class="edge" d="M740 78 V94 H576 V108" marker-end="url(#ax6k-ah)"/>
+  <line class="edge-accent" x1="740" y1="78" x2="740" y2="108" marker-end="url(#ax6k-ah-a)"/>
+  <path class="edge" d="M740 94 H904 V108" marker-end="url(#ax6k-ah)"/>
+  <rect class="box" x="500" y="110" width="152" height="84" rx="4"/>
+  <text class="t-r" x="516" y="134">코드 해시 다름</text>
+  <text class="t-m" x="516" y="158">예상된 차이</text>
+  <text class="t-m" x="516" y="176">코드가 바뀜</text>
+  <rect class="box-accent" x="664" y="110" width="152" height="84" rx="4"/>
+  <text class="t-r" x="680" y="134">코드 해시 같음</text>
+  <text class="t-n" x="680" y="158">비결정성 결함</text>
+  <text class="t-m" x="680" y="176">고쳐야 할 문제</text>
+  <rect class="box" x="828" y="110" width="152" height="84" rx="4"/>
+  <text class="t-r" x="844" y="134">커밋을 모름</text>
+  <text class="t-m" x="844" y="158">같다고 보지 않음</text>
+  <text class="t-m" x="844" y="176">모름을 같음으로 안 바꿈</text>
+  <text class="t-m" x="500" y="226">판정 규칙은 한 곳에 모으고, 커밋을 모르는 두 빌드가</text>
+  <text class="t-m" x="500" y="244">같은 해시로 겹치는 경우는 테스트로 고정</text>
+</svg></div>
+      <p class="scroll-hint">옆으로 밀면 전체 도식을 볼 수 있습니다.</p>
+      <figcaption>같은 입력으로 다시 실행한 결과가 다를 때, 코드가 바뀐 탓인지 계산이 흔들린 탓인지 먼저 나눠 봅니다. 파란 경로가 고쳐야 하는 비결정성 결함입니다.</figcaption>
+    </figure>
     <div class="p-body">
       <div>
         <h3>아키텍처</h3>
