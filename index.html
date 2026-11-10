@@ -689,6 +689,23 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .child .shot { grid-column: 1 / -1; margin-top: 14px; }
 @media (max-width: 759px) { .shot-two { grid-template-columns: 1fr; } }
 
+
+.tldr { margin: 22px 0 0; padding: 16px 18px; background: var(--tint); border-radius: 8px; display: grid; grid-template-columns: 4.5em minmax(0, 1fr); gap: 8px 14px; max-width: 46em; font-size: 15px; line-height: 1.6; }
+.tldr dt { color: var(--muted); font-weight: 600; }
+.tldr dd { margin: 0; }
+.fold-h { margin-bottom: 0; }
+.fold-hint { margin-top: 6px; color: var(--muted); font-size: 14px; }
+.fold { border-top: 1px solid var(--line); }
+.fold:last-of-type { border-bottom: 1px solid var(--line); }
+.fold-hint + .fold { margin-top: 12px; }
+.fold > summary { cursor: pointer; padding: 14px 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 14px; list-style: none; }
+.fold > summary::-webkit-details-marker { display: none; }
+.fold > summary::before { content: "+"; color: var(--accent); font-weight: 700; width: 1em; }
+.fold[open] > summary::before { content: "–"; }
+.fold .f-t { font-weight: 700; font-size: 17px; }
+.fold .f-d { color: var(--muted); font-size: 14px; }
+.fold-body { padding: 0 0 28px; }
+.fold-body > .scope, .fold-body > .ctx { margin-top: 10px; }
 </style>
 
 <div class="topbar">
@@ -702,44 +719,25 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <li><a href="#/">홈</a></li>
     </ul>
     <div class="nav-group">
-      <p class="nav-label">프로젝트</p>
+      <p class="nav-label">대표 프로젝트</p>
       <ul class="nav-list">
-        <li><a href="#/addeep">애딥 서비스 구성</a>
-          <ul class="nav-sub">
-            <li><a href="#/addeep/sns">SNS 서비스 백엔드</a></li>
-            <li><a href="#/addeep/rec">AI 추천 서버</a></li>
-            <li><a href="#/addeep/behavior">사용자 행동 분석 서버</a></li>
-            <li><a href="#/addeep/vlm">영상 분석 파이프라인</a></li>
-            <li><a href="#/addeep/commerce">커머스 추천</a></li>
-            <li><a href="#/addeep/site">서비스 소개 사이트</a></li>
-          </ul>
-        </li>
-        <li><a href="#/ax">AI 전환 (AX)</a>
-          <ul class="nav-sub">
-            <li><a href="#/ax/gate">수정 전 영향 범위 검사</a></li>
-            <li><a href="#/ax/limits">에이전트에게 맡기는 범위</a></li>
-            <li><a href="#/ax/agents">에이전트 구성</a></li>
-            <li><a href="#/ax/review">커밋 전 AI 코드 리뷰</a></li>
-            <li><a href="#/ax/planning">기획 문서와 코드 연결</a></li>
-            <li><a href="#/ax/spread">사내 도입과 교육</a></li>
-            <li><a href="#/ax/honesty">검사 결과 재확인</a></li>
-          </ul>
-        </li>
-        <li><a href="#/bokiyo">보드게임카페 매장 운영 시스템</a>
-          <ul class="nav-sub">
-            <li><a href="#/bokiyo/server">서버</a></li>
-            <li><a href="#/bokiyo/kiosk">키오스크 앱</a></li>
-            <li><a href="#/bokiyo/admin">관리자 웹</a></li>
-            <li><a href="#/bokiyo/data">데이터 수집</a></li>
-          </ul>
-        </li>
-        <li><a href="#/pknu">대학 모바일 앱 화면</a></li>
+        <li><a href="#/addeep/sns">SNS 서비스 백엔드</a></li>
+        <li><a href="#/ax">AI 전환 (AX)</a></li>
+        <li><a href="#/addeep/rec">AI 추천 서버</a></li>
+        <li><a href="#/bokiyo">보드게임카페 매장 운영 시스템</a></li>
       </ul>
     </div>
     <div class="nav-group">
-      <p class="nav-label"><a href="#/side">사이드 프로젝트</a></p>
+      <p class="nav-label">그 밖의 프로젝트</p>
       <ul class="nav-list">
+        <li><a href="#/addeep/behavior">사용자 행동 분석 서버</a></li>
+        <li><a href="#/addeep/vlm">영상 분석 파이프라인</a></li>
+        <li><a href="#/addeep/commerce">커머스 추천</a></li>
+        <li><a href="#/addeep/site">서비스 소개 사이트</a></li>
+        <li><a href="#/pknu">대학 모바일 앱 화면</a></li>
         <li><a href="#/side/cascade">외부 변화 영향 판정 엔진</a></li>
+        <li><a href="#/side">사이드 프로젝트</a></li>
+        <li><a href="#/addeep">애딥 서비스 구성</a></li>
       </ul>
     </div>
     <div class="nav-group">
@@ -892,16 +890,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <p class="scope">혼자 설계하고 구축했으며, 사내 교육도 직접 진행했습니다. 에이전트가 사람 확인 없이 진행할 수 있는 정도(자율성 단계)를 계산하는 엔진과 일부 하위 에이전트는 외부 플러그인을 사용했습니다.</p>
       <p class="ctx">4개 서비스는 코드 구조와 개발 규칙이 서로 달라서, 코드를 바꿀 때마다 서비스별로 같은 확인을 반복해야 했습니다. 그래서 바뀐 코드와 기획 문서를 비교하는 검사 도구를 만들고, 공통 검사는 하나로 묶었습니다. 빌드 도구나 관리자 경로처럼 서비스마다 다른 설정만 따로 적용했습니다. 이 도구는 기획자와 프론트엔드 개발자도 실제 업무에 사용했습니다.</p>
     </div>
-    <p class="fig-title flow-title">세부 페이지</p>
-    <div class="child-grid">
-      <a class="child" href="#/ax/gate"><span class="c-k">수정 전 영향 범위 검사</span><span class="c-d">코드를 고치기 전에 영향 범위를 확인하는 검사와, 명령 실행·편집·커밋 같은 작업 시점마다 실행되는 검사</span></a>
-      <a class="child" href="#/ax/limits"><span class="c-k">에이전트에게 맡기는 범위</span><span class="c-d">에이전트에게 맡길 일과 사람이 할 일을 자율성 단계에 따라 나눈 기준</span></a>
-      <a class="child" href="#/ax/agents"><span class="c-k">에이전트 구성</span><span class="c-d">에이전트의 역할과 권한을 나누고, 서비스 폴더의 훅이 메인 세션에 적용되지 않는 문제를 보완한 구조</span></a>
-      <a class="child" href="#/ax/review"><span class="c-k">커밋 전 AI 코드 리뷰</span><span class="c-d">커밋 직전에 다른 AI 모델로 코드를 한 번 더 검토하는 단계</span></a>
-      <a class="child" href="#/ax/planning"><span class="c-k">기획 문서와 코드 연결</span><span class="c-d">Notion 기획 문서, Obsidian 검토 상태, 코드 위치를 연결하고 정책 확인 요청을 주고받는 도구</span></a>
-      <a class="child" href="#/ax/spread"><span class="c-k">사내 도입과 교육</span><span class="c-d">사내 교육, 그리고 AX KIT와 Next.js 공통 템플릿으로 규칙과 검사 도구를 다른 저장소에 적용한 과정</span></a>
-      <a class="child" href="#/ax/honesty"><span class="c-k">검사 결과 재확인</span><span class="c-d">일부러 규칙 위반을 넣어 검사가 실제로 잡아내는지 확인한 사례</span></a>
-    </div>
+    <dl class="tldr" aria-label="요약">
+      <dt>한 일</dt><dd>AI 에이전트가 코드를 고치기 전에 영향 범위를 확인하게 하는 검사, 위험 명령 차단, 커밋 전 교차 리뷰를 만들고, 기획 문서와 코드를 잇는 지식 그래프를 구축했습니다.</dd>
+      <dt>규모</dt><dd>4개 서비스에 적용, 약 25명 사용, 6주 과정 사내 워크숍 설계·강의.</dd>
+      <dt>결과</dt><dd>확인 기록이 없는 편집과 되돌릴 수 없는 명령은 사람 승인 없이 실행되지 않고, 문서와 코드가 어긋나면 검사에서 실패합니다.</dd>
+    </dl>
     <figure class="dgf">
       <p class="fig-title">확인 작업을 도구로 옮기기 전과 후</p>
       <div class="fig-scroll"><svg class="dg dg-wide" viewBox="0 0 1000 340" role="img" aria-label="전: 구조와 규칙이 서로 다른 4개 서비스에서 AI 에이전트가 편집할 때마다 사람이 영향 범위·규칙·문서를 확인하고 다시 수정을 요청한 뒤 반영했다. 후: 에이전트의 편집을 기계가 영향 범위·계층 규칙·문서 정합으로 확인해 위반이면 사유와 함께 차단하고, 통과한 변경만 사람이 머지와 원격 반영을 승인한다.">
@@ -1110,25 +1103,13 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     </figure>
 
 
-    <ul class="stack" aria-label="사용 기술">
-      <li>AI Agents</li><li>MCP</li><li>Hooks</li><li>Obsidian</li><li>Notion</li><li>Python</li><li>Next.js</li><li>Turborepo</li><li>pnpm</li>
-    </ul>
-  </section>
-    <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/"><span class="pg-k">← 이전</span><span class="pg-t">홈</span></a>
-      <a class="next" href="#/ax/gate"><span class="pg-k">다음 →</span><span class="pg-t">AX / 수정 전 영향 범위 검사</span></a>
-    </nav>
-    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
-</article>
-<article class="view" data-route="ax/gate" data-title="수정 전 영향 범위 검사" tabindex="-1">
-  <section class="project" id="ax-gate">
-    <div class="p-head">
-      <p class="crumbs"><a href="#/ax">AI 전환 (AX)</a><span aria-hidden="true">/</span><span>수정 전 영향 범위 검사</span></p>
-      <p class="label">애딥, 2026.04 – 2026.08</p>
-      <h2>수정 전 영향 범위 검사와 작업 시점별 검사</h2>
+    <h3 class="sub-h fold-h">세부 내용</h3>
+    <p class="fold-hint">제목을 누르면 펼쳐집니다.</p>
+    <details class="fold" id="ax-gate">
+      <summary><span class="f-t">수정 전 영향 범위 검사와 작업 시점별 검사</span><span class="f-d">애딥, 2026.04 – 2026.08</span></summary>
+      <div class="fold-body">
       <p class="scope">혼자 설계하고 구축했습니다. 추천 엔진 저장소에서는 검사를 우회할 수 있는 경로를 모두 막았습니다.</p>
       <p class="ctx">AI 에이전트가 코드를 고치기 전에 영향 범위를 먼저 확인하게 하고, 확인하지 않은 편집은 막았습니다. 명령 실행 전, 파일 편집 전후, 커밋 전, 세션 종료 때마다 검사해서 결과에 따라 허용, 경고, 차단으로 나눴습니다.</p>
-    </div>
 
     <h3 class="sub-h">영향 범위를 확인하지 않은 편집 차단</h3>
     <div class="prose">
@@ -1364,21 +1345,12 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <p class="scroll-hint">옆으로 밀면 전체 도식을 볼 수 있습니다.</p>
       <figcaption>항목 왼쪽의 색은 처리 결과를, 파란 항목은 위에서 설명한 영향 범위 검사를 나타냅니다. 커밋과 푸시 전 훅은 4개 서비스에 똑같이 설치했고, 편집 시점의 검사는 서비스마다 적용 범위가 다릅니다.</figcaption>
     </figure>
-  </section>
-    <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/ax"><span class="pg-k">← 이전</span><span class="pg-t">AI 전환 (AX)</span></a>
-      <a class="next" href="#/ax/limits"><span class="pg-k">다음 →</span><span class="pg-t">AX / 에이전트에게 맡기는 범위</span></a>
-    </nav>
-    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
-</article>
-<article class="view" data-route="ax/limits" data-title="에이전트에게 맡기는 범위" tabindex="-1">
-  <section class="project" id="ax-limits">
-    <div class="p-head">
-      <p class="crumbs"><a href="#/ax">AI 전환 (AX)</a><span aria-hidden="true">/</span><span>에이전트에게 맡기는 범위</span></p>
-      <p class="label">애딥, 2026.04 – 2026.08</p>
-      <h2>에이전트에게 맡길 일과 사람이 할 일을 나눴습니다</h2>
+      </div>
+    </details>
+    <details class="fold" id="ax-limits">
+      <summary><span class="f-t">에이전트에게 맡길 일과 사람이 할 일을 나눴습니다</span><span class="f-d">애딥, 2026.04 – 2026.08</span></summary>
+      <div class="fold-body">
       <p class="ctx">자동화 범위를 넓히기 전에 사람이 맡을 일부터 정했습니다. 품질 검사를 모두 통과하더라도 머지와 원격 반영(푸시)은 사람이 직접 승인합니다.</p>
-    </div>
     <figure class="dgf">
       <p class="fig-title">작업 종류별 처리</p>
       <div class="fig-scroll"><svg class="dg dg-wide" viewBox="0 0 1000 420" role="img" aria-label="작업 종류별 처리. 지정한 범위의 편집, 커밋, PR 생성은 검사를 통과하면 에이전트가 자동으로 진행한다. 품질 검사가 실패하거나 영향 범위가 너무 크면 변경을 되돌리고 멈춘다. 강제 푸시, 하드 리셋, 셸로 소스 직접 수정, 기준 문서 쓰기와 삭제, 보류·제외 항목 자동 구현은 차단한다. 테이블 삭제, 시크릿 교체, 운영 배포, 원격 반영, 머지, 보류 항목 승격은 사람이 승인한다. 안전 장치에 걸리면 자율성 단계가 내려가 작업 단계마다 사람 확인을 받는다.">
@@ -1461,21 +1433,12 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </ul>
       </div>
     </div>
-  </section>
-    <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/ax/gate"><span class="pg-k">← 이전</span><span class="pg-t">AX / 수정 전 영향 범위 검사</span></a>
-      <a class="next" href="#/ax/agents"><span class="pg-k">다음 →</span><span class="pg-t">AX / 에이전트 구성</span></a>
-    </nav>
-    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
-</article>
-<article class="view" data-route="ax/agents" data-title="에이전트 구성" tabindex="-1">
-  <section class="project" id="ax-agents">
-    <div class="p-head">
-      <p class="crumbs"><a href="#/ax">AI 전환 (AX)</a><span aria-hidden="true">/</span><span>에이전트 구성</span></p>
-      <p class="label">애딥, 2026.06 – 2026.08</p>
-      <h2>역할과 권한을 나눈 에이전트 구성</h2>
+      </div>
+    </details>
+    <details class="fold" id="ax-agents">
+      <summary><span class="f-t">역할과 권한을 나눈 에이전트 구성</span><span class="f-d">애딥, 2026.06 – 2026.08</span></summary>
+      <div class="fold-body">
       <p class="ctx">사람이 지시를 내리는 메인 세션은 코드를 직접 고치지 않고, 서비스별 담당 에이전트에게 작업을 나눠 맡깁니다. 전략 담당 에이전트는 코드 권한 없이 웹 조사와 문서 정리만 맡습니다.</p>
-    </div>
     <figure class="dgf">
       <p class="fig-title">작업 위임 구조와 훅이 적용되지 않는 문제</p>
       <div class="fig-scroll"><svg class="dg dg-wide" viewBox="0 0 1000 440" role="img" aria-label="메인 세션이 서비스 담당 에이전트 4종에 작업을 위임하고, 각 에이전트는 자기 서비스 폴더만 편집한다. 서비스 폴더의 훅 설정은 메인 세션과 그 하위 에이전트에 로드되지 않는다. 그래서 메인 세션에서 서비스 코드를 고치는 것은 차단하고, 하위 에이전트 지시문에는 편집 전 참조 분석, 편집 후 진단, 품질 검사를 직접 실행하라고 적었다. 하나라도 실패하면 변경을 되돌리고 멈춰 보고한다. 전략 담당 에이전트 2종은 코드 편집 권한 없이 웹 조사와 문서 도구 쓰기만 한다.">
@@ -1567,21 +1530,12 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </ul>
       </div>
     </div>
-  </section>
-    <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/ax/limits"><span class="pg-k">← 이전</span><span class="pg-t">AX / 에이전트에게 맡기는 범위</span></a>
-      <a class="next" href="#/ax/review"><span class="pg-k">다음 →</span><span class="pg-t">AX / 커밋 전 AI 코드 리뷰</span></a>
-    </nav>
-    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
-</article>
-<article class="view" data-route="ax/review" data-title="커밋 전 AI 코드 리뷰" tabindex="-1">
-  <section class="project" id="ax-review">
-    <div class="p-head">
-      <p class="crumbs"><a href="#/ax">AI 전환 (AX)</a><span aria-hidden="true">/</span><span>커밋 전 AI 코드 리뷰</span></p>
-      <p class="label">애딥 추천 엔진 저장소, 2026.04 – 2026.06</p>
-      <h2>다른 AI 모델로 하는 커밋 전 코드 리뷰</h2>
+      </div>
+    </details>
+    <details class="fold" id="ax-review">
+      <summary><span class="f-t">다른 AI 모델로 하는 커밋 전 코드 리뷰</span><span class="f-d">애딥 추천 엔진 저장소, 2026.04 – 2026.06</span></summary>
+      <div class="fold-body">
       <p class="ctx">같은 모델이 쓴 코드를 같은 모델이 검토하면 놓치는 부분이 겹칠 수 있습니다. 그래서 커밋 직전에 다른 AI 모델의 코딩 CLI로 한 번 더 검토하고, 이 검토 단계가 제대로 동작하는지도 자동으로 확인했습니다. 이후 같은 방식을 메인 세션의 검사에도 적용했습니다.</p>
-    </div>
     <figure class="dgf">
       <p class="fig-title">커밋 전후 리뷰 흐름</p>
       <div class="fig-scroll"><svg class="dg dg-wide" viewBox="0 0 1000 400" role="img" aria-label="에이전트가 커밋하려 하면 커밋 전 훅이 먼저 바뀐 파일 경로를 위험 패턴과 비교해 분류한다. 이 단계는 모델을 부르지 않는다. 저위험이면 리뷰를 건너뛰고 기록만 남긴다. 고위험이면 스테이징된 변경만 올린 임시 작업트리에서 다른 AI 모델의 코딩 CLI가 결함을 일부러 찾는 반박 검토를 한다. 심각 판정이면 커밋을 막고, 중요 판정이면 경고 후 허용, 문제가 없으면 허용하며, 시간 초과나 오류는 통과시키고 기록한다. 커밋 후에는 백그라운드 러너가 리뷰를 돌려 결과를 대기 파일에 쌓고, 세션 종료 훅은 지적 사항을 반영하기 전에는 종료를 막는다. 세 지점이 공용 엔진 하나를 쓰고, 간단 점검 스크립트가 그 엔진을 확인한다.">
@@ -1685,22 +1639,13 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </ul>
       </div>
     </div>
-  </section>
-    <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/ax/agents"><span class="pg-k">← 이전</span><span class="pg-t">AX / 에이전트 구성</span></a>
-      <a class="next" href="#/ax/planning"><span class="pg-k">다음 →</span><span class="pg-t">AX / 기획 문서와 코드 연결</span></a>
-    </nav>
-    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
-</article>
-<article class="view" data-route="ax/planning" data-title="기획 문서와 코드 연결" tabindex="-1">
-  <section class="project" id="ax-planning">
-    <div class="p-head">
-      <p class="crumbs"><a href="#/ax">AI 전환 (AX)</a><span aria-hidden="true">/</span><span>기획 문서와 코드 연결</span></p>
-      <p class="label">애딥, 2026.04 – 2026.05</p>
-      <h2>기획 문서와 코드를 연결한 도구</h2>
+      </div>
+    </details>
+    <details class="fold" id="ax-planning">
+      <summary><span class="f-t">기획 문서와 코드를 연결한 도구</span><span class="f-d">애딥, 2026.04 – 2026.05</span></summary>
+      <div class="fold-body">
       <p class="scope">설계와 구축을 맡았습니다. 기획자와 프론트엔드 개발자가 실제 업무에 사용했습니다.</p>
       <p class="ctx">확정된 기획은 Notion에, 검토 상태는 Obsidian에, 실제 동작은 코드에 나뉘어 있어서 서로 어긋나도 알아채기 어려웠습니다. 그래서 세 곳을 연결하고, 각 단계에서 정보가 한 방향으로만 넘어가도록 했습니다.</p>
-    </div>
     <figure class="shot">
       <img loading="lazy" src="img/ax-docs-index-graph.jpg" width="1600" height="1000" alt="Obsidian 문서 볼트 화면. 왼쪽에 폴더 목록과 인덱스 문서가, 오른쪽에 노트끼리 이어진 연결 그래프가 있고 그래프의 색은 폴더별로 다르다">
       <figcaption>이 도구의 Obsidian 볼트와 같은 구조로 만든 추천·사용자 상태 엔진 문서 볼트입니다. 왼쪽은 볼트의 진입점인 인덱스 문서, 오른쪽은 노트끼리 이어진 연결 그래프이고, 색은 폴더(나침반, 용어, 엔진 카탈로그, 거버넌스, 대시보드)를 나타냅니다. 문서 본문은 흐리게 처리했습니다.</figcaption>
@@ -1863,21 +1808,12 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <p class="flow-note">AI 모델을 호출하지 않는 스크립트라 추가 토큰 비용이 들지 않습니다.</p>
       </div>
     </div>
-  </section>
-    <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/ax/review"><span class="pg-k">← 이전</span><span class="pg-t">AX / 커밋 전 AI 코드 리뷰</span></a>
-      <a class="next" href="#/ax/spread"><span class="pg-k">다음 →</span><span class="pg-t">AX / 사내 도입과 교육</span></a>
-    </nav>
-    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
-</article>
-<article class="view" data-route="ax/spread" data-title="사내 도입과 교육" tabindex="-1">
-  <section class="project" id="ax-spread">
-    <div class="p-head">
-      <p class="crumbs"><a href="#/ax">AI 전환 (AX)</a><span aria-hidden="true">/</span><span>사내 도입과 교육</span></p>
-      <p class="label">애딥, 2026.03 – 2026.08</p>
-      <h2>사내 교육과 다른 저장소 적용</h2>
+      </div>
+    </details>
+    <details class="fold" id="ax-spread">
+      <summary><span class="f-t">사내 교육과 다른 저장소 적용</span><span class="f-d">애딥, 2026.03 – 2026.08</span></summary>
+      <div class="fold-body">
       <p class="ctx">직접 만든 규칙과 검사 도구를 팀 전체에 적용하기 위해 동료 개발자를 교육하고, 다른 저장소에도 설치할 수 있는 AX KIT를 만들었습니다.</p>
-    </div>
 
     <h3 class="sub-h">사내 AX 워크숍</h3>
     <div class="prose">
@@ -2036,21 +1972,12 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       </div>
       <figcaption>정리한 디자인 시스템 문서의 컬러 토큰(왼쪽)과 버튼 컴포넌트(오른쪽) 카드입니다. 디자인 값은 포털 코드에 있던 그대로이고, 저는 추출과 문서화를 맡았습니다.</figcaption>
     </figure>
-  </section>
-    <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/ax/planning"><span class="pg-k">← 이전</span><span class="pg-t">AX / 기획 문서와 코드 연결</span></a>
-      <a class="next" href="#/ax/honesty"><span class="pg-k">다음 →</span><span class="pg-t">AX / 검사 결과 재확인</span></a>
-    </nav>
-    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
-</article>
-<article class="view" data-route="ax/honesty" data-title="검사 결과 재확인" tabindex="-1">
-  <section class="project" id="ax-honesty">
-    <div class="p-head">
-      <p class="crumbs"><a href="#/ax">AI 전환 (AX)</a><span aria-hidden="true">/</span><span>검사 결과 재확인</span></p>
-      <p class="label">애딥, 2026.05 – 2026.08</p>
-      <h2>검사가 실제로 잡아내는지 다시 확인했습니다</h2>
+      </div>
+    </details>
+    <details class="fold" id="ax-honesty">
+      <summary><span class="f-t">검사가 실제로 잡아내는지 다시 확인했습니다</span><span class="f-d">애딥, 2026.05 – 2026.08</span></summary>
+      <div class="fold-body">
       <p class="ctx">검사를 추가한 뒤에는 실제로 위반을 잡아내는지 따로 확인했습니다. 통과 결과만 보고 넘어가지 않고, 일부러 위반을 넣거나 실제 의존성과 연결해 다시 검증했습니다.</p>
-    </div>
     <div class="cases">
       <div class="case-card">
         <h3>규칙 위반을 넣어 검사가 잡아내는지 확인</h3>
@@ -2085,11 +2012,16 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         </ol>
       </div>
     </div>
+      </div>
+    </details>
 
+    <ul class="stack" aria-label="사용 기술">
+      <li>AI Agents</li><li>MCP</li><li>Hooks</li><li>Obsidian</li><li>Notion</li><li>Python</li><li>Next.js</li><li>Turborepo</li><li>pnpm</li>
+    </ul>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/ax/spread"><span class="pg-k">← 이전</span><span class="pg-t">AX / 사내 도입과 교육</span></a>
-      <a class="next" href="#/addeep"><span class="pg-k">다음 →</span><span class="pg-t">애딥 서비스 구성</span></a>
+      <a class="prev" href="#/addeep/sns"><span class="pg-k">← 이전</span><span class="pg-t">SNS 서비스 백엔드</span></a>
+      <a class="next" href="#/addeep/rec"><span class="pg-k">다음 →</span><span class="pg-t">AI 추천 서버</span></a>
     </nav>
     <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
@@ -2224,8 +2156,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     </div>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/ax/honesty"><span class="pg-k">← 이전</span><span class="pg-t">AX / 검사 결과 재확인</span></a>
-      <a class="next" href="#/addeep/sns"><span class="pg-k">다음 →</span><span class="pg-t">애딥 / SNS 서비스 백엔드</span></a>
+      <a class="prev" href="#/side"><span class="pg-k">← 이전</span><span class="pg-t">사이드 프로젝트</span></a>
+      <a class="next" href="#/"><span class="pg-k">다음 →</span><span class="pg-t">홈</span></a>
     </nav>
     <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
@@ -2235,9 +2167,14 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <p class="crumbs"><a href="#/addeep">애딥 서비스 구성</a><span aria-hidden="true">/</span><span>SNS 서비스 백엔드</span></p>
       <p class="label">애딥, 2025.12 – 2026.04</p>
       <h2>SNS 서비스 백엔드</h2>
-      <p class="scope">초기 서버 코드를 혼자 작성했고(2026.01 – 2026.02), 이후 백엔드 개발자들과 협업해 앱스토어 출시까지 개발했습니다. 보안 기능은 ISMS-P 기준에 맞춰 구현했습니다. 규모는 API 134개(앱 69, 관리자 65), PostgreSQL 테이블 44개(12개 도메인)이고, 이 중 API 125개와 테이블 42개를 직접 작성했습니다.</p>
+      <p class="scope">초기 서버 코드를 혼자 작성했고(2026.01 – 2026.02), 이후 백엔드 개발자들과 협업해 앱스토어 출시까지 개발했습니다. 보안 기능은 ISMS-P 기준에 맞춰 구현했습니다.</p>
       <p class="ctx">Java 21과 Spring Boot 3.4로 개발한 SNS API 서버입니다. 회원과 인증 API를 먼저 개발하며 예외 처리 방식과 개발 규칙을 정했고, 팀원이 합류한 뒤에는 API 통합을 맡았습니다. 관리자 기능 개발과 앱스토어 출시에도 참여했습니다.</p>
     </div>
+    <dl class="tldr" aria-label="요약">
+      <dt>한 일</dt><dd>Java 21·Spring Boot 3.4로 SNS API 서버와 관리자 기능을 개발했습니다. 초기 서버 코드를 작성한 뒤 백엔드 개발자들과 협업해 앱스토어에 출시했습니다.</dd>
+      <dt>규모</dt><dd>API 134개(앱 69, 관리자 65), PostgreSQL 테이블 44개(12개 도메인). 이 중 API 125개와 테이블 42개를 직접 작성했습니다.</dd>
+      <dt>결과</dt><dd>개인정보를 암호화한 상태로 로그인·중복 확인을 복호화 없이 처리하고, 롤백된 변경이 캐시와 감사 로그에 남지 않게 했습니다.</dd>
+    </dl>
     <figure class="dgf">
       <p class="fig-title">기술 계층별 구조에서 도메인별 구조로</p>
       <div class="fig-scroll"><svg class="dg dg-mid" viewBox="0 0 1000 300" role="img" aria-label="SNS 백엔드 패키지 구조 전환. 전에는 controller, service, repository 같은 기술 계층별 패키지였다. 후에는 회원, 게시물, 팔로우, 관리자, 암호화 같은 도메인별 수직 슬라이스로 나누고, 각 도메인 안에 컨트롤러, 서비스, 저장소, 도메인, 예외, 요청·응답 DTO를 둔다. 공통 패키지에는 보안, 설정, 외부 연동만 둔다. 일곱 단계로 나눠 단계마다 되돌릴 수 있게 옮겼다.">
@@ -2447,8 +2384,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     </ul>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/addeep"><span class="pg-k">← 이전</span><span class="pg-t">애딥 서비스 구성</span></a>
-      <a class="next" href="#/addeep/rec"><span class="pg-k">다음 →</span><span class="pg-t">애딥 / AI 추천 서버</span></a>
+      <a class="prev" href="#/"><span class="pg-k">← 이전</span><span class="pg-t">홈</span></a>
+      <a class="next" href="#/ax"><span class="pg-k">다음 →</span><span class="pg-t">AI 전환 (AX)</span></a>
     </nav>
     <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
@@ -2461,6 +2398,11 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       <p class="scope">서버는 혼자 설계하고 구현했으며, 추천 알고리즘은 연구원과 함께 연구했습니다.</p>
       <p class="ctx">SNS 피드와 커머스 상품을 위한 개인화 추천 서버입니다. 커머스 상품 추천은 이후 별도 서비스로 분리했습니다. 관심사, 인기, 최신, 팔로우, 카테고리를 각각 후보 채널로 두고, 화면마다 다른 기준으로 순위를 정합니다. 사용자 상태는 사람이 직접 읽고 해석할 수 있는 지표로 저장했습니다.</p>
     </div>
+    <dl class="tldr" aria-label="요약">
+      <dt>한 일</dt><dd>SNS 피드와 커머스 상품을 추천하는 서버를 Python·FastAPI로 설계·구현했습니다. 추천 알고리즘 연구는 연구원과 함께 했습니다.</dd>
+      <dt>규모</dt><dd>2개 서비스(서비스별 검색 채널 5개), API 28개, PostgreSQL 테이블 13개와 Qdrant 벡터 저장소. 코드는 전부 직접 작성했습니다.</dd>
+      <dt>결과</dt><dd>반복 호출 결과 일치율 8.3% → 93.3%, 커머스 추천 응답 p50 2,455ms → 16.6ms(개발환경), 개인화가 무너지는 변경을 배포 전에 차단.</dd>
+    </dl>
     <figure class="dgf">
       <p class="fig-title">추천 요청 한 건의 처리 흐름</p>
       <div class="fig-scroll"><svg class="dg dg-wide" viewBox="0 0 1000 430" role="img" aria-label="추천 요청이 오면 행동 분석 서버에서 사용자 상태를 동기로 조회한다. 조회 실패와 신규 사용자는 구분한다. 관심사, 인기, 최신, 팔로우, 카테고리 다섯 채널이 각자 시간 제한과 차단기를 두고 병렬로 후보를 만들고, 합치는 단계에서 점수를 정규화하고 할당량을 맞추고 중복을 없앤다. 한 채널이 실패해도 나머지 채널로 응답한다. 이어서 화면별 랭킹, 재정렬, 광고 정책 검사를 거쳐 추천 결과를 돌려준다.">
@@ -2699,8 +2641,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     </ul>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/addeep/sns"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / SNS 서비스 백엔드</span></a>
-      <a class="next" href="#/addeep/behavior"><span class="pg-k">다음 →</span><span class="pg-t">애딥 / 사용자 행동 분석 서버</span></a>
+      <a class="prev" href="#/ax"><span class="pg-k">← 이전</span><span class="pg-t">AI 전환 (AX)</span></a>
+      <a class="next" href="#/bokiyo"><span class="pg-k">다음 →</span><span class="pg-t">보드게임카페 매장 운영 시스템</span></a>
     </nav>
     <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
@@ -2841,8 +2783,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     </ul>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/addeep/rec"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / AI 추천 서버</span></a>
-      <a class="next" href="#/addeep/vlm"><span class="pg-k">다음 →</span><span class="pg-t">애딥 / 영상 분석 파이프라인</span></a>
+      <a class="prev" href="#/bokiyo"><span class="pg-k">← 이전</span><span class="pg-t">보드게임카페 매장 운영 시스템</span></a>
+      <a class="next" href="#/addeep/vlm"><span class="pg-k">다음 →</span><span class="pg-t">영상 분석 파이프라인</span></a>
     </nav>
     <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
@@ -3104,8 +3046,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     </ul>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/addeep/behavior"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / 사용자 행동 분석 서버</span></a>
-      <a class="next" href="#/addeep/commerce"><span class="pg-k">다음 →</span><span class="pg-t">애딥 / 커머스 추천</span></a>
+      <a class="prev" href="#/addeep/behavior"><span class="pg-k">← 이전</span><span class="pg-t">사용자 행동 분석 서버</span></a>
+      <a class="next" href="#/addeep/commerce"><span class="pg-k">다음 →</span><span class="pg-t">커머스 추천</span></a>
     </nav>
     <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
@@ -3265,8 +3207,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     </div>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/addeep/vlm"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / 영상 분석 파이프라인</span></a>
-      <a class="next" href="#/addeep/site"><span class="pg-k">다음 →</span><span class="pg-t">애딥 / 서비스 소개 사이트</span></a>
+      <a class="prev" href="#/addeep/vlm"><span class="pg-k">← 이전</span><span class="pg-t">영상 분석 파이프라인</span></a>
+      <a class="next" href="#/addeep/site"><span class="pg-k">다음 →</span><span class="pg-t">서비스 소개 사이트</span></a>
     </nav>
     <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
@@ -3323,8 +3265,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     </figure>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/addeep/commerce"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / 커머스 추천</span></a>
-      <a class="next" href="#/bokiyo"><span class="pg-k">다음 →</span><span class="pg-t">보드게임카페 매장 운영 시스템</span></a>
+      <a class="prev" href="#/addeep/commerce"><span class="pg-k">← 이전</span><span class="pg-t">커머스 추천</span></a>
+      <a class="next" href="#/pknu"><span class="pg-k">다음 →</span><span class="pg-t">대학 모바일 앱 화면</span></a>
     </nav>
     <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
@@ -3333,9 +3275,14 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     <div class="p-head">
       <p class="label">보드요잉 2023.04 – 2024.07 → 보키요(외주) 2025.06 – 2025.10</p>
       <h2>보드게임카페 매장 운영 시스템</h2>
-      <p class="scope">기획과 아키텍처 설계부터 서버, 키오스크 앱, 관리자 웹 개발까지 혼자 맡았고, 매장에 도입했습니다. REST API 37개를 구현했고, 매장에서 태블릿 10대 이상이 이 서버를 씁니다.</p>
+      <p class="scope">기획과 아키텍처 설계부터 서버, 키오스크 앱, 관리자 웹 개발까지 혼자 맡았고, 매장에 도입했습니다.</p>
       <p class="ctx">보드게임카페의 테이블 이용 시간, 게임 안내, 매장 운영을 관리하는 시스템입니다. 2023년 보드요잉 프로토타입에서 게임 정보 수집 방식과 데이터 구조를 먼저 검증했고, 2025년 보키요에서 Spring Boot 서버, Flutter 키오스크 앱, Next.js 관리자 웹을 새로 개발해 실제 매장에 배포했습니다.</p>
     </div>
+    <dl class="tldr" aria-label="요약">
+      <dt>한 일</dt><dd>기획·설계부터 Spring Boot 서버, Flutter 키오스크 앱, Next.js 관리자 웹까지 혼자 개발해 매장에 도입했습니다.</dd>
+      <dt>규모</dt><dd>REST API 37개, 매장 태블릿 10대 이상, 보드게임 정보 5만 건 이상 수집.</dd>
+      <dt>결과</dt><dd>앱이 꺼지거나 백그라운드로 가도 이용 시간이 이어지고, 업로드 영상 평균 크기를 100MB에서 5MB로 줄였습니다.</dd>
+    </dl>
     <figure class="shot">
       <div class="shot-two">
         <img loading="lazy" src="img/bokiyo-kiosk-tablet.jpg" width="1080" height="810" alt="매장 테이블용 태블릿 키오스크 앱의 이용 시작 화면">
@@ -3343,13 +3290,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
       </div>
       <figcaption>왼쪽은 매장 테이블에 두는 태블릿 키오스크 앱(Flutter), 오른쪽은 점주용 관리자 웹(Next.js)입니다. 둘 다 직접 만든 Spring Boot API 하나를 씁니다.</figcaption>
     </figure>
-    <p class="fig-title flow-title">세부 페이지</p>
-    <div class="child-grid">
-      <a class="child" href="#/bokiyo/server"><span class="c-k">서버</span><span class="c-d">이용 세션을 서버 시각 기준으로 관리하고, 테이블과 태블릿을 1대1로 묶은 Spring Boot 서버</span></a>
-      <a class="child" href="#/bokiyo/kiosk"><span class="c-k">키오스크 앱</span><span class="c-d">MVVM으로 계층을 나누고 Provider로 상태를 관리하며, 앱이 꺼져도 이용 시간이 이어지게 만든 Flutter 태블릿 앱</span></a>
-      <a class="child" href="#/bokiyo/admin"><span class="c-k">관리자 웹</span><span class="c-d">점주가 원격으로 매장을 관리하고, 바꾼 내용이 같은 API로 키오스크에 반영되는 관리자 웹</span></a>
-      <a class="child" href="#/bokiyo/data"><span class="c-k">데이터 수집</span><span class="c-d">사이트별 수집기를 나누고, 멈춘 지점부터 이어서 수집하게 만든 2023년 수집 서버</span></a>
-    </div>
     <p class="tab-lead">키오스크와 관리자 웹은 같은 API 서버를 씁니다. 서버는 테이블과 태블릿의 연결과 이용 시각을 기록하고, 키오스크는 종료 시각을 기기에 저장해 앱을 다시 켜도 남은 시간을 이어서 보여 줍니다. 2023년 프로토타입에서 수집한 게임 데이터는 정식 서버의 공통 게임 정보로 이어 썼습니다.</p>
 
 
@@ -3463,25 +3403,13 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
             </ul>
           </div>
         </div>
-        <ul class="stack" aria-label="사용 기술">
-          <li>Java</li><li>Spring Boot</li><li>JPA</li><li>PostgreSQL</li><li>Amazon RDS</li><li>AWS Elastic Beanstalk</li><li>S3</li><li>Firebase FCM</li><li>FFmpeg</li><li>Selenium</li><li>Flutter</li><li>Provider</li><li>Hive</li><li>Next.js</li><li>TypeScript</li><li>React Query</li><li>Cursor Rules</li><li>Claude Code</li>
-        </ul>
-  </section>
-    <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/addeep/site"><span class="pg-k">← 이전</span><span class="pg-t">애딥 / 서비스 소개 사이트</span></a>
-      <a class="next" href="#/bokiyo/server"><span class="pg-k">다음 →</span><span class="pg-t">매장 운영 시스템 / 서버</span></a>
-    </nav>
-    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
-</article>
-<article class="view" data-route="bokiyo/server" data-title="서버" tabindex="-1">
-  <section class="project" id="bokiyo-server">
-    <div class="p-head">
-      <p class="crumbs"><a href="#/bokiyo">보드게임카페 매장 운영 시스템</a><span aria-hidden="true">/</span><span>서버</span></p>
-      <p class="label">보키요 서버, 2025.06 – 2025.10</p>
-      <h2>Spring Boot API 서버</h2>
+        <h3 class="sub-h fold-h">세부 내용</h3>
+    <p class="fold-hint">제목을 누르면 펼쳐집니다.</p>
+    <details class="fold" id="bokiyo-server">
+      <summary><span class="f-t">Spring Boot API 서버</span><span class="f-d">보키요 서버, 2025.06 – 2025.10</span></summary>
+      <div class="fold-body">
       <p class="scope">설계부터 구현, 배포까지 혼자 맡았습니다.</p>
       <p class="ctx">Spring Boot 3.5와 Java 17로 만든 REST API 서버입니다. 키오스크와 관리자 웹이 같은 API를 씁니다. 서버는 AWS Elastic Beanstalk 인스턴스에서 nginx를 앞에 두고 실행되며, Amazon RDS(PostgreSQL), S3, Firebase FCM과 연결됩니다. API 문서는 Swagger로 제공합니다.</p>
-    </div>
 
 
         
@@ -3665,22 +3593,13 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <ul class="stack" aria-label="사용 기술">
           <li>Java 17</li><li>Spring Boot 3.5</li><li>JPA</li><li>JPA Specification</li><li>PostgreSQL</li><li>Amazon RDS</li><li>AWS Elastic Beanstalk</li><li>nginx</li><li>S3</li><li>Firebase Admin</li><li>FFmpeg</li><li>Swagger</li>
         </ul>
-  </section>
-    <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/bokiyo"><span class="pg-k">← 이전</span><span class="pg-t">보드게임카페 매장 운영 시스템</span></a>
-      <a class="next" href="#/bokiyo/kiosk"><span class="pg-k">다음 →</span><span class="pg-t">매장 운영 시스템 / 키오스크 앱</span></a>
-    </nav>
-    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
-</article>
-<article class="view" data-route="bokiyo/kiosk" data-title="키오스크 앱" tabindex="-1">
-  <section class="project" id="bokiyo-kiosk">
-    <div class="p-head">
-      <p class="crumbs"><a href="#/bokiyo">보드게임카페 매장 운영 시스템</a><span aria-hidden="true">/</span><span>키오스크 앱</span></p>
-      <p class="label">보키요 키오스크 앱, 2025.06 – 2025.07</p>
-      <h2>Flutter 키오스크 앱</h2>
+      </div>
+    </details>
+    <details class="fold" id="bokiyo-kiosk">
+      <summary><span class="f-t">Flutter 키오스크 앱</span><span class="f-d">보키요 키오스크 앱, 2025.06 – 2025.07</span></summary>
+      <div class="fold-body">
       <p class="scope">화면, 상태 관리, 기기 저장 기능을 혼자 개발했고, 화면 구성은 디자이너와 협의해 정했습니다.</p>
       <p class="ctx">매장 테이블마다 설치하는 태블릿 앱입니다. 손님이 인원과 이용 시간을 선택하면 이용이 시작되고, 게임을 검색하거나 설명 영상, 추천 코스, 매장 안내를 볼 수 있습니다. 2025년 6~7월에 단계별로 나눠 개발을 마쳤습니다.</p>
-    </div>
 
 
         <figure class="dgf">
@@ -3889,22 +3808,13 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <ul class="stack" aria-label="사용 기술">
           <li>Flutter</li><li>Provider</li><li>GetIt, Injectable</li><li>go_router</li><li>Hive</li><li>Firebase Messaging</li><li>Local Notifications</li><li>YouTube Player</li><li>easy_localization</li><li>Cursor Rules</li>
         </ul>
-  </section>
-    <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/bokiyo/server"><span class="pg-k">← 이전</span><span class="pg-t">매장 운영 시스템 / 서버</span></a>
-      <a class="next" href="#/bokiyo/admin"><span class="pg-k">다음 →</span><span class="pg-t">매장 운영 시스템 / 관리자 웹</span></a>
-    </nav>
-    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
-</article>
-<article class="view" data-route="bokiyo/admin" data-title="관리자 웹" tabindex="-1">
-  <section class="project" id="bokiyo-admin">
-    <div class="p-head">
-      <p class="crumbs"><a href="#/bokiyo">보드게임카페 매장 운영 시스템</a><span aria-hidden="true">/</span><span>관리자 웹</span></p>
-      <p class="label">보키요 관리자 웹, 2025</p>
-      <h2>Next.js 관리자 웹</h2>
+      </div>
+    </details>
+    <details class="fold" id="bokiyo-admin">
+      <summary><span class="f-t">Next.js 관리자 웹</span><span class="f-d">보키요 관리자 웹, 2025</span></summary>
+      <div class="fold-body">
       <p class="scope">혼자 개발했습니다.</p>
       <p class="ctx">점주가 원격으로 매장을 관리하는 웹입니다. Next.js로 개발했고, 키오스크와 같은 API를 써서 관리자 웹에서 바꾼 내용이 키오스크 화면에 반영됩니다.</p>
-    </div>
     <figure class="shot">
       <img loading="lazy" src="img/bokiyo-admin-web.jpg" width="1600" height="1200" alt="노트북과 휴대폰에 띄운 관리자 웹 대시보드. 빠른 작업, 실시간 방 현황, 오늘의 현황, 최근 활동이 보인다">
       <figcaption>점주용 관리자 웹입니다. 대시보드에서 테이블(화면에서는 '방')별 실시간 이용 현황과 오늘 현황을 보고, 매장, 게임, 테이블, 공지, 추천 코스를 관리합니다.</figcaption>
@@ -3992,22 +3902,13 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <ul class="stack" aria-label="사용 기술">
           <li>Next.js</li><li>App Router</li><li>TypeScript</li><li>React Query</li>
         </ul>
-  </section>
-    <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/bokiyo/kiosk"><span class="pg-k">← 이전</span><span class="pg-t">매장 운영 시스템 / 키오스크 앱</span></a>
-      <a class="next" href="#/bokiyo/data"><span class="pg-k">다음 →</span><span class="pg-t">매장 운영 시스템 / 데이터 수집</span></a>
-    </nav>
-    <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
-</article>
-<article class="view" data-route="bokiyo/data" data-title="데이터 수집" tabindex="-1">
-  <section class="project" id="bokiyo-data">
-    <div class="p-head">
-      <p class="crumbs"><a href="#/bokiyo">보드게임카페 매장 운영 시스템</a><span aria-hidden="true">/</span><span>데이터 수집</span></p>
-      <p class="label">보드요잉 준비 시기, 2023</p>
-      <h2>보드게임 정보 수집 서버</h2>
+      </div>
+    </details>
+    <details class="fold" id="bokiyo-data">
+      <summary><span class="f-t">보드게임 정보 수집 서버</span><span class="f-d">보드요잉 준비 시기, 2023</span></summary>
+      <div class="fold-body">
       <p class="scope">수집기를 설계하고 구현했으며, 수집한 데이터는 보키요의 공통 게임 정보로 사용했습니다.</p>
       <p class="ctx">보드게임 정보, 카드 슬리브 규격, 설명 영상을 세 곳에서 자동으로 수집하는 Spring Boot 서버입니다. 보드요잉 프로토타입 단계에서 만들어 현장에서 시험했고, 이때 수집한 데이터는 보키요의 공통 게임 정보로 썼습니다.</p>
-    </div>
 
         <figure class="dgf">
           <p class="fig-title">게임 정보 수집 구조</p>
@@ -4085,10 +3986,16 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
         <ul class="stack" aria-label="사용 기술">
           <li>Java 17</li><li>Spring Boot 3.0</li><li>JPA</li><li>PostgreSQL</li><li>Docker</li><li>H2</li><li>Selenium</li><li>RestTemplate</li>
         </ul>
+      </div>
+    </details>
+
+    <ul class="stack" aria-label="사용 기술">
+          <li>Java</li><li>Spring Boot</li><li>JPA</li><li>PostgreSQL</li><li>Amazon RDS</li><li>AWS Elastic Beanstalk</li><li>S3</li><li>Firebase FCM</li><li>FFmpeg</li><li>Selenium</li><li>Flutter</li><li>Provider</li><li>Hive</li><li>Next.js</li><li>TypeScript</li><li>React Query</li><li>Cursor Rules</li><li>Claude Code</li>
+        </ul>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/bokiyo/admin"><span class="pg-k">← 이전</span><span class="pg-t">매장 운영 시스템 / 관리자 웹</span></a>
-      <a class="next" href="#/pknu"><span class="pg-k">다음 →</span><span class="pg-t">대학 모바일 앱 화면</span></a>
+      <a class="prev" href="#/addeep/rec"><span class="pg-k">← 이전</span><span class="pg-t">AI 추천 서버</span></a>
+      <a class="next" href="#/addeep/behavior"><span class="pg-k">다음 →</span><span class="pg-t">사용자 행동 분석 서버</span></a>
     </nav>
     <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
@@ -4244,8 +4151,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     </ul>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/bokiyo/data"><span class="pg-k">← 이전</span><span class="pg-t">매장 운영 시스템 / 데이터 수집</span></a>
-      <a class="next" href="#/side"><span class="pg-k">다음 →</span><span class="pg-t">사이드 프로젝트</span></a>
+      <a class="prev" href="#/addeep/site"><span class="pg-k">← 이전</span><span class="pg-t">서비스 소개 사이트</span></a>
+      <a class="next" href="#/side/cascade"><span class="pg-k">다음 →</span><span class="pg-t">외부 변화 영향 판정 엔진</span></a>
     </nav>
     <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
@@ -4270,8 +4177,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     </div>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/pknu"><span class="pg-k">← 이전</span><span class="pg-t">대학 모바일 앱 화면</span></a>
-      <a class="next" href="#/side/cascade"><span class="pg-k">다음 →</span><span class="pg-t">사이드 프로젝트 / 외부 변화 영향 판정 엔진</span></a>
+      <a class="prev" href="#/side/cascade"><span class="pg-k">← 이전</span><span class="pg-t">외부 변화 영향 판정 엔진</span></a>
+      <a class="next" href="#/addeep"><span class="pg-k">다음 →</span><span class="pg-t">애딥 서비스 구성</span></a>
     </nav>
     <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
@@ -4489,7 +4396,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     </ul>
   </section>
     <nav class="pager" aria-label="이전과 다음 페이지">
-      <a class="prev" href="#/side"><span class="pg-k">← 이전</span><span class="pg-t">사이드 프로젝트</span></a>
+      <a class="prev" href="#/pknu"><span class="pg-k">← 이전</span><span class="pg-t">대학 모바일 앱 화면</span></a>
+      <a class="next" href="#/side"><span class="pg-k">다음 →</span><span class="pg-t">사이드 프로젝트</span></a>
     </nav>
     <p class="kbd-hint">키보드 ← → 로 이전·다음 페이지로 이동할 수 있습니다.</p>
 </article>
@@ -4538,7 +4446,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   var nav = document.getElementById('site-nav');
   var btn = document.querySelector('.menu-btn');
   var onHome = { how: 'how', career: 'career', skills: 'skills' };
-  var legacy = { proto: 'bokiyo/data', rec: 'addeep/rec', vlm: 'addeep/vlm', sns: 'addeep/sns', commerce: 'addeep/commerce', 'addeep/image': 'addeep', 'addeep/act': 'addeep', 'side/travel': 'side', 'side/timer': 'side', 'side/flutter-base': 'side', 'ax/more': 'ax', 'addeep/more': 'addeep' };
+  var legacy = { proto: 'bokiyo', rec: 'addeep/rec', vlm: 'addeep/vlm', sns: 'addeep/sns', commerce: 'addeep/commerce', 'addeep/image': 'addeep', 'addeep/act': 'addeep', 'side/travel': 'side', 'side/timer': 'side', 'side/flutter-base': 'side', 'ax/more': 'ax', 'addeep/more': 'addeep' };
+  var folds = {'ax/gate': ['ax', 'ax-gate'], 'ax/limits': ['ax', 'ax-limits'], 'ax/agents': ['ax', 'ax-agents'], 'ax/review': ['ax', 'ax-review'], 'ax/planning': ['ax', 'ax-planning'], 'ax/spread': ['ax', 'ax-spread'], 'ax/honesty': ['ax', 'ax-honesty'], 'bokiyo/server': ['bokiyo', 'bokiyo-server'], 'bokiyo/kiosk': ['bokiyo', 'bokiyo-kiosk'], 'bokiyo/admin': ['bokiyo', 'bokiyo-admin'], 'bokiyo/data': ['bokiyo', 'bokiyo-data']};
   var first = true;
   function closeNav() {
     if (!nav || !btn) return;
@@ -4555,6 +4464,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   function render() {
     var r = decodeURIComponent(location.hash.replace(/^#\/?/, '')).replace(/\/$/, '');
     if (legacy[r]) r = legacy[r];
+    var fold = null;
+    if (folds[r]) { fold = folds[r][1]; r = folds[r][0]; }
     var anchor = onHome[r] || null;
     if (anchor) r = '';
     var current = null;
@@ -4575,7 +4486,10 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
     var t = current.getAttribute('data-title');
     document.title = (t ? t + ' · ' : '') + '노성훈 포트폴리오';
     closeNav();
-    if (anchor) {
+    if (fold) {
+      var fe = document.getElementById(fold);
+      if (fe) { fe.open = true; fe.scrollIntoView(); }
+    } else if (anchor) {
       var el = document.getElementById(anchor);
       if (el) el.scrollIntoView();
     } else if (!first) {
